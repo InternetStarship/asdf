@@ -1,50 +1,43 @@
-import { generate } from "./generate";
+(() => {
+  console.log("clickfunnels classic page verification loaded.");
 
-export const importClassic = (url) => {
-  return new Promise((resolve) => {
-    const contentId = "";
-    let page_tree = {
-      version: 103,
-      content: {
-        type: "ContentNode",
-        id: contentId,
-        params: {},
-        attrs: {},
-        children: [],
-      },
-      settings: {},
-      popup: {},
-    };
-    let css = "";
-    let google_font_families = "";
+  const contentId = "";
+  let page_tree = {
+    version: 103,
+    content: {
+      type: "ContentNode",
+      id: contentId,
+      params: {},
+      attrs: {},
+      children: [],
+    },
+    settings: {},
+    popup: {},
+  };
+  let css = "";
+  let google_font_families = "";
 
-    const iframe = document.querySelector("iframe#classic-transfer");
-    const iframeWindow = iframe.contentWindow;
-    console.log("the url", url);
-    // iframe.src = url;
-    // iframe.onload = () => {
-    const dom = iframe.contentWindow.document.querySelector(
-      ".containerWrapper"
-    );
-    console.log(
-      iframe.contentWindow.document,
-      dom,
-      iframe.contentWindow.document.innerHTML
-    );
-    const data = {
-      sections: generate.sections(dom),
-    };
+  const dom = document.querySelector(".containerWrapper");
 
-    css = "";
-    google_font_families = "";
+  console.log("we got the dom!", dom.innerHTML);
 
-    // Call resolve() here, when iframe finished loading and after
-    // all synchronous operations are done.
-    resolve({
-      css: css,
-      page_tree: JSON.stringify(page_tree),
-      google_font_families: google_font_families,
-    });
-    // };
-  });
-};
+  css = "";
+  google_font_families = "";
+
+  window.addEventListener(
+    "message",
+    function (event) {
+      if (event.data.type === "import-classic") {
+        console.log("Received import-classic message:", event.data);
+        // After executing your logic, send the response back to the parent
+        const response = {
+          css: css,
+          page_tree: JSON.stringify(page_tree),
+          google_font_families: google_font_families,
+        };
+        window.parent.postMessage(response, "*");
+      }
+    },
+    false
+  );
+})();
