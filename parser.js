@@ -27,6 +27,7 @@
   window.addEventListener(
     "message",
     function (event) {
+      console.log("Received message that is this:", event.data);
       if (event.data.type === "import-classic") {
         console.log("Received import-classic message:", event.data);
         // After executing your logic, send the response back to the parent
