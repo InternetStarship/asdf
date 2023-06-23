@@ -6,53 +6,46 @@ function inject(url) {
   document.head.appendChild(script)
 }
 
-inject('app.js')
-inject('settings/animations.js')
-inject('settings/params.js')
-inject('settings/properties.js')
-inject('settings/settings.js')
-inject('layout/sections.js')
-inject('layout/rows.js')
-inject('layout/columns.js')
-inject('layout/elements.js')
-
-const elements = [
-  'audio_player.js',
-  'billing',
-  'button',
-  'countdown',
-  'divider',
-  'embed',
-  'faq_block',
-  'fh_comments',
-  'featured_image',
-  'flex',
-  'headline',
-  'icon',
-  'image_list',
-  'image_popup',
-  'image',
-  'input',
-  'list',
-  'nav',
-  'pricing',
-  'progress',
-  'select',
-  'shipping',
-  'text_block',
-  'video_popup',
-]
-elements.forEach(element => {
-  inject(`elements/${element}.js`)
-})
-
-inject('page-tree/clickfunnels-classic.js')
-inject('page-tree/clickfunnels2.js')
-
 window.addEventListener(
   'message',
   event => {
     if (event.data.type === 'import-classic') {
+      inject('app.js')
+      inject('settings/animations.js')
+      inject('settings/params.js')
+      inject('settings/properties.js')
+      inject('settings/settings.js')
+      inject('layout/sections.js')
+      inject('layout/rows.js')
+      inject('layout/columns.js')
+      inject('layout/elements.js')
+      inject('elements/audio_player.js')
+      inject('elements/billing.js')
+      inject('elements/button.js')
+      inject('elements/countdown.js')
+      inject('elements/divider.js')
+      inject('elements/embed.js')
+      inject('elements/faq_block.js')
+      inject('elements/fh_comments.js')
+      inject('elements/featured_image.js')
+      inject('elements/flex.js')
+      inject('elements/headline.js')
+      inject('elements/icon.js')
+      inject('elements/image_list.js')
+      inject('elements/image_popup.js')
+      inject('elements/image.js')
+      inject('elements/input.js')
+      inject('elements/list.js')
+      inject('elements/nav.js')
+      inject('elements/pricing.js')
+      inject('elements/progress.js')
+      inject('elements/select.js')
+      inject('elements/shipping.js')
+      inject('elements/text_block.js')
+      inject('elements/video_popup.js')
+      inject('page-tree/clickfunnels-classic.js')
+      inject('page-tree/clickfunnels2.js')
+
       app.init()
     }
   },
