@@ -13,7 +13,7 @@ const app = {
     )
 
     // Convert ClickFunnels Classic page tree to ClickFunnels 2.0 page tree
-    const clickfunnels_v2 = convert(clickfunnels_classic)
+    const clickfunnels_v2 = clickfunnels2_pagetree(clickfunnels_classic)
     clickfunnels_v2.version = 95
 
     // TODO get CSS and Fonts from ClickFunnels Classic page
