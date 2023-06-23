@@ -56,7 +56,7 @@ window.addEventListener(
           inject('page-tree/clickfunnels2.js'),
         ])
 
-        checkImagesLoaded('.containerWrapper', app.init())
+        app.checkImagesLoaded('.containerWrapper', app.init())
       } catch (err) {
         console.error(`Failed to load ClickFunnels Classic verification: ${err}`)
       }
