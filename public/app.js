@@ -12,7 +12,7 @@ const app = {
     )
 
     const clickfunnels_v2 = clickfunnels2_pagetree(clickfunnels_classic)
-    clickfunnels_v2.version = 85
+    clickfunnels_v2.version = 93
 
     const css = ''
     const google_font_families = ''
