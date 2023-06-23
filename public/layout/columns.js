@@ -53,7 +53,7 @@ const columns = (columns, parentId) => {
         },
         '.col-inner': {},
       },
-      children: elements(column.elements, id),
+      children: [], //elements(column.elements, id),
     }
 
     data.selectors['& > .col-inner'].attrs.style = Object.assign(
