@@ -209,22 +209,13 @@ const button = data => {
 
   if (element.content.sub) {
     output.children.push({
-      type: 'slot',
+      type: 'text',
       slotName: 'button-sub',
       id: subId,
       version: 0,
       parentId: id,
       fractionalIndex: 'a0',
-      children: [
-        {
-          type: 'text',
-          innerText: element.content.sub,
-          id: app.makeId(),
-          version: 0,
-          parentId: subId,
-          fractionalIndex: 'a1',
-        },
-      ],
+      innerText: element.content.sub,
     })
   }
   output.selectors['.elButton'].attrs.style = Object.assign(
