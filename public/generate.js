@@ -1,4 +1,4 @@
-export const generate = {
+const generate = {
   sections: dom => {
     console.log('Okay I can access it anywhere now.')
   },
@@ -624,3 +624,5 @@ export const generate = {
     }
   },
 }
+
+export { generate }
