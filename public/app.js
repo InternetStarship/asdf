@@ -59,25 +59,6 @@ const app = {
     }
   },
 
-  ensureChildrenAreArrays: obj => {
-    if (typeof obj !== 'object' || obj === null) {
-      return
-    }
-
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        if (key === 'children') {
-          if (!Array.isArray(obj[key]) || obj[key] === undefined) {
-            obj[key] = []
-          }
-        }
-        if (typeof obj[key] === 'object') {
-          app.ensureChildrenAreArrays(obj[key])
-        }
-      }
-    }
-  },
-
   checkVisibility: element => {
     const hideOn = element.getAttribute('data-hide-on')
     if (hideOn === 'desktop') {
@@ -112,5 +93,28 @@ const app = {
         callback(cf2_classnames[index])
       }
     })
+  },
+
+  checkImagesLoaded: (parentSelector, callback) => {
+    const parent = document.querySelector(parentSelector)
+    const images = parent.getElementsByTagName('img')
+    let imagesToLoad = images.length
+
+    for (let i = 0; i < images.length; i++) {
+      if (images[i].complete) {
+        imagesToLoad--
+      } else {
+        images[i].addEventListener('load', function () {
+          imagesToLoad--
+          if (imagesToLoad === 0) {
+            callback()
+          }
+        })
+      }
+    }
+
+    if (imagesToLoad === 0) {
+      callback()
+    }
   },
 }
