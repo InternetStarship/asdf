@@ -1,13 +1,14 @@
 function loadScript(url, callback) {
+  const base_url = 'https://classic-parser.onrender.com/'
   const script = document.createElement('script')
   script.type = 'text/javascript'
-  script.src = url
+  script.src = `${base_url}${url}`
   script.onload = callback
   document.head.appendChild(script)
 }
 
-loadScript('https://classic-parser.onrender.com/init.js')
-loadScript('https://classic-parser.onrender.com/generate.js')
+loadScript('init.js')
+loadScript('generate.js')
 
 console.info('Clickfunnels Classic Verification loaded.')
 
