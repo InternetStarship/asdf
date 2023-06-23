@@ -8,13 +8,9 @@ const columns = (columns, parentId) => {
     const borderRadius = properties.borderRadius(columnCSS)
     const backgroundClasses = pageDocument.querySelector(`[id="${column.id}"]`).classList
     let backgroundPosition = ''
-    const bgSizeClasses = ['bgCover', 'bgCover100', 'bgNoRepeat', 'bgRepeat', 'bgRepeatX', 'bgRepeatY']
-    const bgSizeCF2Classes = ['bgCoverCenter', 'bgW100', 'bgNoRepeat', 'bgRepeat', 'bgRepeatX', 'bgRepeatY']
 
-    bgSizeClasses.forEach((item, index) => {
-      if (backgroundClasses.contains(item)) {
-        backgroundPosition = bgSizeCF2Classes[index]
-      }
+    app.convertBackground(backgroundClasses, className => {
+      backgroundPosition = className
     })
 
     const columnContainer = pageDocument.querySelector(`[id="${column.id}"] .col-inner`)

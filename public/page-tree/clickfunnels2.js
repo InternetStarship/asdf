@@ -90,13 +90,8 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
     backgroundAttrs['style']['background-position'] = `${data.horizontal} ${data.vertical} !important`
   }
 
-  const bgSizeClasses = ['bgCover', 'bgCover100', 'bgNoRepeat', 'bgRepeat', 'bgRepeatX', 'bgRepeatY']
-  const bgSizeCF2Classes = ['bgCoverCenter', 'bgW100', 'bgNoRepeat', 'bgRepeat', 'bgRepeatX', 'bgRepeatY']
-
-  bgSizeClasses.forEach((item, index) => {
-    if (backgroundClasses.contains(item)) {
-      backgroundAttrs.className = 'bgCoverV2Center ' + bgSizeCF2Classes[index]
-    }
+  app.convertBackground(backgroundClasses, className => {
+    backgroundAttrs.className = 'bgCoverV2Center ' + className
   })
 
   const convertedJSON = {

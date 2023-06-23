@@ -7,21 +7,15 @@ const app = {
   iframeId: '',
 
   init: () => {
-    // Build page tree (JSON) of ClickFunnels Classic page
     const clickfunnels_classic = clickfunnels_classic_page_tree.sections(
       document.querySelector('.containerWrapper')
     )
 
-    // Convert ClickFunnels Classic page tree to ClickFunnels 2.0 page tree
     const clickfunnels_v2 = clickfunnels2_pagetree(clickfunnels_classic)
     clickfunnels_v2.version = 95
 
-    // TODO get CSS and Fonts from ClickFunnels Classic page
     const css = ''
     const google_font_families = ''
-
-    // Optional show recommendations
-    const recommendations = app.recommendations
 
     const response = {
       data: {
@@ -29,7 +23,7 @@ const app = {
         page_tree: JSON.stringify(clickfunnels_v2),
         google_font_families: google_font_families,
       },
-      recommendations: recommendations,
+      recommendations: app.recommendations,
       classic_pagetree: clickfunnels_classic,
     }
 
@@ -79,5 +73,16 @@ const app = {
     })
 
     return output
+  },
+
+  convertBackground: (backgroundClasses, callback) => {
+    const classic_classnames = ['bgCover', 'bgCover100', 'bgNoRepeat', 'bgRepeat', 'bgRepeatX', 'bgRepeatY']
+    const cf2_classnames = ['bgCoverCenter', 'bgW100', 'bgNoRepeat', 'bgRepeat', 'bgRepeatX', 'bgRepeatY']
+
+    classic_classnames.forEach((item, index) => {
+      if (backgroundClasses.contains(item)) {
+        callback(cf2_classnames[index])
+      }
+    })
   },
 }

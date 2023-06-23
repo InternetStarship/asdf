@@ -13,13 +13,9 @@ const popup = (sections, parentId) => {
   const containerClass = containerClasses.find(item => currentClasses.includes(item))
   const backgroundClasses = pageDocument.querySelector(`[id="${sections[0].id}"]`).classList
   let backgroundPosition = ''
-  const bgSizeClasses = ['bgCover', 'bgCover100', 'bgNoRepeat', 'bgRepeat', 'bgRepeatX', 'bgRepeatY']
-  const bgSizeCF2Classes = ['bgCoverCenter', 'bgW100', 'bgNoRepeat', 'bgRepeat', 'bgRepeatX', 'bgRepeatY']
 
-  bgSizeClasses.forEach((item, index) => {
-    if (backgroundClasses.contains(item)) {
-      backgroundPosition = bgSizeCF2Classes[index]
-    }
+  app.convertBackground(backgroundClasses, className => {
+    backgroundPosition = className
   })
 
   const popupModal = pageDocument.querySelector('.containerModal')

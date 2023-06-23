@@ -510,7 +510,6 @@ const clickfunnels_classic_page_tree = {
 
     if (dom.querySelector('.elBulletList')) {
       data.type = 'list'
-      const element = dom.querySelector('ul.elBulletList')
       const list = dom.querySelectorAll('ul.elBulletList li')
       const items = []
       list.forEach(item => {
