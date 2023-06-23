@@ -46,7 +46,7 @@ const settings = () => {
         type: 'raw',
         parentId: headerCodeId,
         fractionalIndex: 'a0',
-        innerText: pageDocument.querySelector('#page_head_tag').innerText,
+        innerText: '',
       },
       {
         id: 'footer-code',
