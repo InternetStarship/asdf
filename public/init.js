@@ -27,6 +27,8 @@ function init() {
     page_tree: page_tree, // JSON.stringify(page_tree),
     google_font_families: google_font_families,
   }
+
+  console.info('Classic is sending back the response.', response)
   window.parent.postMessage(response, '*')
 }
 

@@ -1,6 +1,6 @@
 const generate = {
   sections: dom => {
-    console.log('Okay I can access it anywhere now.')
+    console.log('Okay I can access it anywhere now.', dom.getAttribute('class'))
   },
   sections2: dom => {
     const output = []
