@@ -11,19 +11,11 @@ const app = {
       document.querySelector('.containerWrapper')
     )
 
-    const clickfunnels_v2 = clickfunnels2_pagetree(clickfunnels_classic)
+    const clickfunnels_v2 = app.cleanUp(clickfunnels2_pagetree(clickfunnels_classic))
     clickfunnels_v2.version = 93
 
     const css = ''
     const google_font_families = ''
-
-    clickfunnels_v2.popup.children = clickfunnels_v2.popup.children.filter(function (element) {
-      return element !== undefined
-    })
-
-    clickfunnels_v2.content.children = clickfunnels_v2.content.children.filter(function (element) {
-      return element !== undefined
-    })
 
     const response = {
       data: {
@@ -56,6 +48,25 @@ const app = {
       return finalId
     } else {
       app.makeId()
+    }
+  },
+
+  cleanUp: obj => {
+    if (typeof obj !== 'object' || obj === null) {
+      return
+    }
+
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        if (key === 'children') {
+          if (!Array.isArray(obj[key]) || obj[key] === undefined) {
+            obj[key] = []
+          }
+        }
+        if (typeof obj[key] === 'object') {
+          app.cleanUp(obj[key])
+        }
+      }
     }
   },
 
