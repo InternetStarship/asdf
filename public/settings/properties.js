@@ -2,82 +2,80 @@ const properties = {
   css: (elementId, type = null, isParams = false) => {
     let dom
 
-    let pageDocument = document
-
     if (type === 'column') {
-      dom = pageDocument.querySelector(`.containerWrapper #${elementId}`)
+      dom = document.querySelector(`.containerWrapper #${elementId}`)
     } else if (type === 'image') {
-      dom = pageDocument.querySelector(`#${elementId} img`)
+      dom = document.querySelector(`#${elementId} img`)
     } else if (type === 'icon') {
-      dom = pageDocument.querySelector(`#${elementId} .eliconelement`)
+      dom = document.querySelector(`#${elementId} .eliconelement`)
     } else if (type === 'headline') {
-      dom = pageDocument.querySelector(`#${elementId} .elHeadline`)
+      dom = document.querySelector(`#${elementId} .elHeadline`)
     } else if (type === 'headlinePrepend') {
-      dom = pageDocument.querySelector(`#${elementId} .fa_prepended`)
+      dom = document.querySelector(`#${elementId} .fa_prepended`)
     } else if (type === 'faqPrepend') {
-      dom = pageDocument.querySelector(`#${elementId} .faqIcon`)
+      dom = document.querySelector(`#${elementId} .faqIcon`)
     } else if (type === 'divider') {
-      dom = pageDocument.querySelector(`#${elementId} .elDividerInner`)
+      dom = document.querySelector(`#${elementId} .elDividerInner`)
     } else if (type === 'dividerContainer') {
-      dom = pageDocument.querySelector(`#${elementId} .elDivider`)
+      dom = document.querySelector(`#${elementId} .elDivider`)
     } else if (type === 'input') {
-      dom = pageDocument.querySelector(`#${elementId} .elInput`)
+      dom = document.querySelector(`#${elementId} .elInput`)
     } else if (type === 'button') {
-      dom = pageDocument.querySelector(`#${elementId} .elButton`)
+      dom = document.querySelector(`#${elementId} .elButton`)
     } else if (type === 'buttonMain') {
-      dom = pageDocument.querySelector(`#${elementId} .elButtonMain`)
+      dom = document.querySelector(`#${elementId} .elButtonMain`)
     } else if (type === 'buttonSub') {
-      dom = pageDocument.querySelector(`#${elementId} .elButtonSub`)
+      dom = document.querySelector(`#${elementId} .elButtonSub`)
     } else if (type === 'buttonPrepend') {
-      dom = pageDocument.querySelector(`#${elementId} .fa_prepended`)
+      dom = document.querySelector(`#${elementId} .fa_prepended`)
     } else if (type === 'buttonAppend') {
-      dom = pageDocument.querySelector(`#${elementId} .fa_appended`)
+      dom = document.querySelector(`#${elementId} .fa_appended`)
     } else if (type === 'popup') {
-      dom = pageDocument.querySelector(`.containerModal`)
+      dom = document.querySelector(`.containerModal`)
     } else if (type === 'popup-backdrop') {
-      dom = pageDocument.querySelector(`.modalBackdropWrapper`)
+      dom = document.querySelector(`.modalBackdropWrapper`)
     } else if (type === 'featured_image_image') {
-      dom = pageDocument.querySelector(`#${elementId} .elScreenshot_image img`)
+      dom = document.querySelector(`#${elementId} .elScreenshot_image img`)
     } else if (type === 'featured_image_headline') {
-      dom = pageDocument.querySelector(`#${elementId} .elScreenshot_text_headline`)
+      dom = document.querySelector(`#${elementId} .elScreenshot_text_headline`)
     } else if (type === 'featured_image_paragraph') {
-      dom = pageDocument.querySelector(`#${elementId} .elScreenshot_text_body`)
+      dom = document.querySelector(`#${elementId} .elScreenshot_text_body`)
     } else if (type === 'faq_block_headline') {
-      dom = pageDocument.querySelector(`#${elementId} .faqTitle`)
+      dom = document.querySelector(`#${elementId} .faqTitle`)
     } else if (type === 'faq_block_paragraph') {
-      dom = pageDocument.querySelector(`#${elementId} .faqAnswer`)
+      dom = document.querySelector(`#${elementId} .faqAnswer`)
     } else if (type === 'image_list_headline') {
-      dom = pageDocument.querySelector(`#${elementId} li`)
+      dom = document.querySelector(`#${elementId} li`)
     } else if (type && type.includes('text_block_headline_')) {
       const eqIndex = type.split('_')[3]
       const eqType = type.split('_')[4]
-      dom = pageDocument.querySelector(`#${elementId} .elTextblock ${eqType}:nth-child(${eqIndex})`)
+      dom = document.querySelector(`#${elementId} .elTextblock ${eqType}:nth-child(${eqIndex})`)
       if (dom.querySelector('span')) {
         dom = dom.querySelector('span')
         dom.style.paddingBottom = '10px'
       }
     } else if (type === 'pricing_label_headline') {
-      dom = pageDocument.querySelector(`#${elementId} .pricely-label`)
+      dom = document.querySelector(`#${elementId} .pricely-label`)
     } else if (type === 'pricing_figure_headline') {
-      dom = pageDocument.querySelector(`#${elementId} .pricely-amount`)
+      dom = document.querySelector(`#${elementId} .pricely-amount`)
       dom.style.padding = '20px 0'
     } else if (type === 'pricing_foreword_headline') {
-      dom = pageDocument.querySelector(`#${elementId} .pricely-foreword`)
+      dom = document.querySelector(`#${elementId} .pricely-foreword`)
     } else if (type && type.includes('pricing_headline_')) {
       const eqIndex = type.split('_')[2]
-      dom = pageDocument.querySelector(`#${elementId} .list-group .list-group-item:nth-child(${eqIndex})`)
+      dom = document.querySelector(`#${elementId} .list-group .list-group-item:nth-child(${eqIndex})`)
     } else if (type === 'shipping_headline') {
-      dom = pageDocument.querySelector(`#${elementId} .labelUnderInput`)
+      dom = document.querySelector(`#${elementId} .labelUnderInput`)
     } else if (type === 'shipping_input') {
-      dom = pageDocument.querySelector(`#${elementId} .elInput`)
+      dom = document.querySelector(`#${elementId} .elInput`)
     } else if (type === 'billing_headline') {
-      dom = pageDocument.querySelector(`#${elementId} .labelUnderInput`)
+      dom = document.querySelector(`#${elementId} .labelUnderInput`)
     } else if (type === 'billing_input') {
-      dom = pageDocument.querySelector(`#${elementId} .elInput`)
+      dom = document.querySelector(`#${elementId} .elInput`)
     } else if (type === 'list') {
-      dom = pageDocument.querySelector(`#${elementId} .elBulletList li`)
+      dom = document.querySelector(`#${elementId} .elBulletList li`)
     } else {
-      dom = pageDocument.querySelector(`#${elementId}`)
+      dom = document.querySelector(`#${elementId}`)
     }
 
     if (dom) {

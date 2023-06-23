@@ -1,14 +1,12 @@
 const rows = (rows, parentId) => {
-  let pageDocument = document
-
   return rows.map((row, index) => {
     const id = app.makeId()
 
     const borderRadius = properties.borderRadius(row.css)
-    const backgroundClasses = pageDocument.querySelector(`[id="${row.id}"]`).classList
+    const backgroundClasses = document.querySelector(`[id="${row.id}"]`).classList
     let backgroundPosition = ''
 
-    app.convertBackground(backgroundClasses, className => {
+    app.convertBackgroundPositionClassName(backgroundClasses, className => {
       backgroundPosition = className
     })
 
@@ -38,11 +36,8 @@ const rows = (rows, parentId) => {
       children: columns(row.columns, id),
     }
 
-    data.attrs = Object.assign(data.attrs, animations.attrs(pageDocument.querySelector(`[id="${row.id}"]`)))
-    data.params = Object.assign(
-      data.params,
-      animations.params(pageDocument.querySelector(`[id="${row.id}"]`))
-    )
+    data.attrs = Object.assign(data.attrs, animations.attrs(document.querySelector(`[id="${row.id}"]`)))
+    data.params = Object.assign(data.params, animations.params(document.querySelector(`[id="${row.id}"]`)))
 
     data.attrs.style = Object.assign(data.attrs.style, borderRadius)
     return data

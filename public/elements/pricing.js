@@ -1,6 +1,4 @@
 const pricing = data => {
-  let pageDocument = document
-
   const element = data.element
   const parentId = data.parentId
   const index = data.index
@@ -62,7 +60,7 @@ const pricing = data => {
   const header = flex_container(children_header, parentId, index)
   header.attrs.style['flex-direction'] = 'column'
 
-  const headerContainer = pageDocument.querySelector(`#${element.id} .panel-heading`)
+  const headerContainer = document.querySelector(`#${element.id} .panel-heading`)
   const headerStyles = getComputedStyle(headerContainer)
 
   header.attrs.style['background-color'] = headerStyles.getPropertyValue('background-color') || 'transparent'
@@ -94,11 +92,11 @@ const pricing = data => {
   listItems.attrs.style['flex-direction'] = 'column'
 
   const output = flex_container([header, listItems], parentId, index)
-  output.attrs.style['margin-top'] = pageDocument.querySelector(`#${element.id}`).style.marginTop || 0
+  output.attrs.style['margin-top'] = document.querySelector(`#${element.id}`).style.marginTop || 0
   output.attrs.style['flex-direction'] = 'column'
   output.attrs.style['gap'] = 0
 
-  const mainContainer = pageDocument.querySelector(`#${element.id} .pricing-panel`)
+  const mainContainer = document.querySelector(`#${element.id} .pricing-panel`)
   const containerStyles = getComputedStyle(mainContainer)
   const borderRadius = properties.borderRadius(containerStyles)
 
@@ -115,7 +113,7 @@ const pricing = data => {
     output.attrs['data-show-only'] = element.content.visible
     output.attrs = Object.assign(
       output.attrs,
-      animations.attrs(pageDocument.querySelector(`[id="${element.id}"]`))
+      animations.attrs(document.querySelector(`[id="${element.id}"]`))
     )
   }
 

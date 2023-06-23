@@ -1,6 +1,4 @@
 const popup = (sections, parentId) => {
-  let pageDocument = document
-
   const borderRadius = properties.borderRadius(sections[0].css)
   const containerClasses = [
     'smallContainer',
@@ -9,22 +7,22 @@ const popup = (sections, parentId) => {
     'wideContainer',
     'fullContainer',
   ]
-  const currentClasses = pageDocument.querySelector(`[id="${sections[0].id}"]`).getAttribute('class')
+  const currentClasses = document.querySelector(`[id="${sections[0].id}"]`).getAttribute('class')
   const containerClass = containerClasses.find(item => currentClasses.includes(item))
-  const backgroundClasses = pageDocument.querySelector(`[id="${sections[0].id}"]`).classList
+  const backgroundClasses = document.querySelector(`[id="${sections[0].id}"]`).classList
   let backgroundPosition = ''
 
-  app.convertBackground(backgroundClasses, className => {
+  app.convertBackgroundPositionClassName(backgroundClasses, className => {
     backgroundPosition = className
   })
 
-  const popupModal = pageDocument.querySelector('.containerModal')
+  const popupModal = document.querySelector('.containerModal')
   if (popupModal) {
     popupModal.style.display = 'block'
   }
   const css = properties.css(null, 'popup')
   const cssBackdrop = properties.css(null, 'popup-backdrop')
-  const popupWidth = pageDocument.querySelector('.containerModal').getBoundingClientRect()
+  const popupWidth = document.querySelector('.containerModal').getBoundingClientRect()
 
   const popup = {
     type: 'ModalContainer/V1',
@@ -80,7 +78,7 @@ const popup = (sections, parentId) => {
     borderRadius
   )
 
-  const classes = pageDocument.querySelector(`.containerModal`).getAttribute('class')
+  const classes = document.querySelector(`.containerModal`).getAttribute('class')
 
   if (classes.includes('bounce')) {
     popup.selectors['.containerModal'].attrs['data-show-popup-on-exit'] = 'true'

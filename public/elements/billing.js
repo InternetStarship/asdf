@@ -1,6 +1,4 @@
 const billing_block = data => {
-  let pageDocument = document
-
   const element = data.element
   const id = data.id
   const parentId = data.parentId
@@ -31,17 +29,15 @@ const billing_block = data => {
 
     let inputJSON = {}
     if (data.element.content.items[i].label === 'Country') {
-      const inputBox = pageDocument
-        .querySelector(`#${element.id} select[name="country"]`)
-        .getBoundingClientRect()
+      const inputBox = document.querySelector(`#${element.id} select[name="country"]`).getBoundingClientRect()
       inputJSON = select({
         element: {
           content: {
             width: inputBox.width,
             height: inputBox.height,
             placeholder: 'Select Country',
-            name: pageDocument.querySelector(`#${element.id} select[name="country"]`).getAttribute('name'),
-            type: pageDocument.querySelector(`#${element.id} select[name="country"]`).getAttribute('type'),
+            name: document.querySelector(`#${element.id} select[name="country"]`).getAttribute('name'),
+            type: document.querySelector(`#${element.id} select[name="country"]`).getAttribute('type'),
             required: document
               .querySelector(`#${element.id} select[name="country"]`)
               .getAttribute('class')
@@ -57,9 +53,7 @@ const billing_block = data => {
       })
       inputJSON.selectors['.elSelect'].attrs.style['margin-bottom'] = '0px'
     } else {
-      const inputBox = pageDocument
-        .querySelector(`#${element.id} input[name="address"]`)
-        .getBoundingClientRect()
+      const inputBox = document.querySelector(`#${element.id} input[name="address"]`).getBoundingClientRect()
       inputJSON = input({
         element: {
           content: {
@@ -96,7 +90,7 @@ const billing_block = data => {
   }
 
   const output = flex_container(children, parentId, index)
-  output.attrs.style['margin-top'] = pageDocument.querySelector(`#${element.id}`).style.marginTop || 0
+  output.attrs.style['margin-top'] = document.querySelector(`#${element.id}`).style.marginTop || 0
   output.attrs.style['flex-direction'] = 'column'
   output.attrs.style['gap'] = 0.5
 
@@ -104,7 +98,7 @@ const billing_block = data => {
     output.attrs['data-show-only'] = element.content.visible
     output.attrs = Object.assign(
       output.attrs,
-      animations.attrs(pageDocument.querySelector(`[id="${element.id}"]`))
+      animations.attrs(document.querySelector(`[id="${element.id}"]`))
     )
   }
 

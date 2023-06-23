@@ -1,20 +1,18 @@
 const settings = () => {
-  let pageDocument = document
-
   const settingsId = app.makeId()
   const headerCodeId = app.makeId()
   const footerCodeId = app.makeId()
   const cssCodeId = app.makeId()
-  const linkColorDom = pageDocument.querySelector('#link_color_style')
+  const linkColorDom = document.querySelector('#link_color_style')
   let linkColor = '#000'
   if (linkColorDom) {
     linkColor = linkColorDom.innerText.replace('a { color: ', '').replace(';}', '').trim()
   }
-  const textColor = pageDocument.querySelector('html').style.color
-  const fontFamily = pageDocument.querySelector('html').style.fontFamily
+  const textColor = document.querySelector('html').style.color
+  const fontFamily = document.querySelector('html').style.fontFamily
 
-  app.copiedCSS = pageDocument.querySelector('#custom-css').innerText
-  app.copiedJS = pageDocument.querySelector('#page_body_tag').innerText
+  app.copiedCSS = document.querySelector('#custom-css').innerText
+  app.copiedJS = document.querySelector('#page_body_tag').innerText
 
   app.copiedCSS = app.copiedCSS.replaceAll(`;`, ` !important;`)
   app.copiedCSS = app.copiedCSS.replaceAll(`!important !important;`, ` !important;`)

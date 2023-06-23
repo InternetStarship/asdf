@@ -1,6 +1,4 @@
 const faq_block = data => {
-  let pageDocument = document
-
   const element = data.element
   const id = data.id
   const parentId = data.parentId
@@ -13,7 +11,7 @@ const faq_block = data => {
     {
       element: {
         content: {
-          visible: app.checkVisibility(pageDocument.querySelector(`#${element.id}`)),
+          visible: app.checkVisibility(document.querySelector(`#${element.id}`)),
           text: data.element.content.headline_text,
           html: data.element.content.headline,
         },
@@ -33,7 +31,7 @@ const faq_block = data => {
     {
       element: {
         content: {
-          visible: app.checkVisibility(pageDocument.querySelector(`#${element.id}`)),
+          visible: app.checkVisibility(document.querySelector(`#${element.id}`)),
           text: data.element.content.paragraph_text,
           html: data.element.content.paragraph,
         },
@@ -46,14 +44,14 @@ const faq_block = data => {
   )
 
   const output = flex_container([headlineJSON, paragraphDataJSON], parentId, index)
-  output.attrs.style['margin-top'] = pageDocument.querySelector(`#${element.id}`).style.marginTop || 0
+  output.attrs.style['margin-top'] = document.querySelector(`#${element.id}`).style.marginTop || 0
   output.attrs.style['flex-direction'] = 'column'
 
   if (element.content.visible) {
     output.attrs['data-show-only'] = element.content.visible
     output.attrs = Object.assign(
       output.attrs,
-      animations.attrs(pageDocument.querySelector(`[id="${element.id}"]`))
+      animations.attrs(document.querySelector(`[id="${element.id}"]`))
     )
   }
 

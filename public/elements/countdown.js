@@ -1,6 +1,4 @@
 const countdown = data => {
-  let pageDocument = document
-
   const element = data.element
   const id = data.id
   const parentId = data.parentId

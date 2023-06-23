@@ -1,6 +1,4 @@
 const text_block = data => {
-  let pageDocument = document
-
   const element = data.element
   const parentId = data.parentId
   const index = data.index
@@ -29,11 +27,11 @@ const text_block = data => {
   }
 
   const output = flex_container(children, parentId, index)
-  output.attrs.style['margin-top'] = pageDocument.querySelector(`#${element.id}`).style.marginTop || 0
+  output.attrs.style['margin-top'] = document.querySelector(`#${element.id}`).style.marginTop || 0
   output.attrs.style['flex-direction'] = 'column'
   output.attrs.style['gap'] = 0.2
 
-  const mainContainer = pageDocument.querySelector(`#${element.id} .elTextblock`)
+  const mainContainer = document.querySelector(`#${element.id} .elTextblock`)
   const containerStyles = getComputedStyle(mainContainer)
   const borderRadius = properties.borderRadius(containerStyles)
 
@@ -67,7 +65,7 @@ const text_block = data => {
     output.attrs['data-show-only'] = element.content.visible
     output.attrs = Object.assign(
       output.attrs,
-      animations.attrs(pageDocument.querySelector(`[id="${element.id}"]`))
+      animations.attrs(document.querySelector(`[id="${element.id}"]`))
     )
   }
 

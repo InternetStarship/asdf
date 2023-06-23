@@ -1,6 +1,4 @@
 const image_list = data => {
-  let pageDocument = document
-
   const element = data.element
   const id = data.id
   const parentId = data.parentId
@@ -59,7 +57,7 @@ const image_list = data => {
   }
 
   const output = flex_container(children, parentId, index)
-  output.attrs.style['margin-top'] = pageDocument.querySelector(`#${element.id}`).style.marginTop || 0
+  output.attrs.style['margin-top'] = document.querySelector(`#${element.id}`).style.marginTop || 0
   output.attrs.style['flex-direction'] = 'column'
   output.attrs.style['gap'] = 0.5
 
@@ -67,7 +65,7 @@ const image_list = data => {
     output.attrs['data-show-only'] = element.content.visible
     output.attrs = Object.assign(
       output.attrs,
-      animations.attrs(pageDocument.querySelector(`[id="${element.id}"]`))
+      animations.attrs(document.querySelector(`[id="${element.id}"]`))
     )
   }
 

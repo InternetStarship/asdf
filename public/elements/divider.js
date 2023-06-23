@@ -1,13 +1,11 @@
 const divider = data => {
-  let pageDocument = document
-
   const element = data.element
   const id = data.id
   const parentId = data.parentId
   const index = data.index
   const css = properties.css(element.id, 'divider')
   const cssContainer = properties.css(element.id, 'dividerContainer')
-  const dividerInner = pageDocument.querySelector(`#${element.id} .elDividerInner`)
+  const dividerInner = document.querySelector(`#${element.id} .elDividerInner`)
   const theParams = params(css, 'element', element.id)
   theParams['--style-border-top-width'] = parseInt(css['border-top-width']) || 0
   theParams['width--unit'] = '%'
@@ -57,13 +55,10 @@ const divider = data => {
   if (element.content.visible) {
     output.attrs['data-show-only'] = element.content.visible
   }
-  output.attrs = Object.assign(
-    output.attrs,
-    animations.attrs(pageDocument.querySelector(`[id="${element.id}"]`))
-  )
+  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
   output.params = Object.assign(
     output.params,
-    animations.params(pageDocument.querySelector(`[id="${element.id}"]`))
+    animations.params(document.querySelector(`[id="${element.id}"]`))
   )
   return output
 }

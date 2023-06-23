@@ -1,6 +1,4 @@
 const select = data => {
-  let pageDocument = document
-
   const element = data.element
   const id = data.id
   const parentId = data.parentId
@@ -103,13 +101,10 @@ const select = data => {
   if (element.content.visible) {
     output.attrs['data-show-only'] = element.content.visible
   }
-  output.attrs = Object.assign(
-    output.attrs,
-    animations.attrs(pageDocument.querySelector(`[id="${element.id}"]`))
-  )
+  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
   output.params = Object.assign(
     output.params,
-    animations.params(pageDocument.querySelector(`[id="${element.id}"]`))
+    animations.params(document.querySelector(`[id="${element.id}"]`))
   )
   return output
 }

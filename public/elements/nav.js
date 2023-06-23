@@ -1,6 +1,4 @@
 const navigation = data => {
-  let pageDocument = document
-
   const element = data.element
   const parentId = data.parentId
   const index = data.index
@@ -28,7 +26,7 @@ const navigation = data => {
   }
 
   const output = flex_container(children, parentId, index)
-  output.attrs.style['margin-top'] = pageDocument.querySelector(`#${element.id}`).style.marginTop || 0
+  output.attrs.style['margin-top'] = document.querySelector(`#${element.id}`).style.marginTop || 0
   output.attrs.style['flex-direction'] = 'row'
   output.attrs.style['justify-content'] = 'center'
   output.attrs.style['gap'] = 2.3
@@ -37,7 +35,7 @@ const navigation = data => {
     output.attrs['data-show-only'] = element.content.visible
     output.attrs = Object.assign(
       output.attrs,
-      animations.attrs(pageDocument.querySelector(`[id="${element.id}"]`))
+      animations.attrs(document.querySelector(`[id="${element.id}"]`))
     )
   }
 

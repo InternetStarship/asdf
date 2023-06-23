@@ -63,8 +63,6 @@ const clickfunnels_classic_page_tree = {
   },
 
   element: dom => {
-    let pageDocument = document
-
     const data = {
       title: dom.dataset.title,
       type: '',
@@ -496,7 +494,7 @@ const clickfunnels_classic_page_tree = {
       dom.querySelectorAll('.elBulletList li').forEach(item => {
         listItems.push(item.innerHTML)
       })
-      const image = pageDocument.querySelectorAll(`#${dom.id} .elBulletList li`)[0]
+      const image = document.querySelectorAll(`#${dom.id} .elBulletList li`)[0]
       const imageComputedStyles = getComputedStyle(image)
       const imageBG = imageComputedStyles.getPropertyValue('background-image')
 

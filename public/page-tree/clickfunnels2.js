@@ -1,13 +1,8 @@
 const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) => {
-  // console.clear()
-  console.time('conversion')
-
-  let pageDocument = document
-
   const contentId = app.makeId()
   const popupId = app.makeId()
-  const htmlComputedStyles = getComputedStyle(pageDocument.querySelector('html'))
-  const videoBg = pageDocument.querySelector('.modalBackdropWrapper')
+  const htmlComputedStyles = getComputedStyle(document.querySelector('html'))
+  const videoBg = document.querySelector('.modalBackdropWrapper')
   const backgroundParams = {}
   const backgroundColor = htmlComputedStyles.getPropertyValue('background-color')
   const backgroundImage = htmlComputedStyles.getPropertyValue('background-image')
@@ -49,7 +44,7 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
     className: '',
     style: {},
   }
-  const backgroundClasses = pageDocument.querySelector('html').classList
+  const backgroundClasses = document.querySelector('html').classList
   const backgroundPosition = htmlComputedStyles.getPropertyValue('background-position')
 
   if (backgroundPosition) {
@@ -90,7 +85,7 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
     backgroundAttrs['style']['background-position'] = `${data.horizontal} ${data.vertical} !important`
   }
 
-  app.convertBackground(backgroundClasses, className => {
+  app.convertBackgroundPositionClassName(backgroundClasses, className => {
     backgroundAttrs.className = 'bgCoverV2Center ' + className
   })
 
@@ -108,24 +103,16 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
   }
 
   convertedJSON.content.children = sections(clickfunnels_classic_page_tree, contentId)
-
   convertedJSON.settings = settings()
 
   let output = JSON.stringify(convertedJSON)
   output = output.replace(/null,/g, '').replace(/,null/g, '')
 
-  console.group('ClickFunnels Classic Page Conversion')
-  console.timeEnd('conversion')
-  console.info('Inspect the JSON for ClickFunnels 2.0:', JSON.parse(output))
-  console.info('ID Conversion List:', app.idList)
-  console.groupEnd()
-
-  pageDocument.querySelectorAll('.de').forEach(dom => {
+  document.querySelectorAll('.de').forEach(dom => {
     if (dom.getAttribute('data-de-type') === 'social') {
       app.recommendations.push({
         type: 'Social Share',
         status: 'Not Supported',
-        id: dom.id,
         explainer: 'The social share element is not supported.',
       })
     }
@@ -134,7 +121,6 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
       app.recommendations.push({
         type: 'Privacy Notice',
         status: 'Not Supported',
-        id: dom.id,
         explainer: 'The Privacy Notice element is not supported.',
       })
     }
@@ -143,7 +129,6 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
       app.recommendations.push({
         type: 'Video Popup',
         status: 'Custom Code',
-        id: dom.id,
         explainer:
           'The video popup element is not supported inside of ClickFunnels 2.0 yet. This element will be converted to a custom code element.',
       })
@@ -157,7 +142,6 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
         app.recommendations.push({
           type: 'FB Optin Button',
           status: 'Not Supported',
-          id: dom.id,
           explainer:
             'The Facebook optin button is not supported inside of ClickFunnels 2.0. This element will be converted to a normal button.',
         })
@@ -168,7 +152,6 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
       app.recommendations.push({
         type: 'SMS',
         status: 'Not Supported',
-        id: dom.id,
         explainer: 'The SMS element is not supported inside of ClickFunnels 2.0 and has not been copied.',
       })
     }
@@ -177,7 +160,6 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
       app.recommendations.push({
         type: 'Survey',
         status: 'Coming Soon',
-        id: dom.id,
         explainer: 'The survey element is work-in-progress and should be available soon.',
       })
     }
@@ -186,16 +168,11 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
       app.recommendations.push({
         type: 'Facebook Comments',
         status: 'Not Supported',
-        id: dom.id,
         explainer:
           'The FB Comments element is not supported inside of ClickFunnels 2.0 and has not been copied.',
       })
     }
   })
-
-  app.idList = []
-  app.copiedCSS = ''
-  app.copiedJS = ''
 
   return JSON.parse(output)
 }

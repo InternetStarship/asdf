@@ -1,6 +1,4 @@
 const button = data => {
-  let pageDocument = document
-
   const element = data.element
   const id = data.id
   const mainId = app.makeId()
@@ -16,10 +14,10 @@ const button = data => {
   const theParams = params(css, 'element', element.id)
   theParams['width--unit'] = '%'
 
-  const fa_prependDom = pageDocument.querySelector(`#${element.id} .fa_prepended`)
+  const fa_prependDom = document.querySelector(`#${element.id} .fa_prepended`)
   let fa_prepended = {}
 
-  const fa_appendDom = pageDocument.querySelector(`#${element.id} .fa_appended`)
+  const fa_appendDom = document.querySelector(`#${element.id} .fa_appended`)
   let fa_appended = {}
 
   if (fa_prependDom) {
@@ -236,13 +234,10 @@ const button = data => {
   if (element.content.visible) {
     output.attrs['data-show-only'] = element.content.visible
   }
-  output.attrs = Object.assign(
-    output.attrs,
-    animations.attrs(pageDocument.querySelector(`[id="${element.id}"]`))
-  )
+  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
   output.params = Object.assign(
     output.params,
-    animations.params(pageDocument.querySelector(`[id="${element.id}"]`))
+    animations.params(document.querySelector(`[id="${element.id}"]`))
   )
 
   return output

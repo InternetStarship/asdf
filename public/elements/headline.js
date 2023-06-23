@@ -4,8 +4,6 @@ const headline = (
   prependIconType = 'headlinePrepend',
   fa_prepended_class = 'fa_prepended'
 ) => {
-  let pageDocument = document
-
   const element = data.element
   const id = data.id
   const parentId = data.parentId
@@ -26,10 +24,10 @@ const headline = (
     })
 
     if (
-      pageDocument.querySelector(`#${element.id} .elHeadline b`) &&
-      pageDocument.querySelector(`style#bold_style_${element.id}`)
+      document.querySelector(`#${element.id} .elHeadline b`) &&
+      document.querySelector(`style#bold_style_${element.id}`)
     ) {
-      const boldColorStyle = pageDocument.querySelector(`style#bold_style_${element.id}`).textContent
+      const boldColorStyle = document.querySelector(`style#bold_style_${element.id}`).textContent
       boldColor = boldColorStyle.split('color:')[1].replace(';', '').replace('}', '').trim()
     }
   } else {
@@ -56,7 +54,7 @@ const headline = (
   }
 
   const cssPrepend = properties.css(element.id, prependIconType)
-  const fa_prependDom = pageDocument.querySelector(`#${element.id} .${fa_prepended_class}`)
+  const fa_prependDom = document.querySelector(`#${element.id} .${fa_prepended_class}`)
   let fa_prepended = {}
 
   if (fa_prependDom) {
@@ -145,27 +143,22 @@ const headline = (
     output.attrs['data-show-only'] = element.content.visible
   }
   output.attrs.style = Object.assign(output.attrs.style, borderRadius)
-  output.attrs = Object.assign(
-    output.attrs,
-    animations.attrs(pageDocument.querySelector(`[id="${element.id}"]`))
-  )
+  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
   output.params = Object.assign(
     output.params,
-    animations.params(pageDocument.querySelector(`[id="${element.id}"]`))
+    animations.params(document.querySelector(`[id="${element.id}"]`))
   )
   return output
 }
 
 const headlineUtils = {
   wrapSpan: html => {
-    let pageDocument = document
-
     const dom = app.htmlToDom(html.replace(/&nbsp;/g, ''))
     const nodes = dom.childNodes
 
     for (let i = 0; i < nodes.length; i++) {
       if (nodes[i].nodeType == 3) {
-        const span = pageDocument.createElement('span')
+        const span = document.createElement('span')
         span.textContent = nodes[i].textContent
         dom.replaceChild(span, nodes[i])
       }
@@ -175,8 +168,6 @@ const headlineUtils = {
   },
 
   parse: (parentNode, html, contentEditableNodeId, index, css) => {
-    let pageDocument = document
-
     if (parentNode.nodeName !== 'DIV') return false // TODO: handle this case for nested tags
 
     // replace all divs in html

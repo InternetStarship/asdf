@@ -1,6 +1,4 @@
 const params = (css, type = null, id = null, params = {}) => {
-  let pageDocument = document
-
   if (css === undefined || css === null) return false
 
   const borderRadiusCorner = properties.borderRadius(css, 'check')
@@ -84,7 +82,7 @@ const params = (css, type = null, id = null, params = {}) => {
   }
 
   if (type === 'section') {
-    const paddingLeft = pageDocument.querySelector(`.container[id="${id}"] .containerInner`).style.paddingLeft
+    const paddingLeft = document.querySelector(`.container[id="${id}"] .containerInner`).style.paddingLeft
     if (paddingLeft) {
       data['--style-padding-horizontal'] = parseInt(paddingLeft)
     }
@@ -94,15 +92,15 @@ const params = (css, type = null, id = null, params = {}) => {
       data['--style-padding-horizontal'] = parseInt(css['padding-left'])
     }
   } else if (type === 'headline') {
-    if (pageDocument.querySelector(`.elHeadlineWrapper[id="${id}"]`)) {
-      const paddingLeft = pageDocument.querySelector(`.elHeadlineWrapper[id="${id}"]`).style.paddingLeft
+    if (document.querySelector(`.elHeadlineWrapper[id="${id}"]`)) {
+      const paddingLeft = document.querySelector(`.elHeadlineWrapper[id="${id}"]`).style.paddingLeft
       data['--style-padding-horizontal'] = parseInt(paddingLeft) || 0
     } else {
       data['--style-padding-horizontal'] = parseInt(css['padding-left'])
     }
   } else if (type === 'input') {
-    if (pageDocument.querySelector(`.elInputWrapper[id="${id}"] elInput`)) {
-      const paddingLeft = pageDocument.querySelector(`.elInputWrapper[id="${id}"] elInput`).style.paddingLeft
+    if (document.querySelector(`.elInputWrapper[id="${id}"] elInput`)) {
+      const paddingLeft = document.querySelector(`.elInputWrapper[id="${id}"] elInput`).style.paddingLeft
       data['--style-padding-horizontal'] = parseInt(paddingLeft) || 0
     } else {
       data['--style-padding-horizontal'] = parseInt(css['padding-left'])

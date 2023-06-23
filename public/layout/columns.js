@@ -1,19 +1,17 @@
 const columns = (columns, parentId) => {
-  let pageDocument = document
-
   return columns.map((column, index) => {
     const columnCSS = properties.css(column.id, 'column')
     const id = app.makeId()
 
     const borderRadius = properties.borderRadius(columnCSS)
-    const backgroundClasses = pageDocument.querySelector(`[id="${column.id}"]`).classList
+    const backgroundClasses = document.querySelector(`[id="${column.id}"]`).classList
     let backgroundPosition = ''
 
-    app.convertBackground(backgroundClasses, className => {
+    app.convertBackgroundPositionClassName(backgroundClasses, className => {
       backgroundPosition = className
     })
 
-    const columnContainer = pageDocument.querySelector(`[id="${column.id}"] .col-inner`)
+    const columnContainer = document.querySelector(`[id="${column.id}"] .col-inner`)
 
     const data = {
       type: 'ColContainer/V1',
@@ -63,14 +61,8 @@ const columns = (columns, parentId) => {
       borderRadius
     )
 
-    data.attrs = Object.assign(
-      data.attrs,
-      animations.attrs(pageDocument.querySelector(`[id="${column.id}"]`))
-    )
-    data.params = Object.assign(
-      data.params,
-      animations.params(pageDocument.querySelector(`[id="${column.id}"]`))
-    )
+    data.attrs = Object.assign(data.attrs, animations.attrs(document.querySelector(`[id="${column.id}"]`)))
+    data.params = Object.assign(data.params, animations.params(document.querySelector(`[id="${column.id}"]`)))
 
     return data
   })

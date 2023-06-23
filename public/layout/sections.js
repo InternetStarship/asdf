@@ -1,6 +1,4 @@
 const sections = (sections, parentId) => {
-  let pageDocument = document
-
   return sections.map(section => {
     if (section.id !== 'modalPopup') {
       const id = app.makeId()
@@ -14,13 +12,13 @@ const sections = (sections, parentId) => {
         'fullContainer',
       ]
       const stickyClasses = ['stickyTop', 'stickyBottom']
-      const currentClasses = pageDocument.querySelector(`[id="${section.id}"]`).getAttribute('class')
+      const currentClasses = document.querySelector(`[id="${section.id}"]`).getAttribute('class')
       const containerClass = containerClasses.find(item => currentClasses.includes(item))
       const stickyClass = stickyClasses.find(item => currentClasses.includes(item))
-      const backgroundClasses = pageDocument.querySelector(`[id="${section.id}"]`).classList
+      const backgroundClasses = document.querySelector(`[id="${section.id}"]`).classList
       let backgroundPosition = ''
 
-      app.convertBackground(backgroundClasses, className => {
+      app.convertBackgroundPositionClassName(backgroundClasses, className => {
         backgroundPosition = className
       })
 
@@ -48,13 +46,10 @@ const sections = (sections, parentId) => {
         children: rows(section.rows, id),
       }
 
-      data.attrs = Object.assign(
-        data.attrs,
-        animations.attrs(pageDocument.querySelector(`[id="${section.id}"]`))
-      )
+      data.attrs = Object.assign(data.attrs, animations.attrs(document.querySelector(`[id="${section.id}"]`)))
       data.params = Object.assign(
         data.params,
-        animations.params(pageDocument.querySelector(`[id="${section.id}"]`))
+        animations.params(document.querySelector(`[id="${section.id}"]`))
       )
 
       data.attrs.style = Object.assign(data.attrs.style, borderRadius)
