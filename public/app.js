@@ -52,18 +52,25 @@ const app = {
   },
 
   cleanUp: obj => {
+    if (typeof obj !== 'object' || obj === null) {
+      return obj
+    }
+
+    if (obj.hasOwnProperty('children')) {
+      if (!Array.isArray(obj.children) || obj.children === undefined) {
+        obj.children = []
+      }
+    }
+
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
-        if (key === 'children') {
-          if (!Array.isArray(obj[key]) || obj[key] === undefined) {
-            obj[key] = []
-          }
-        }
         if (typeof obj[key] === 'object') {
-          app.cleanUp(obj[key])
+          ensureChildrenAreArrays(obj[key])
         }
       }
     }
+
+    return obj
   },
 
   checkVisibility: element => {
