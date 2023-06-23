@@ -17,6 +17,14 @@ const app = {
     const css = ''
     const google_font_families = ''
 
+    clickfunnels_v2.popup.children = clickfunnels_v2.popup.children.filter(function (element) {
+      return element !== undefined
+    })
+
+    clickfunnels_v2.content.children = clickfunnels_v2.content.children.filter(function (element) {
+      return element !== undefined
+    })
+
     const response = {
       data: {
         css: css,
@@ -25,7 +33,7 @@ const app = {
       },
       recommendations: app.recommendations,
       classic_pagetree: clickfunnels_classic,
-      v2_pagetree: app.cleanUp(clickfunnels_v2),
+      v2_pagetree: clickfunnels_v2,
     }
 
     window.parent.postMessage(response, '*')
@@ -51,19 +59,23 @@ const app = {
     }
   },
 
-  cleanUp: obj => {
-    const removeUndefined = obj => {
-      Object.keys(obj).forEach(key => {
-        if (Array.isArray(obj[key])) {
-          obj[key] = obj[key].filter(item => item !== undefined)
-        }
-        if (typeof obj[key] === 'object') {
-          removeUndefined(obj[key])
-        }
-      })
+  ensureChildrenAreArrays: obj => {
+    if (typeof obj !== 'object' || obj === null) {
+      return
     }
 
-    return removeUndefined(obj)
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        if (key === 'children') {
+          if (!Array.isArray(obj[key]) || obj[key] === undefined) {
+            obj[key] = []
+          }
+        }
+        if (typeof obj[key] === 'object') {
+          app.ensureChildrenAreArrays(obj[key])
+        }
+      }
+    }
   },
 
   checkVisibility: element => {

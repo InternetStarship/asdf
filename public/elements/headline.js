@@ -77,6 +77,10 @@ const headline = (
     }
   }
 
+  children = children.filter(function (element) {
+    return element !== undefined
+  })
+
   const output = {
     type: 'Headline/V1',
     params: type !== 'image_list_headline' ? params(css, 'element', element.id) : {},
