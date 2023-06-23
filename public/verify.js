@@ -34,7 +34,7 @@ window.addEventListener(
           inject('elements/divider.js'),
           inject('elements/embed.js'),
           inject('elements/faq_block.js'),
-          inject('elements/fh_comments.js'),
+          inject('elements/fb_comments.js'),
           inject('elements/featured_image.js'),
           inject('elements/flex.js'),
           inject('elements/headline.js'),
