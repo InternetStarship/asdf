@@ -12,7 +12,6 @@ const settings = () => {
   const fontFamily = document.querySelector('html').style.fontFamily
 
   app.copiedCSS = document.querySelector('#custom-css').innerText
-  app.copiedJS = document.querySelector('#page_body_tag').innerText
 
   app.copiedCSS = app.copiedCSS.replaceAll(`;`, ` !important;`)
   app.copiedCSS = app.copiedCSS.replaceAll(`!important !important;`, ` !important;`)
