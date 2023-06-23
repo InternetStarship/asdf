@@ -23,6 +23,7 @@ window.addEventListener(
           inject('settings/params.js'),
           inject('settings/properties.js'),
           inject('settings/settings.js'),
+          inject('layout/popup.js'),
           inject('layout/sections.js'),
           inject('layout/rows.js'),
           inject('layout/columns.js'),

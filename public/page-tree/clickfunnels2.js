@@ -100,7 +100,7 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
   })
 
   const convertedJSON = {
-    version: 95,
+    version: null,
     content: {
       type: 'ContentNode',
       id: contentId,
