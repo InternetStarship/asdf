@@ -28,11 +28,12 @@ const app = {
     const response = {
       data: {
         css: css,
-        page_tree: clickfunnels_v2, //JSON.stringify(clickfunnels_v2),
+        page_tree: JSON.stringify(clickfunnels_v2),
         google_font_families: google_font_families,
       },
       recommendations: app.recommendations,
       classic_pagetree: clickfunnels_classic,
+      v2_pagetree: clickfunnels_v2,
     }
 
     window.parent.postMessage(response, '*')
