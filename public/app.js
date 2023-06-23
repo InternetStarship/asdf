@@ -65,7 +65,7 @@ const app = {
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         if (typeof obj[key] === 'object') {
-          ensureChildrenAreArrays(obj[key])
+          app.cleanUp(obj[key])
         }
       }
     }
