@@ -56,9 +56,7 @@ window.addEventListener(
           inject('page-tree/clickfunnels2.js'),
         ])
 
-        setTimeout(() => {
-          app.init()
-        }, 5000) // wait until all images and videos are loaded
+        app.init()
       } catch (err) {
         console.error(`Failed to load ClickFunnels Classic verification: ${err}`)
       }
