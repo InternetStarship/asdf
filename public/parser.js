@@ -1,4 +1,4 @@
-import { init } from "./init";
+import { init } from "https://classic-parser.onrender.com/init.js";
 
 (() => {
   console.log("clickfunnels classic page verification loaded.");
