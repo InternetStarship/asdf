@@ -1,15 +1,14 @@
-import { init } from "https://classic-parser.onrender.com/init.js";
+import { init } from 'https://classic-parser.onrender.com/init.js'
+import generate from 'https://classic-parser.onrender.com/generate.js'
 
-(() => {
-  console.log("clickfunnels classic page verification loaded.");
+console.info('Clickfunnels Classic Verification loaded.')
 
-  window.addEventListener(
-    "message",
-    function (event) {
-      if (event.data.type === "import-classic") {
-        init();
-      }
-    },
-    false
-  );
-})();
+window.addEventListener(
+  'message',
+  event => {
+    if (event.data.type === 'import-classic') {
+      init()
+    }
+  },
+  false
+)

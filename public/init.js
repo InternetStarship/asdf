@@ -1,9 +1,9 @@
 function init() {
-  const contentId = "";
-  let page_tree = {
+  const contentId = 'testing...'
+  const page_tree = {
     version: 103,
     content: {
-      type: "ContentNode",
+      type: 'ContentNode',
       id: contentId,
       params: {},
       attrs: {},
@@ -11,21 +11,23 @@ function init() {
     },
     settings: {},
     popup: {},
-  };
-  let css = "";
-  let google_font_families = "";
+  }
+  let css = ''
+  let google_font_families = ''
 
-  const dom = document.querySelector(".containerWrapper");
+  const dom = document.querySelector('.containerWrapper')
 
-  css = "";
-  google_font_families = "";
+  page_tree.content.children = generate.sections(dom)
+
+  css = ''
+  google_font_families = ''
 
   const response = {
     css: css,
-    page_tree: JSON.stringify(page_tree),
+    page_tree: page_tree, // JSON.stringify(page_tree),
     google_font_families: google_font_families,
-  };
-  window.parent.postMessage(response, "*");
+  }
+  window.parent.postMessage(response, '*')
 }
 
-export { init };
+export { init }
