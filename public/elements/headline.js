@@ -1,7 +1,3 @@
-/*
- *   Copyright (c) 2023 Wynter Jones
- *   All rights reserved.
- */
 const headline = (
   data,
   type = 'headline',
@@ -9,9 +5,6 @@ const headline = (
   fa_prepended_class = 'fa_prepended'
 ) => {
   let pageDocument = document
-  if (app.iframeId) {
-    pageDocument = document.querySelector(`iframe#${app.iframeId}`).contentDocument
-  }
 
   const element = data.element
   const id = data.id
@@ -166,9 +159,6 @@ const headline = (
 const headlineUtils = {
   wrapSpan: html => {
     let pageDocument = document
-    if (app.iframeId) {
-      pageDocument = document.querySelector(`iframe#${app.iframeId}`).contentDocument
-    }
 
     const dom = app.htmlToDom(html.replace(/&nbsp;/g, ''))
     const nodes = dom.childNodes
@@ -186,9 +176,6 @@ const headlineUtils = {
 
   parse: (parentNode, html, contentEditableNodeId, index, css) => {
     let pageDocument = document
-    if (app.iframeId) {
-      pageDocument = document.querySelector(`iframe#${app.iframeId}`).contentDocument
-    }
 
     if (parentNode.nodeName !== 'DIV') return false // TODO: handle this case for nested tags
 

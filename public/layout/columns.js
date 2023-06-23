@@ -1,8 +1,5 @@
 const columns = (columns, parentId) => {
   let pageDocument = document
-  if (app.iframeId) {
-    pageDocument = document.querySelector(`iframe#${app.iframeId}`).contentDocument
-  }
 
   return columns.map((column, index) => {
     const columnCSS = properties.css(column.id, 'column')

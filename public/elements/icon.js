@@ -1,8 +1,5 @@
 const icon = data => {
   let pageDocument = document
-  if (app.iframeId) {
-    pageDocument = document.querySelector(`iframe#${app.iframeId}`).contentDocument
-  }
 
   const element = data.element
   const id = data.id

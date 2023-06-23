@@ -1,8 +1,5 @@
 const rows = (rows, parentId) => {
   let pageDocument = document
-  if (app.iframeId) {
-    pageDocument = document.querySelector(`iframe#${app.iframeId}`).contentDocument
-  }
 
   return rows.map((row, index) => {
     const id = app.makeId()

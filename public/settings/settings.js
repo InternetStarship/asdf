@@ -1,12 +1,5 @@
-/*
- *   Copyright (c) 2023 Wynter Jones
- *   All rights reserved.
- */
 const settings = () => {
   let pageDocument = document
-  if (app.iframeId) {
-    pageDocument = document.querySelector(`iframe#${app.iframeId}`).contentDocument
-  }
 
   const settingsId = app.makeId()
   const headerCodeId = app.makeId()

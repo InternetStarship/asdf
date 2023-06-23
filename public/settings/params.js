@@ -1,8 +1,5 @@
 const params = (css, type = null, id = null, params = {}) => {
   let pageDocument = document
-  if (app.iframeId) {
-    pageDocument = document.querySelector(`iframe#${app.iframeId}`).contentDocument
-  }
 
   if (css === undefined || css === null) return false
 

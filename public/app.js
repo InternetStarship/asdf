@@ -1,41 +1,48 @@
-/*
- *   Copyright (c) 2023 Wynter Jones
- *   All rights reserved.
- */
 const app = {
-  base_url: 'https://members.funnelplugins.io',
-
   copiedCSS: '',
   copiedJS: '',
   idList: [],
   recommendations: [],
+  idLookupTable: [],
   iframeId: '',
 
-  getEmail: async () => {
-    return await chrome.storage.sync.get(['linkfunnels_loggedin_email_api'])
-  },
+  init: () => {
+    const contentId = app.makeId()
+    const page_tree = {
+      version: 103,
+      content: {
+        type: 'ContentNode',
+        id: contentId,
+        params: {},
+        attrs: {},
+        children: [],
+      },
+      settings: {},
+      popup: {},
+    }
+    let css = ''
+    let google_font_families = ''
 
-  setEmail: email => {
-    chrome.storage.sync.set({ linkfunnels_loggedin_email_api: email }, function () {
-      return true
-    })
-  },
+    // Build page tree (JSON) of ClickFunnels Classic page
+    const clickfunnels_classic = clickfunnels_classic_page_tree.sections(
+      document.querySelector('.containerWrapper')
+    )
 
-  isValidEmail: email => {
-    const regexExp =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi
+    // Convert ClickFunnels Classic page tree to ClickFunnels 2.0 page tree
+    // TODO: pass cfclassic to converter clickfunnels2_pagetree(clickfunnels_classic, page_tree)
 
-    return regexExp.test(email)
-  },
+    // TODO get CSS and Fonts from ClickFunnels Classic page
+    css = ''
+    google_font_families = ''
 
-  connect: async callback => {
-    const queryOptions = { active: true, currentWindow: true }
-    const tabs = await chrome.tabs.query(queryOptions)
-    const port = chrome.tabs.connect(tabs[0].id, {
-      name: 'FunnelPlugins.io',
-    })
+    const response = {
+      css: css,
+      page_tree: page_tree, // JSON.stringify(page_tree),
+      google_font_families: google_font_families,
+      dev_only_classic_pagetree: clickfunnels_classic,
+    }
 
-    callback(port)
+    window.parent.postMessage(response, '*')
   },
 
   htmlToDom: html => {
@@ -58,8 +65,6 @@ const app = {
     }
   },
 
-  idLookupTable: [],
-
   checkVisibility: element => {
     const hideOn = element.getAttribute('data-hide-on')
     if (hideOn === 'desktop') {
@@ -73,9 +78,15 @@ const app = {
     }
   },
 
-  filtered: array => {
-    return array.filter(function (x) {
-      return x !== undefined && x !== false
+  columnSize: dom => {
+    let output = ''
+
+    dom.classList.forEach(className => {
+      if (className.includes('col-md-')) {
+        output = className.replace('col-md-', '')
+      }
     })
+
+    return output
   },
 }

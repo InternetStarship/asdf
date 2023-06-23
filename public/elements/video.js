@@ -1,13 +1,5 @@
-/*
- *   Copyright (c) 2023 Wynter Jones
- *   All rights reserved.
- */
-
 const video = data => {
   let pageDocument = document
-  if (app.iframeId) {
-    pageDocument = dcument.querySelector(`iframe#${app.iframeId}`).contentDocument
-  }
 
   const element = data.element
   const id = data.id

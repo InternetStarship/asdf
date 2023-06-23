@@ -1,8 +1,5 @@
-const generate = {
+const clickfunnels_classic_page_tree = {
   sections: dom => {
-    console.log('Okay I can access it anywhere now.', dom.getAttribute('class'))
-  },
-  sections2: dom => {
     const output = []
     const sections = dom.querySelectorAll('.container')
 
@@ -12,7 +9,7 @@ const generate = {
         title: section.dataset.title,
         id: section.id,
         css: properties.css(section.id),
-        rows: generate.rows(section),
+        rows: clickfunnels_classic_page_tree.rows(section),
       })
     })
 
@@ -29,7 +26,7 @@ const generate = {
         title: row.dataset.title,
         id: row.id,
         css: properties.css(row.id),
-        columns: generate.columns(row),
+        columns: clickfunnels_classic_page_tree.columns(row),
       })
     })
 
@@ -46,21 +43,9 @@ const generate = {
         title: column.dataset.title,
         id: column.id,
         css: properties.css(column.id),
-        size: generate.columnSize(column),
-        elements: generate.elements(column),
+        size: app.columnSize(column),
+        elements: clickfunnels_classic_page_tree.elements(column),
       })
-    })
-
-    return output
-  },
-
-  columnSize: dom => {
-    let output = ''
-
-    dom.classList.forEach(className => {
-      if (className.includes('col-md-')) {
-        output = className.replace('col-md-', '')
-      }
     })
 
     return output
@@ -71,7 +56,7 @@ const generate = {
     const elements = dom.querySelectorAll('.de')
 
     elements.forEach(element => {
-      output.push(generate.element(element))
+      output.push(clickfunnels_classic_page_tree.element(element))
     })
 
     return output
@@ -79,9 +64,6 @@ const generate = {
 
   element: dom => {
     let pageDocument = document
-    if (app.iframeId) {
-      pageDocument = document.querySelector(`iframe#${app.iframeId}`).contentDocument
-    }
 
     const data = {
       title: dom.dataset.title,

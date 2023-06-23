@@ -1,8 +1,5 @@
 const sections = (sections, parentId) => {
   let pageDocument = document
-  if (app.iframeId) {
-    pageDocument = document.querySelector(`iframe#${app.iframeId}`).contentDocument
-  }
 
   return sections.map(section => {
     if (section.id !== 'modalPopup') {

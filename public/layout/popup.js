@@ -1,8 +1,5 @@
 const popup = (sections, parentId) => {
   let pageDocument = document
-  if (app.iframeId) {
-    pageDocument = document.querySelector(`iframe#${app.iframeId}`).contentDocument
-  }
 
   const borderRadius = properties.borderRadius(sections[0].css)
   const containerClasses = [

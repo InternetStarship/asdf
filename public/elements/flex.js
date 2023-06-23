@@ -1,7 +1,3 @@
-/*
- *   Copyright (c) 2023 Wynter Jones
- *   All rights reserved.
- */
 const flex_container = (children, parentId, index) => {
   const id = app.makeId()
   children.forEach(item => {

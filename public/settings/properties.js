@@ -3,9 +3,6 @@ const properties = {
     let dom
 
     let pageDocument = document
-    if (app.iframeId) {
-      pageDocument = document.querySelector(`iframe#${app.iframeId}`).contentDocument
-    }
 
     if (type === 'column') {
       dom = pageDocument.querySelector(`.containerWrapper #${elementId}`)
