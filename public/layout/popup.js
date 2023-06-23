@@ -22,7 +22,10 @@ const popup = (sections, parentId) => {
     }
   })
 
-  pageDocument.querySelector('[data-editor="popup"]').click()
+  const popupModal = pageDocument.querySelector('.containerModal')
+  if (popupModal) {
+    popupModal.style.display = 'block'
+  }
   const css = properties.css(null, 'popup')
   const cssBackdrop = properties.css(null, 'popup-backdrop')
   const popupWidth = pageDocument.querySelector('.containerModal').getBoundingClientRect()
@@ -104,6 +107,5 @@ const popup = (sections, parentId) => {
       return data
     }
   })
-  pageDocument.querySelector('.closeLPModal').click()
   return popup
 }
