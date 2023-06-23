@@ -174,5 +174,5 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
     }
   })
 
-  return JSON.parse(output)
+  return convertedJSON
 }
