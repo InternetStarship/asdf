@@ -28,5 +28,4 @@ function init() {
   window.parent.postMessage(response, "*");
 }
 
-// Export the function to make it accessible in other files
 export { init };
