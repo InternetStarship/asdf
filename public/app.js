@@ -7,39 +7,30 @@ const app = {
   iframeId: '',
 
   init: () => {
-    const contentId = app.makeId()
-    const page_tree = {
-      version: 103,
-      content: {
-        type: 'ContentNode',
-        id: contentId,
-        params: {},
-        attrs: {},
-        children: [],
-      },
-      settings: {},
-      popup: {},
-    }
-    let css = ''
-    let google_font_families = ''
-
     // Build page tree (JSON) of ClickFunnels Classic page
     const clickfunnels_classic = clickfunnels_classic_page_tree.sections(
       document.querySelector('.containerWrapper')
     )
 
     // Convert ClickFunnels Classic page tree to ClickFunnels 2.0 page tree
-    // TODO: pass cfclassic to converter clickfunnels2_pagetree(clickfunnels_classic, page_tree)
+    const clickfunnels_v2 = convert(clickfunnels_classic)
+    clickfunnels_v2.version = 95
 
     // TODO get CSS and Fonts from ClickFunnels Classic page
-    css = ''
-    google_font_families = ''
+    const css = ''
+    const google_font_families = ''
+
+    // Optional show recommendations
+    const recommendations = app.recommendations
 
     const response = {
-      css: css,
-      page_tree: page_tree, // JSON.stringify(page_tree),
-      google_font_families: google_font_families,
-      dev_only_classic_pagetree: clickfunnels_classic,
+      data: {
+        css: css,
+        page_tree: JSON.stringify(clickfunnels_v2),
+        google_font_families: google_font_families,
+      },
+      recommendations: recommendations,
+      classic_pagetree: clickfunnels_classic,
     }
 
     window.parent.postMessage(response, '*')

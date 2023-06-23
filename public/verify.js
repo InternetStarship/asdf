@@ -57,7 +57,7 @@ window.addEventListener(
 
         app.init()
       } catch (err) {
-        console.error(`Failed to load scripts: ${err}`)
+        console.error(`Failed to load ClickFunnels Classic verification: ${err}`)
       }
     }
   },
