@@ -11,7 +11,7 @@ const app = {
       document.querySelector('.containerWrapper')
     )
 
-    const clickfunnels_v2 = app.cleanUp(clickfunnels2_pagetree(clickfunnels_classic))
+    const clickfunnels_v2 = clickfunnels2_pagetree(clickfunnels_classic)
     clickfunnels_v2.version = 93
 
     const css = ''
@@ -25,7 +25,7 @@ const app = {
       },
       recommendations: app.recommendations,
       classic_pagetree: clickfunnels_classic,
-      v2_pagetree: clickfunnels_v2,
+      v2_pagetree: app.cleanUp(clickfunnels_v2),
     }
 
     window.parent.postMessage(response, '*')
