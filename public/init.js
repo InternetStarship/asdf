@@ -31,5 +31,3 @@ function init() {
   console.info('Classic is sending back the response.', response)
   window.parent.postMessage(response, '*')
 }
-
-export { init }

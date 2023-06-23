@@ -624,5 +624,3 @@ const generate = {
     }
   },
 }
-
-export { generate }
