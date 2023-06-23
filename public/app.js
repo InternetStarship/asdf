@@ -17,6 +17,14 @@ const app = {
     const css = ''
     const google_font_families = ''
 
+    clickfunnels_v2.popup.children = clickfunnels_v2.popup.children.filter(function (element) {
+      return element !== undefined
+    })
+
+    clickfunnels_v2.content.children = clickfunnels_v2.content.children.filter(function (element) {
+      return element !== undefined
+    })
+
     const response = {
       data: {
         css: css,
