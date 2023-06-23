@@ -52,10 +52,6 @@ const app = {
   },
 
   cleanUp: obj => {
-    if (typeof obj !== 'object' || obj === null) {
-      return
-    }
-
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         if (key === 'children') {
