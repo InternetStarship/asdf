@@ -13,7 +13,10 @@ const button = data => {
   const borderRadius = properties.borderRadius(css)
   const theParams = params(css, 'element', element.id)
   theParams['width--unit'] = '%'
-
+  theParams['--style-padding-horizontal'] = parseInt(css['padding-left'])
+  theParams['--style-padding-horizontal--unit'] = 'px'
+  theParams['--style-padding-vertical'] = parseInt(css['padding-top'])
+  theParams['--style-padding-vertical--unit'] = 'px'
   const fa_prependDom = document.querySelector(`#${element.id} .fa_prepended`)
   let fa_prepended = {}
 
