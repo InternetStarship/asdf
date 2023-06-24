@@ -77,7 +77,6 @@ const button = data => {
           style: {
             width: element.content.width,
             'font-family': cssMain['font-family'],
-            'text-align': cssMain['text-align'],
           },
           'data-skip-corners-settings': 'false',
           'data-skip-borders-settings': 'false',
@@ -168,12 +167,11 @@ const button = data => {
     attrs: {
       style: {
         'margin-top': parseInt(element.css['margin-top']) || 0,
-        'text-align': parseInt(element.css['text-align']) || 'center',
+        'text-align': element.css['text-align'] || 'center',
         'padding-top': parseInt(element.css['padding-top']) || 0,
         'padding-bottom': parseInt(element.css['padding-bottom']) || 0,
         position: element.css['position'] || 'relative',
         'z-index': parseInt(element.css['z-index']) || 0,
-        // width: 100,
       },
     },
     children: [
