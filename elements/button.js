@@ -172,7 +172,7 @@ const button = data => {
         'padding-bottom': parseInt(element.css['padding-bottom']) || 0,
         position: element.css['position'] || 'relative',
         'z-index': parseInt(element.css['z-index']) || 0,
-        display: element.css['display'] || 'block',
+        display: element.css['display'] || 'inline-block',
       },
     },
     children: [
