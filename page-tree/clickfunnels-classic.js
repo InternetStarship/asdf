@@ -135,7 +135,6 @@ const clickfunnels_classic_page_tree = {
       const elementSub = dom.querySelector('.elButton .elButtonSub')
       const elementMain = dom.querySelector('.elButton .elButtonMain')
       const button = element.getBoundingClientRect()
-      const domRect = dom.getBoundingClientRect()
       let width
       if (dom.querySelector('.elButton').classList.contains('elButtonFull')) {
         width = 100

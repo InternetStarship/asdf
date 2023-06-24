@@ -127,39 +127,39 @@ const button = data => {
       },
       '.elButton:hover,\\n.elButton.elButtonHovered': {
         params: {
-          '--style-background-color': 'var(--color-6Z-AAzZj-1)',
+          '--style-background-color': css['background-color'],
         },
       },
       '.elButton:hover .elButtonText,\\n.elButton.elButtonHovered .elButtonText': {
         attrs: {
           style: {
-            color: 'var(--color-6Z-AAzZj-5)',
+            color: cssMain['color'],
           },
         },
       },
       '.elButton:hover .elButtonSub,\\n.elButton.elButtonHovered .elButtonSub': {
         attrs: {
           style: {
-            color: 'rgb(119, 119, 119)',
+            color: cssMain['color'],
           },
         },
       },
       '.elButton:active,\\n.elButton.elButtonActive': {
         params: {
-          '--style-background-color': 'rgb(241, 238, 237)',
+          '--style-background-color': css['background-color'],
         },
       },
       '.elButton:active .elButtonText,\\n.elButton.elButtonActive .elButtonText': {
         attrs: {
           style: {
-            color: 'rgb(119, 119, 119)',
+            color: cssMain['color'],
           },
         },
       },
       '.elButton:active .elButtonSub,\\n.elButton.elButtonActive .elButtonSub': {
         attrs: {
           style: {
-            color: 'rgb(119, 119, 119)',
+            color: cssMain['color'],
           },
         },
       },
@@ -172,6 +172,7 @@ const button = data => {
         'padding-bottom': parseInt(element.css['padding-bottom']) || 0,
         position: element.css['position'] || 'relative',
         'z-index': parseInt(element.css['z-index']) || 0,
+        display: element.css['display'] || 'block',
       },
     },
     children: [
