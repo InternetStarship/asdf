@@ -59,6 +59,7 @@ const image = data => {
     output.selectors['.elImage'].attrs.style,
     borderRadius
   )
+
   if (element.content.link) {
     output.selectors['.elImage'].attrs['data-element-link'] = element.content.link
     output.selectors['.elImage'].attrs.target = element.content.target

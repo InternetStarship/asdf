@@ -5,14 +5,12 @@ const headline = (
   fa_prepended_class = 'fa_prepended'
 ) => {
   const element = data.element
-  const id = data.id
-  const parentId = data.parentId
-  const index = data.index
+  const output = blueprint('Headline/V1', data.id, data.parentId, data.index, element)
   const contentEditableNodeId = app.makeId()
   const html = headlineUtils.wrapSpan(element.content.html)
   const css = properties.css(element.id, type)
   let children = []
-
+  let fontWeight = css['font-weight']
   let boldColor = ''
 
   if (/<\/?[a-z][\s\S]*>/i.test(html)) {
@@ -41,8 +39,9 @@ const headline = (
       fractionalIndex: 'a0',
     })
   }
+
   const borderRadius = properties.borderRadius(element.css)
-  let fontWeight = css['font-weight']
+
   if (fontWeight === 'normal') {
     fontWeight = '400'
   } else if (fontWeight === 'bold') {
@@ -81,41 +80,33 @@ const headline = (
     return element !== undefined
   })
 
-  const output = {
-    type: 'Headline/V1',
-    params: type !== 'image_list_headline' ? params(css, 'element', element.id) : {},
-    attrs: {
-      style: {
-        'margin-top': parseInt(element.css['margin-top']) || 0,
-        'padding-top': parseInt(css['padding-top']) || 0,
-        'padding-bottom': parseInt(css['padding-bottom']) || 0,
-        position: css['position'] || 'relative',
-        'z-index': parseInt(css['z-index']) || 0,
-      },
-      'data-skip-background-settings': 'false',
+  output.params = type !== 'image_list_headline' ? params(css, 'element', element.id) : {}
+
+  output.attrs = {
+    style: {
+      'margin-top': parseInt(element.css['margin-top']) || 0,
+      'padding-top': parseInt(css['padding-top']) || 0,
+      'padding-bottom': parseInt(css['padding-bottom']) || 0,
+      position: css['position'] || 'relative',
+      'z-index': parseInt(css['z-index']) || 0,
     },
-    selectors: {
-      '.elHeadline': {
-        attrs: {
-          style: {
-            'font-family': css['font-family'],
-            'font-weight': fontWeight,
-            'letter-spacing': parseInt(css['letter-spacing']) || 0,
-            'line-height': 'normal',
-            'font-size': parseInt(css['font-size']) || 26,
-            color: css['color'],
-            'text-transform': css['text-transform'],
-            'text-decoration': css['text-decoration'],
-            'text-align': css['text-align'],
-            opacity: parseInt(css['opacity']) || 1,
-          },
-        },
-        '.elHeadline b,\\n.elHeadline strong': {
-          attrs: {
-            style: {
-              color: boldColor || css['color'],
-            },
-          },
+    'data-skip-background-settings': 'false',
+  }
+
+  output.selectors = {
+    '.elHeadline': {
+      attrs: {
+        style: {
+          'font-family': css['font-family'],
+          'font-weight': fontWeight,
+          'letter-spacing': parseInt(css['letter-spacing']) || 0,
+          'line-height': 'normal',
+          'font-size': parseInt(css['font-size']) || 26,
+          color: css['color'],
+          'text-transform': css['text-transform'],
+          'text-decoration': css['text-decoration'],
+          'text-align': css['text-align'],
+          opacity: parseInt(css['opacity']) || 1,
         },
       },
       '.elHeadline b,\\n.elHeadline strong': {
@@ -125,33 +116,35 @@ const headline = (
           },
         },
       },
-      '.fa_prepended': fa_prepended,
     },
-    id: id,
-    version: 0,
-    parentId: parentId,
-    fractionalIndex: `a${index}`,
-    children: [
-      {
-        type: 'ContentEditableNode',
-        attrs: { 'data-align-selector': '.elHeadline' },
-        id: contentEditableNodeId,
-        version: 0,
-        parentId: id,
-        fractionalIndex: 'a0',
-        children: children,
+    '.elHeadline b,\\n.elHeadline strong': {
+      attrs: {
+        style: {
+          color: boldColor || css['color'],
+        },
       },
-    ],
+    },
+    '.fa_prepended': fa_prepended,
   }
+
+  output.children = [
+    {
+      type: 'ContentEditableNode',
+      attrs: { 'data-align-selector': '.elHeadline' },
+      id: contentEditableNodeId,
+      version: 0,
+      parentId: id,
+      fractionalIndex: 'a0',
+      children: children,
+    },
+  ]
+
   if (element.content.visible) {
     output.attrs['data-show-only'] = element.content.visible
   }
+
   output.attrs.style = Object.assign(output.attrs.style, borderRadius)
-  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
-  output.params = Object.assign(
-    output.params,
-    animations.params(document.querySelector(`[id="${element.id}"]`))
-  )
+
   return output
 }
 
@@ -172,9 +165,8 @@ const headlineUtils = {
   },
 
   parse: (parentNode, html, contentEditableNodeId, index, css) => {
-    if (parentNode.nodeName !== 'DIV') return false // TODO: handle this case for nested tags
+    if (parentNode.nodeName !== 'DIV') return false
 
-    // replace all divs in html
     html = html.replace(/<div/g, '<span').replace(/<\/div>/g, '</span>')
 
     const dom = app.htmlToDom(html)
