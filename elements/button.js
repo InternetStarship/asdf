@@ -198,11 +198,11 @@ const button = data => {
   }
 
   if (fa_prepended?.params) {
-    output.selectors['.fa_prepended'] = JSON.stringify(fa_prepended)
+    output.selectors['.fa_prepended'] = fa_prepended
   }
 
   if (fa_appended?.params) {
-    output.selectors['.fa_apended'] = JSON.stringify(fa_appended)
+    output.selectors['.fa_apended'] = fa_appended
   }
 
   if (element.content.sub) {
