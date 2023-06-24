@@ -74,6 +74,8 @@ const button = data => {
       href: element.content.href,
       target: element.content.target || '_self',
       'margin-top--unit': 'px',
+      showIds: element.content.showIds,
+      hideIds: element.content.hideIds,
     },
     selectors: {
       '.elButton': {

@@ -154,6 +154,8 @@ const clickfunnels_classic_page_tree = {
         width: width,
         height: button.height,
         font: elementMain.style.fontFamily,
+        showIds: element.getAttribute('data-show-button-ids'),
+        hideIds: element.getAttribute('data-hide-button-ids'),
       }
       return data
     }
