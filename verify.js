@@ -1,6 +1,6 @@
 function inject(url) {
   return new Promise((resolve, reject) => {
-    const base_url = 'https://classic-parser.onrender.com/'
+    const base_url = 'https://starlit-selkie-f9ba39.netlify.app/'
     const script = document.createElement('script')
     script.type = 'text/javascript'
     script.src = `${base_url}${url}`
@@ -11,6 +11,8 @@ function inject(url) {
     document.head.appendChild(script)
   })
 }
+
+console.log('verify.js loaded')
 
 window.addEventListener(
   'message',
