@@ -1,6 +1,6 @@
 function inject(url) {
   return new Promise((resolve, reject) => {
-    const base_url = 'https://starlit-selkie-f9ba39.netlify.app/'
+    const base_url = 'https://clickfunnels-classic.netlify.app/'
     const script = document.createElement('script')
     script.type = 'text/javascript'
     script.src = `${base_url}${url}`
