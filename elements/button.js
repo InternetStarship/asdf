@@ -63,6 +63,27 @@ const button = data => {
     }
   }
 
+  let newShowIds = ''
+  let newHideIds = ''
+
+  element.content.showIds.split(',').forEach(id => {
+    const newId = app.idList.filter(item => {
+      if (item.cf1_id === id) {
+        return item.cf2_id
+      }
+    })
+    newShowIds += `${newId},`
+  })
+
+  element.content.hideIds.split(',').forEach(id => {
+    const newId = app.idList.filter(item => {
+      if (item.cf1_id === id) {
+        return item.cf2_id
+      }
+    })
+    newHideIds += `${newId},`
+  })
+
   const output = {
     type: 'Button/V1',
     id: id,
@@ -74,8 +95,8 @@ const button = data => {
       href: element.content.href,
       target: element.content.target || '_self',
       'margin-top--unit': 'px',
-      showIds: element.content.showIds,
-      hideIds: element.content.hideIds,
+      showIds: newShowIds,
+      hideIds: newHideIds,
     },
     selectors: {
       '.elButton': {
