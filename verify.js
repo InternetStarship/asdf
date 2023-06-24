@@ -1,18 +1,16 @@
+console.log('ClickFunnels Classic Verify.js Loaded')
+
 function inject(url) {
   return new Promise((resolve, reject) => {
     const base_url = 'https://clickfunnels-classic.netlify.app/'
     const script = document.createElement('script')
     script.type = 'text/javascript'
     script.src = `${base_url}${url}`
-
     script.onload = resolve
     script.onerror = reject
-
     document.head.appendChild(script)
   })
 }
-
-console.log('verify.js loaded')
 
 window.addEventListener(
   'message',
@@ -58,7 +56,7 @@ window.addEventListener(
           inject('page-tree/clickfunnels2.js'),
         ])
 
-        app.checkImagesLoaded('.containerWrapper', app.init())
+        app.checkImagesLoaded('.containerWrapper', app.init)
       } catch (err) {
         console.error(`Failed to load ClickFunnels Classic verification: ${err}`)
       }
