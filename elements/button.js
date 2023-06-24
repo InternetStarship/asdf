@@ -231,7 +231,7 @@ const button = data => {
       slotName: 'button-sub',
       id: subId,
       version: 0,
-      parentId: id,
+      parentId: data.id,
       fractionalIndex: 'a0',
       innerText: element.content.sub,
     })
