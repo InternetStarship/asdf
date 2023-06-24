@@ -77,6 +77,7 @@ const button = data => {
           style: {
             width: element.content.width,
             'font-family': cssMain['font-family'],
+            'text-align': cssMain['text-align'],
           },
           'data-skip-corners-settings': 'false',
           'data-skip-borders-settings': 'false',
