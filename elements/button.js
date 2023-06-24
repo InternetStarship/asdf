@@ -17,6 +17,7 @@ const button = data => {
   theParams['--style-padding-horizontal--unit'] = 'px'
   theParams['--style-padding-vertical'] = parseInt(css['padding-top'])
   theParams['--style-padding-vertical--unit'] = 'px'
+
   const fa_prependDom = document.querySelector(`#${element.id} .fa_prepended`)
   let fa_prepended = {}
 
@@ -84,10 +85,6 @@ const button = data => {
           'data-skip-corners-settings': 'false',
           'data-skip-borders-settings': 'false',
           'data-skip-shadow-settings': 'false',
-          'padding-left': parseInt(css['padding-left']) || 25,
-          'padding-right': parseInt(css['padding-right']) || 25,
-          'padding-top': parseInt(css['padding-top']) || 25,
-          'padding-bottom': parseInt(css['padding-bottom']) || 25,
         },
         params: theParams,
       },
@@ -171,8 +168,6 @@ const button = data => {
       style: {
         'margin-top': parseInt(element.css['margin-top']) || 0,
         'text-align': element.css['text-align'] || 'center',
-        'padding-top': parseInt(element.css['padding-top']) || 0,
-        'padding-bottom': parseInt(element.css['padding-bottom']) || 0,
         position: element.css['position'] || 'relative',
         'z-index': parseInt(element.css['z-index']) || 0,
       },

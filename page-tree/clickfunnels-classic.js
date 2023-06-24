@@ -136,16 +136,20 @@ const clickfunnels_classic_page_tree = {
       const elementMain = dom.querySelector('.elButton .elButtonMain')
       const button = element.getBoundingClientRect()
       let width
-      if (dom.querySelector('.elButton').classList.contains('elButtonFull')) {
+      if (element.classList.contains('elButtonFull')) {
         width = 100
       } else {
         width = 'auto'
+      }
+      let href = element.getAttribute('href')
+      if (href === '#' && element.getAttribute('data-show-button-ids')) {
+        href = '#show-hide'
       }
       data.content = {
         visible: app.checkVisibility(dom),
         main: elementMain.textContent,
         sub: elementSub.textContent,
-        href: element.getAttribute('href'),
+        href: href,
         target: element.target,
         width: width,
         height: button.height,
