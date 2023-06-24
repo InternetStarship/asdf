@@ -14,7 +14,6 @@ const app = {
     const clickfunnels_v2 = clickfunnels2_pagetree(clickfunnels_classic)
     clickfunnels_v2.version = 93
 
-    const css = ''
     const google_font_families = ''
 
     clickfunnels_v2.popup.children = clickfunnels_v2.popup.children.filter(function (element) {
@@ -27,7 +26,7 @@ const app = {
 
     const response = {
       data: {
-        css: css,
+        css: app.copiedCSS,
         page_tree: JSON.stringify(clickfunnels_v2),
         google_font_families: google_font_families,
       },
