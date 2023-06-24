@@ -1,5 +1,6 @@
 const icon = data => {
-  const output = blueprint('Icon/V1', data.id, data.parentId, data.index, data.element)
+  const element = data.element
+  const output = blueprint('Icon/V1', data.id, data.parentId, data.index, element)
   const css = properties.css(element.id, 'icon')
 
   output.selectors = {
