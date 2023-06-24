@@ -12,6 +12,7 @@ const button = data => {
   const cssAppend = properties.css(element.id, 'buttonAppend')
   const borderRadius = properties.borderRadius(css)
   const theParams = params(css, 'element', element.id)
+
   theParams['width--unit'] = '%'
   theParams['--style-padding-horizontal'] = parseInt(css['padding-left'])
   theParams['--style-padding-horizontal--unit'] = 'px'
@@ -66,23 +67,27 @@ const button = data => {
   let newShowIds = ''
   let newHideIds = ''
 
-  element.content.showIds.split(',').forEach(id => {
-    const newId = app.idList.filter(item => {
-      if (item.cf1_id === id) {
-        return item.cf2_id
-      }
+  if (element.content.showIds) {
+    element.content.showIds.split(',').forEach(id => {
+      const newId = app.idList.filter(item => {
+        if (item.cf1_id === id) {
+          return item.cf2_id
+        }
+      })
+      newShowIds += `${newId},`
     })
-    newShowIds += `${newId},`
-  })
+  }
 
-  element.content.hideIds.split(',').forEach(id => {
-    const newId = app.idList.filter(item => {
-      if (item.cf1_id === id) {
-        return item.cf2_id
-      }
+  if (element.content.hideIds) {
+    element.content.hideIds.split(',').forEach(id => {
+      const newId = app.idList.filter(item => {
+        if (item.cf1_id === id) {
+          return item.cf2_id
+        }
+      })
+      newHideIds += `${newId},`
     })
-    newHideIds += `${newId},`
-  })
+  }
 
   const output = {
     type: 'Button/V1',
@@ -248,8 +253,6 @@ const button = data => {
     output.params,
     animations.params(document.querySelector(`[id="${element.id}"]`))
   )
-
-  console.log('button output', output)
 
   return output
 }
