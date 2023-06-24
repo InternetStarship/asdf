@@ -9,6 +9,7 @@ const headline = (
   const contentEditableNodeId = app.makeId()
   const html = headlineUtils.wrapSpan(element.content.html)
   const css = properties.css(element.id, type)
+
   let children = []
   let fontWeight = css['font-weight']
   let boldColor = ''
@@ -133,7 +134,7 @@ const headline = (
       attrs: { 'data-align-selector': '.elHeadline' },
       id: contentEditableNodeId,
       version: 0,
-      parentId: id,
+      parentId: data.id,
       fractionalIndex: 'a0',
       children: children,
     },

@@ -202,7 +202,7 @@ const button = data => {
       slotName: 'button-main',
       id: mainId,
       version: 0,
-      parentId: id,
+      parentId: data.id,
       fractionalIndex: 'a0',
       children: [
         {
