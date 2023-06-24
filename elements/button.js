@@ -75,7 +75,7 @@ const button = data => {
       '.elButton': {
         attrs: {
           style: {
-            width: 100,
+            width: element.content.width,
             'font-family': cssMain['font-family'],
           },
           'data-skip-corners-settings': 'false',
@@ -163,8 +163,6 @@ const button = data => {
           },
         },
       },
-      // '.fa_prepended': fa_prepended ? JSON.stringify(fa_prepended) : '',
-      // '.fa_apended': fa_appended ? JSON.stringify(fa_appended) : '',
     },
     attrs: {
       style: {
@@ -230,6 +228,8 @@ const button = data => {
     output.params,
     animations.params(document.querySelector(`[id="${element.id}"]`))
   )
+
+  console.log('button output', output)
 
   return output
 }
