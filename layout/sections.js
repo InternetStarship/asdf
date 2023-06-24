@@ -1,7 +1,13 @@
 const sections = (sections, parentId) => {
   return sections.map(section => {
-    if (section.id !== 'modalPopup') {
+    if (section && section.id !== 'modalPopup') {
       const id = app.makeId()
+
+      app.idList.push({
+        type: 'section',
+        cf1_id: section.id,
+        cf2_id: id,
+      })
 
       const borderRadius = properties.borderRadius(section.css)
       const containerClasses = [

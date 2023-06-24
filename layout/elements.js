@@ -7,6 +7,7 @@ const elements = (elements, parentId) => {
         cf1_id: element.id,
         cf2_id: id,
       })
+
       const data = {
         element,
         id,
