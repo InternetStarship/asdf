@@ -191,6 +191,7 @@ const button = data => {
     style: {
       'margin-top': parseInt(element.css['margin-top']) || 0,
       'text-align': element.css['text-align'] || 'center',
+      display: element.css['display'] || 'block',
       position: element.css['position'] || 'relative',
       'z-index': parseInt(element.css['z-index']) || 0,
     },
