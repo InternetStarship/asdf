@@ -6,10 +6,10 @@ const image = data => {
   const theParams = params(css, 'element', element.id)
 
   theParams['default-aspect-ratio'] = '1280 / 853'
-  theParams['--style-padding-horizontal'] = 0
-  theParams['--style-padding-horizontal--unit'] = 'px'
-  theParams['--style-padding-vertical'] = 0
-  theParams['--style-padding-vertical--unit'] = 'px'
+  // theParams['--style-padding-horizontal'] = 0
+  // theParams['--style-padding-horizontal--unit'] = 'px'
+  // theParams['--style-padding-vertical'] = 0
+  // theParams['--style-padding-vertical--unit'] = 'px'
 
   output.params = {
     'padding-top--unit': 'px',
