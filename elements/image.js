@@ -1,7 +1,7 @@
 const image = data => {
   const element = data.element
   const output = blueprint('Image/V1', data.id, data.parentId, data.index, element)
-  const css = properties.css(element.id, 'icon')
+  const css = properties.css(element.id, 'image')
   const borderRadius = properties.borderRadius(css)
   const theParams = params(css, 'element', element.id, 'image')
 
