@@ -71,7 +71,7 @@ const button = data => {
       console.log(id, 'hide id')
       const item = app.idList.find(item => item.cf1_id === id)
       const newId = item ? item.cf2_id : id
-      newShowIds += `${newId},`
+      newShowIds += `id-${newId},`
     })
   }
 
@@ -81,9 +81,12 @@ const button = data => {
       const item = app.idList.find(item => item.cf1_id === id)
       const newId = item ? item.cf2_id : id
       console.log(newId, 'new id')
-      newHideIds += `${newId},`
+      newHideIds += `id-${newId},`
     })
   }
+
+  newShowIds = newShowIds.slice(0, -1)
+  newHideIds = newHideIds.slice(0, -1)
 
   output.params = {
     buttonState: 'default',
