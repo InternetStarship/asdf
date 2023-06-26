@@ -6,7 +6,6 @@ const clickfunnels_classic_page_tree = {
     app.idList = []
 
     sections.forEach(section => {
-      console.log(section.id, 'section')
       output.push({
         type: 'section',
         title: section.dataset.title,

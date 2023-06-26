@@ -111,6 +111,10 @@ const params = (css, type = null, id = null, params = {}, subType = null) => {
     }
   }
 
+  if (subType === 'image') {
+    console.log('IMAGE', { ...data, ...params })
+  }
+
   if (css['box-shadow']) {
     const boxShadow = css['box-shadow']
     const shadowArray = boxShadow.match(/(?:[^\s\(\)]+|\([^\(\)]*\))+/g)
@@ -172,10 +176,6 @@ const params = (css, type = null, id = null, params = {}, subType = null) => {
 
   if (parseInt(css['border-right-width']) === 0) {
     data['--style-border-right'] = '0px'
-  }
-
-  if (subType === 'image') {
-    console.log('IMAGE', { ...data, ...params })
   }
 
   return { ...data, ...params }
