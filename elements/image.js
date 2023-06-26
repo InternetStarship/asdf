@@ -27,6 +27,10 @@ const image = data => {
       'margin-top': parseInt(element.css['margin-top']) || 0,
       'text-align': element.css['text-align'] || 'center',
       position: css['position'] || 'relative',
+      'padding-top': parseInt(css['padding-top']) || 0,
+      'padding-bottom': parseInt(css['padding-bottom']) || 0,
+      'padding-left': parseInt(css['padding-left']) || 0,
+      'padding-right': parseInt(css['padding-right']) || 0,
       'z-index': parseInt(css['z-index']) || 0,
     },
   }
@@ -46,10 +50,7 @@ const image = data => {
           width: parseInt(element.content.width),
           height: parseInt(element.content.height),
           opacity: parseInt(css['opacity']) || 1,
-          'padding-top': parseInt(css['padding-top']) || 0,
-          'padding-bottom': parseInt(css['padding-bottom']) || 0,
-          'padding-left': parseInt(css['padding-left']) || 0,
-          'padding-right': parseInt(css['padding-right']) || 0,
+
           'background-color': css['background-color'],
           'object-fit': 'fill',
           'object-position': 'center',
@@ -59,15 +60,16 @@ const image = data => {
         'data-skip-corners-settings': 'false',
         'data-skip-borders-settings': 'false',
         'data-skip-shadow-settings': 'false',
+        'data-skip-background-settings': 'false',
       },
       params: theParams,
     },
   }
 
-  output.selectors['.elImage'].attrs.style = Object.assign(
-    output.selectors['.elImage'].attrs.style,
-    borderRadius
-  )
+  // output.selectors['.elImage'].attrs.style = Object.assign(
+  //   output.selectors['.elImage'].attrs.style,
+  //   borderRadius
+  // )
   output.attrs.style = Object.assign(output.attrs.style, borderRadius)
 
   if (element.content.link) {
