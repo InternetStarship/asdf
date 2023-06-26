@@ -30,7 +30,7 @@ const settings = () => {
       {
         id: 'page_style',
         type: 'css',
-        parentId: '6Z-ZJjGz-2',
+        parentId: app.makeId(),
         fractionalIndex: 'a0',
         attrs: {
           style: { color: textColor, 'font-family': fontFamily, 'font-weight': 500 },
