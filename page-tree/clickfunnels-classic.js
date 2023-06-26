@@ -564,10 +564,6 @@ const clickfunnels_classic_page_tree = {
       const image = element.getBoundingClientRect()
       let src = element.getAttribute('src')
 
-      if (src === 'https://via.placeholder.com/350x150/e1e5e6/6d7b8b?text=Thumbnail') {
-        src = '/editor/editor-demo-image-placeholder.svg'
-      }
-
       data.content = {
         visible: app.checkVisibility(dom),
         src: src || '',
