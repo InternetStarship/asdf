@@ -31,7 +31,9 @@ const image = data => {
       'padding-bottom': parseInt(css['padding-bottom']) || 0,
       'padding-left': parseInt(css['padding-left']) || 0,
       'padding-right': parseInt(css['padding-right']) || 0,
+      'background-color': css['background-color'],
       'z-index': parseInt(css['z-index']) || 0,
+      opacity: parseInt(css['opacity']) || 1,
     },
     'data-skip-corners-settings': 'false',
     'data-skip-borders-settings': 'false',
@@ -53,15 +55,12 @@ const image = data => {
         style: {
           width: parseInt(element.content.width),
           height: parseInt(element.content.height),
-          opacity: parseInt(css['opacity']) || 1,
-          'background-color': css['background-color'],
           'object-fit': 'fill',
           'object-position': 'center',
         },
         'data-lazy-loading': 'false',
         'data-image-quality': 100,
       },
-      params: theParams,
     },
   }
 
