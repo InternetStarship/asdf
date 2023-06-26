@@ -1,6 +1,6 @@
 const image = data => {
   const element = data.element
-  const output = blueprint('Image/V1', data.id, data.parentId, data.index, element)
+  const output = blueprint('Image/V2', data.id, data.parentId, data.index, element)
   const css = properties.css(element.id, 'image')
   const borderRadius = properties.borderRadius(css)
   const theParams = params(css, 'element', element.id)
@@ -26,6 +26,8 @@ const image = data => {
       'text-align': element.css['text-align'] || 'center',
       'padding-top': parseInt(css['padding-top']) || 0,
       'padding-bottom': parseInt(css['padding-bottom']) || 0,
+      'padding-left': parseInt(css['padding-left']) || 0,
+      'padding-right': parseInt(css['padding-right']) || 0,
       position: css['position'] || 'relative',
       'z-index': parseInt(css['z-index']) || 0,
     },

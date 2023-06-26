@@ -13,7 +13,7 @@ const image_popup = (data, type = 'image_popup') => {
   theParams['--style-padding-vertical--unit'] = 'px'
 
   const output = {
-    type: 'Image/V1',
+    type: 'Image/V2',
     params: {
       'padding-top--unit': 'px',
       'padding-bottom--unit': 'px',
