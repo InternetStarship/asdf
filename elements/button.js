@@ -71,7 +71,7 @@ const button = data => {
       console.log(id, 'hide id')
       const item = app.idList.find(item => item.cf1_id === id)
       const newId = item ? item.cf2_id : id
-      newshowIds += `${newId},`
+      newShowIds += `${newId},`
     })
   }
 
