@@ -88,7 +88,7 @@ const button = data => {
     let scrollId = href.replace('#scroll-', '')
     scrollId = decodeURIComponent(scrollId)
     const scrollItem = app.idList.find(item => item.cf1_id === scrollId)
-    const newScrollId = scrollItem ? scrollItem.cf2_id : id
+    const newScrollId = scrollItem ? scrollItem.cf2_id : scrollId
     href = `#scroll-${newScrollId}`
     console.log(href, scrollId, 'hey')
   }
