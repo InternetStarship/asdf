@@ -190,6 +190,9 @@ const button = data => {
   output.attrs = {
     style: {
       'margin-top': parseInt(element.css['margin-top']) || 0,
+      'margin-right': parseInt(element.css['margin-right']) || 0,
+      'margin-left': parseInt(element.css['margin-left']) || 0,
+      'margin-bottom': parseInt(element.css['margin-bottom']) || 0,
       'text-align': element.css['text-align'] || 'center',
       display: element.css['display'] || 'block',
       position: element.css['position'] || 'relative',
