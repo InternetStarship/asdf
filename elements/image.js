@@ -10,14 +10,14 @@ const image = data => {
   theParams['--style-padding-horizontal--unit'] = 'px'
   theParams['--style-padding-vertical'] = 0
   theParams['--style-padding-vertical--unit'] = 'px'
-  theParams['--style-padding-top--unit'] = 'px'
-  theParams['--style-padding-bottom--unit'] = 'px'
 
   console.log('image', theParams)
 
   output.params = {
     'padding-top--unit': 'px',
     'padding-bottom--unit': 'px',
+    'padding-left--unit': 'px',
+    'padding-right--unit': 'px',
     'padding-horizontal--unit': 'px',
     'padding-horizontal': parseInt(css['padding-left']) || 0,
   }
