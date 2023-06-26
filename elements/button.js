@@ -71,6 +71,8 @@ const button = data => {
       const newId = app.idList.filter(item => {
         if (item.cf1_id === id) {
           return item.cf2_id
+        } else {
+          return id
         }
       })
       newShowIds += `${newId},`
@@ -82,6 +84,8 @@ const button = data => {
       const newId = app.idList.filter(item => {
         if (item.cf1_id === id) {
           return item.cf2_id
+        } else {
+          return id
         }
       })
       newHideIds += `${newId},`
