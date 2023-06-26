@@ -68,33 +68,20 @@ const button = data => {
 
   if (element.content.showIds) {
     element.content.showIds.split(',').forEach(id => {
-      console.log(id, 'show id')
-      // console.log(app.idList, 'id list')
-
-      // const newId = app.idList.filter(item => {
-      //   if (item.cf1_id === id) {
-      //     return item.cf2_id
-      //   } else {
-      //     return id
-      //   }
-      // })
-      // newShowIds += `${newId},`
+      console.log(id, 'hide id')
+      const item = app.idList.find(item => item.cf1_id === id)
+      const newId = item ? item.cf2_id : id
+      newshowIds += `${newId},`
     })
   }
 
   if (element.content.hideIds) {
     element.content.hideIds.split(',').forEach(id => {
       console.log(id, 'hide id')
-      const newId = app.idList.filter(item => {
-        console.log(item)
-        if (item.cf1_id === id) {
-          return item.cf2_id
-        } else {
-          return id
-        }
-      })
-      console.log(newId, 'id list')
-      // newHideIds += `${newId},`
+      const item = app.idList.find(item => item.cf1_id === id)
+      const newId = item ? item.cf2_id : id
+      console.log(newId, 'new id')
+      newHideIds += `${newId},`
     })
   }
 
