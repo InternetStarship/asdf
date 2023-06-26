@@ -90,7 +90,7 @@ const button = data => {
     const scrollItem = app.idList.find(item => item.title === scrollId)
     const newScrollId = scrollItem ? scrollItem.cf2_id : 'not-found'
     href = `#scroll-${newScrollId}`
-    console.log(href, scrollId, 'hey')
+    console.log(href, scrollId, scrollItem, app.idList, 'hey')
   }
 
   newShowIds = newShowIds.slice(0, -1)
