@@ -89,8 +89,7 @@ const button = data => {
     scrollId = decodeURIComponent(scrollId)
     const scrollItem = app.idList.find(item => item.title.trim() === scrollId.trim())
     const newScrollId = scrollItem ? scrollItem.cf2_id : 'not-found'
-    href = `#scroll-${newScrollId}`
-    console.log(href, scrollId, scrollItem, app.idList, 'hey')
+    href = `#scroll-id-${newScrollId}`
   }
 
   newShowIds = newShowIds.slice(0, -1)
