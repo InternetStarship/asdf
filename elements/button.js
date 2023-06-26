@@ -66,6 +66,9 @@ const button = data => {
   let newShowIds = ''
   let newHideIds = ''
 
+  console.log(element.content.showIds, 'show ids')
+  console.log(element.content.showIds, 'hide ids')
+
   if (element.content.showIds) {
     element.content.showIds.split(',').forEach(id => {
       console.log(id, 'hide id')
@@ -93,6 +96,9 @@ const button = data => {
     href: element.content.href,
     target: element.content.target || '_self',
     'margin-top--unit': 'px',
+    'margin-right--unit': 'px',
+    'margin-left--unit': 'px',
+    'margin-bottom--unit': 'px',
     showIds: newShowIds,
     hideIds: newHideIds,
   }
