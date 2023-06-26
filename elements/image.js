@@ -11,8 +11,6 @@ const image = data => {
   theParams['--style-padding-vertical'] = 0
   theParams['--style-padding-vertical--unit'] = 'px'
 
-  console.log('image', theParams)
-
   output.params = {
     'padding-top--unit': 'px',
     'padding-bottom--unit': 'px',
@@ -21,6 +19,8 @@ const image = data => {
     'padding-horizontal--unit': 'px',
     'padding-horizontal': parseInt(css['padding-left']) || 0,
   }
+
+  output.params = Object.assign(output.params, theParams)
 
   output.attrs = {
     style: {
@@ -50,7 +50,6 @@ const image = data => {
           width: parseInt(element.content.width),
           height: parseInt(element.content.height),
           opacity: parseInt(css['opacity']) || 1,
-
           'background-color': css['background-color'],
           'object-fit': 'fill',
           'object-position': 'center',
