@@ -3,7 +3,7 @@ const image = data => {
   const output = blueprint('Image/V1', data.id, data.parentId, data.index, element)
   const css = properties.css(element.id, 'icon')
   const borderRadius = properties.borderRadius(css)
-  const theParams = params(css, 'element', element.id)
+  const theParams = params(css, 'element', element.id, 'image')
 
   theParams['default-aspect-ratio'] = '1280 / 853'
   theParams['--style-padding-horizontal'] = 0

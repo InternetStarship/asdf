@@ -1,4 +1,4 @@
-const params = (css, type = null, id = null, params = {}) => {
+const params = (css, type = null, id = null, params = {}, subType = null) => {
   if (css === undefined || css === null) return false
 
   const borderRadiusCorner = properties.borderRadius(css, 'check')
@@ -174,7 +174,7 @@ const params = (css, type = null, id = null, params = {}) => {
     data['--style-border-right'] = '0px'
   }
 
-  if (type === 'image') {
+  if (subType === 'image') {
     console.log('IMAGE', { ...data, ...params })
   }
 
