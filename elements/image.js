@@ -29,7 +29,6 @@ const image = data => {
       position: css['position'] || 'relative',
       'z-index': parseInt(css['z-index']) || 0,
     },
-    'data-skip-background-settings': 'false',
   }
 
   output.selectors = {
@@ -54,6 +53,7 @@ const image = data => {
         'data-skip-corners-settings': 'false',
         'data-skip-borders-settings': 'false',
         'data-skip-shadow-settings': 'false',
+        'data-skip-background-settings': 'false',
       },
       params: theParams,
     },
