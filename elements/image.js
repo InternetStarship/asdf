@@ -33,6 +33,10 @@ const image = data => {
       'padding-right': parseInt(css['padding-right']) || 0,
       'z-index': parseInt(css['z-index']) || 0,
     },
+    'data-skip-corners-settings': 'false',
+    'data-skip-borders-settings': 'false',
+    'data-skip-shadow-settings': 'false',
+    'data-skip-background-settings': 'false',
   }
 
   output.selectors = {
@@ -56,19 +60,11 @@ const image = data => {
         },
         'data-lazy-loading': 'false',
         'data-image-quality': 100,
-        'data-skip-corners-settings': 'false',
-        'data-skip-borders-settings': 'false',
-        'data-skip-shadow-settings': 'false',
-        'data-skip-background-settings': 'false',
       },
       params: theParams,
     },
   }
 
-  // output.selectors['.elImage'].attrs.style = Object.assign(
-  //   output.selectors['.elImage'].attrs.style,
-  //   borderRadius
-  // )
   output.attrs.style = Object.assign(output.attrs.style, borderRadius)
 
   if (element.content.link) {
