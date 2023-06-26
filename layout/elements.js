@@ -4,6 +4,7 @@ const elements = (elements, parentId) => {
     if (element) {
       app.idList.push({
         type: 'element',
+        title: element.title,
         cf1_id: element.id,
         cf2_id: id,
       })

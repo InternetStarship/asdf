@@ -6,6 +6,7 @@ const columns = (columns, parentId) => {
 
       app.idList.push({
         type: 'column',
+        title: column.title,
         cf1_id: column.id,
         cf2_id: id,
       })

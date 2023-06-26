@@ -5,6 +5,7 @@ const sections = (sections, parentId) => {
 
       app.idList.push({
         type: 'section',
+        title: section.title,
         cf1_id: section.id,
         cf2_id: id,
       })

@@ -5,6 +5,7 @@ const rows = (rows, parentId) => {
 
       app.idList.push({
         type: 'row',
+        title: row.title,
         cf1_id: row.id,
         cf2_id: id,
       })
