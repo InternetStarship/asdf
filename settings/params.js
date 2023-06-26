@@ -174,6 +174,10 @@ const params = (css, type = null, id = null, params = {}) => {
     data['--style-border-right'] = '0px'
   }
 
+  if (type === 'image') {
+    console.log('IMAGE', { ...data, ...params })
+  }
+
   return { ...data, ...params }
 }
 

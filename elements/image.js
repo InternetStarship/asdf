@@ -17,6 +17,7 @@ const image = data => {
     'padding-horizontal--unit': 'px',
     'padding-horizontal': parseInt(css['padding-left']) || 0,
   }
+
   output.attrs = {
     style: {
       'margin-top': parseInt(element.css['margin-top']) || 0,
@@ -49,6 +50,7 @@ const image = data => {
         'data-lazy-loading': 'false',
         'data-image-quality': 100,
         'data-skip-corners-settings': 'false',
+        'data-skip-borders-settings': 'false',
         'data-skip-shadow-settings': 'false',
       },
       params: theParams,

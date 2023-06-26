@@ -95,6 +95,15 @@ const button = data => {
   newShowIds = newShowIds.slice(0, -1)
   newHideIds = newHideIds.slice(0, -1)
 
+  if (href.includes('http:') || href.includes('https:')) {
+    app.recommendations.push({
+      type: 'button',
+      id: element.id,
+      title: 'Button',
+      message: 'This button links to an external website. Please make sure it is correct.',
+    })
+  }
+
   output.params = {
     buttonState: 'default',
     href: href,
