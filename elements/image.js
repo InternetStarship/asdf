@@ -10,14 +10,15 @@ const image = data => {
   theParams['--style-padding-horizontal--unit'] = 'px'
   theParams['--style-padding-vertical'] = 0
   theParams['--style-padding-vertical--unit'] = 'px'
-  theParams['padding-top--unit'] = 'px'
-  theParams['padding-bottom--unit'] = 'px'
-  theParams['padding-horizontal--unit'] = 'px'
-  theParams['padding-horizontal'] = parseInt(css['padding-left']) || 0
 
   console.log('image', theParams)
 
-  output.params = theParams
+  output.params = {
+    'padding-top--unit': 'px',
+    'padding-bottom--unit': 'px',
+    'padding-horizontal--unit': 'px',
+    'padding-horizontal': parseInt(css['padding-left']) || 0,
+  }
 
   output.attrs = {
     style: {
@@ -57,7 +58,7 @@ const image = data => {
         'data-skip-borders-settings': 'false',
         'data-skip-shadow-settings': 'false',
       },
-      // params: theParams,
+      params: theParams,
     },
   }
 
