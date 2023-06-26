@@ -68,27 +68,32 @@ const button = data => {
 
   if (element.content.showIds) {
     element.content.showIds.split(',').forEach(id => {
-      const newId = app.idList.filter(item => {
-        if (item.cf1_id === id) {
-          return item.cf2_id
-        } else {
-          return id
-        }
-      })
-      newShowIds += `${newId},`
+      console.log(id, 'show id')
+      console.log(app.idList, 'id list')
+
+      // const newId = app.idList.filter(item => {
+      //   if (item.cf1_id === id) {
+      //     return item.cf2_id
+      //   } else {
+      //     return id
+      //   }
+      // })
+      // newShowIds += `${newId},`
     })
   }
 
   if (element.content.hideIds) {
     element.content.hideIds.split(',').forEach(id => {
-      const newId = app.idList.filter(item => {
-        if (item.cf1_id === id) {
-          return item.cf2_id
-        } else {
-          return id
-        }
-      })
-      newHideIds += `${newId},`
+      console.log(id, 'hide id')
+      console.log(app.idList, 'id list')
+      // const newId = app.idList.filter(item => {
+      //   if (item.cf1_id === id) {
+      //     return item.cf2_id
+      //   } else {
+      //     return id
+      //   }
+      // })
+      // newHideIds += `${newId},`
     })
   }
 
