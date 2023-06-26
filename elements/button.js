@@ -66,8 +66,7 @@ const button = data => {
   let newShowIds = ''
   let newHideIds = ''
 
-  console.log(element.content.showIds, 'show ids')
-  console.log(element.content.showIds, 'hide ids')
+  console.log(app.idList, 'app.idList')
 
   if (element.content.showIds) {
     element.content.showIds.split(',').forEach(id => {
