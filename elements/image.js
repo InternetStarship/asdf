@@ -11,7 +11,7 @@ const image = data => {
   theParams['--style-padding-vertical'] = 0
   theParams['--style-padding-vertical--unit'] = 'px'
 
-  console.log('image element', css, theParams)
+  console.log('image', theParams)
 
   output.params = {
     'padding-top--unit': 'px',
