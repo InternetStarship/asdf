@@ -69,7 +69,7 @@ const button = data => {
   if (element.content.showIds) {
     element.content.showIds.split(',').forEach(id => {
       console.log(id, 'show id')
-      console.log(app.idList, 'id list')
+      // console.log(app.idList, 'id list')
 
       // const newId = app.idList.filter(item => {
       //   if (item.cf1_id === id) {
@@ -85,14 +85,15 @@ const button = data => {
   if (element.content.hideIds) {
     element.content.hideIds.split(',').forEach(id => {
       console.log(id, 'hide id')
-      console.log(app.idList, 'id list')
-      // const newId = app.idList.filter(item => {
-      //   if (item.cf1_id === id) {
-      //     return item.cf2_id
-      //   } else {
-      //     return id
-      //   }
-      // })
+      const newId = app.idList.filter(item => {
+        console.log(item)
+        if (item.cf1_id === id) {
+          return item.cf2_id
+        } else {
+          return id
+        }
+      })
+      console.log(newId, 'id list')
       // newHideIds += `${newId},`
     })
   }
