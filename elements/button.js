@@ -66,11 +66,8 @@ const button = data => {
   let newShowIds = ''
   let newHideIds = ''
 
-  console.log(app.idList, 'app.idList')
-
   if (element.content.showIds) {
     element.content.showIds.split(',').forEach(id => {
-      console.log(id, 'hide id')
       const item = app.idList.find(item => item.cf1_id === id)
       const newId = item ? item.cf2_id : id
       newShowIds += `id-${newId},`
@@ -79,12 +76,21 @@ const button = data => {
 
   if (element.content.hideIds) {
     element.content.hideIds.split(',').forEach(id => {
-      console.log(id, 'hide id')
       const item = app.idList.find(item => item.cf1_id === id)
       const newId = item ? item.cf2_id : id
-      console.log(newId, 'new id')
       newHideIds += `id-${newId},`
     })
+  }
+
+  let href = element.content.href
+
+  if (href.includes('#scroll-')) {
+    let scrollId = href.replace('#scroll-', '')
+    scrollId = decodeURIComponent(scrollId)
+    const scrollItem = app.idList.find(item => item.cf1_id === scrollId)
+    const newScrollId = scrollItem ? scrollItem.cf2_id : id
+    href = `#scroll-${newScrollId}`
+    console.log(href, scrollId, 'hey')
   }
 
   newShowIds = newShowIds.slice(0, -1)
@@ -92,7 +98,7 @@ const button = data => {
 
   output.params = {
     buttonState: 'default',
-    href: element.content.href,
+    href: href,
     target: element.content.target || '_self',
     'margin-top--unit': 'px',
     'margin-right--unit': 'px',
