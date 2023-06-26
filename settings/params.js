@@ -81,35 +81,35 @@ const params = (css, type = null, id = null, params = {}) => {
     data['--style-background-position'] = `${position.horizontal} ${position.vertical} !important`
   }
 
-  if (type === 'section') {
-    const paddingLeft = document.querySelector(`.container[id="${id}"] .containerInner`).style.paddingLeft
-    if (paddingLeft) {
-      data['--style-padding-horizontal'] = parseInt(paddingLeft)
-    }
-  } else if (type === 'column') {
-    if (css['padding-left'] !== undefined) {
-      data['--style-margin-horizontal'] = parseInt(css['margin-left'])
-      data['--style-padding-horizontal'] = parseInt(css['padding-left'])
-    }
-  } else if (type === 'headline') {
-    if (document.querySelector(`.elHeadlineWrapper[id="${id}"]`)) {
-      const paddingLeft = document.querySelector(`.elHeadlineWrapper[id="${id}"]`).style.paddingLeft
-      data['--style-padding-horizontal'] = parseInt(paddingLeft) || 0
-    } else {
-      data['--style-padding-horizontal'] = parseInt(css['padding-left'])
-    }
-  } else if (type === 'input') {
-    if (document.querySelector(`.elInputWrapper[id="${id}"] elInput`)) {
-      const paddingLeft = document.querySelector(`.elInputWrapper[id="${id}"] elInput`).style.paddingLeft
-      data['--style-padding-horizontal'] = parseInt(paddingLeft) || 0
-    } else {
-      data['--style-padding-horizontal'] = parseInt(css['padding-left'])
-    }
-  } else {
-    if (css['padding-left'] !== undefined) {
-      data['--style-padding-horizontal'] = parseInt(css['padding-left'])
-    }
-  }
+  // if (type === 'section') {
+  //   const paddingLeft = document.querySelector(`.container[id="${id}"] .containerInner`).style.paddingLeft
+  //   if (paddingLeft) {
+  //     data['--style-padding-horizontal'] = parseInt(paddingLeft)
+  //   }
+  // } else if (type === 'column') {
+  //   if (css['padding-left'] !== undefined) {
+  //     data['--style-margin-horizontal'] = parseInt(css['margin-left'])
+  //     data['--style-padding-horizontal'] = parseInt(css['padding-left'])
+  //   }
+  // } else if (type === 'headline') {
+  //   if (document.querySelector(`.elHeadlineWrapper[id="${id}"]`)) {
+  //     const paddingLeft = document.querySelector(`.elHeadlineWrapper[id="${id}"]`).style.paddingLeft
+  //     data['--style-padding-horizontal'] = parseInt(paddingLeft) || 0
+  //   } else {
+  //     data['--style-padding-horizontal'] = parseInt(css['padding-left'])
+  //   }
+  // } else if (type === 'input') {
+  //   if (document.querySelector(`.elInputWrapper[id="${id}"] elInput`)) {
+  //     const paddingLeft = document.querySelector(`.elInputWrapper[id="${id}"] elInput`).style.paddingLeft
+  //     data['--style-padding-horizontal'] = parseInt(paddingLeft) || 0
+  //   } else {
+  //     data['--style-padding-horizontal'] = parseInt(css['padding-left'])
+  //   }
+  // } else {
+  //   if (css['padding-left'] !== undefined) {
+  //     data['--style-padding-horizontal'] = parseInt(css['padding-left'])
+  //   }
+  // }
 
   if (css['box-shadow']) {
     const boxShadow = css['box-shadow']
