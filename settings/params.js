@@ -1,4 +1,4 @@
-const params = (css, type = null, id = null, params = {}, subType = null) => {
+const params = (css, type = null, id = null, params = {}) => {
   if (css === undefined || css === null) return false
 
   const borderRadiusCorner = properties.borderRadius(css, 'check')
@@ -109,10 +109,6 @@ const params = (css, type = null, id = null, params = {}, subType = null) => {
     if (css['padding-left'] !== undefined) {
       data['--style-padding-horizontal'] = parseInt(css['padding-left'])
     }
-  }
-
-  if (subType === 'image') {
-    console.log('IMAGE', { ...data, ...params })
   }
 
   if (css['box-shadow']) {
