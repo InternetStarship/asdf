@@ -129,6 +129,7 @@ const properties = {
         'box-shadow',
         'text-shadow',
         'z-index',
+        'display',
       ]
 
       for (let index = 0; index < computed.length; index++) {
