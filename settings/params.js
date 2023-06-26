@@ -3,7 +3,7 @@ const params = (css, type = null, id = null, params = {}) => {
 
   const borderRadiusCorner = properties.borderRadius(css, 'check')
   const data = {
-    '--style-padding-horizontal--unit': checkParamType(css['padding-left']),
+    // '--style-padding-horizontal--unit': checkParamType(css['padding-left']),
     'margin-top--unit': checkParamType(css['margin-top']),
     'padding-top--unit': checkParamType(css['padding-top']),
     'padding-bottom--unit': checkParamType(css['padding-bottom']),
@@ -22,7 +22,7 @@ const params = (css, type = null, id = null, params = {}) => {
     'border-left-width--unit': checkParamType(css['border-left-width']),
     'border-right-width--unit': checkParamType(css['border-right-width']),
     'border-width--unit': checkParamType(css['border-width']),
-    '--style-margin-horizontal--unit': checkParamType(css['margin-left'] || css['margin-right']),
+    // '--style-margin-horizontal--unit': checkParamType(css['margin-left'] || css['margin-right']),
     'width--unit': checkParamType(css['width']),
     'letter-spacing--unit': checkParamType(css['letter-spacing']),
     'line-height--unit': checkParamType(css['line-height']),
