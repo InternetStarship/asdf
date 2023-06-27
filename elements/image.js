@@ -12,6 +12,12 @@ const image = data => {
     'padding-bottom--unit': 'px',
     'padding-left--unit': 'px',
     'padding-right--unit': 'px',
+    imageUrl: [
+      {
+        type: 'text',
+        innerText: element.content.src,
+      },
+    ],
   }
 
   output.params = Object.assign(output.params, theParams)
@@ -47,7 +53,7 @@ const image = data => {
             innerText: element.content.src,
           },
         ],
-        imageUrl: [{ type: 'text', innerText: element.content.src }],
+
         'data-blurry-image-enabled': false,
         style: {
           width: parseInt(element.content.width),
