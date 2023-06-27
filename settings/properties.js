@@ -163,6 +163,10 @@ const properties = {
 
     return {
       'border-width': borderWidth[0] || borderWidth[1] || borderWidth[2] || borderWidth[3],
+      'border-top-width': top,
+      'border-bottom-width': bottom,
+      'border-left-width': left,
+      'border-right-width': right,
     }
   },
 
