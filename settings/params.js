@@ -159,19 +159,19 @@ const params = (css, type = null, id = null, params = {}) => {
   // }
 
   if (borderWidth['border-bottom-width']) {
-    data['--style-border-bottom-width'] = borderWidth['border-bottom-width']
+    data['--style-border-bottom-width'] = `${parseInt(borderWidth['border-bottom-width'])}px`
   }
 
   if (borderWidth['border-top-width']) {
-    data['--style-border-top-width'] = borderWidth['border-top-width']
+    data['--style-border-top-width'] = `${parseInt(borderWidth['border-top-width'])}px`
   }
 
   if (borderWidth['border-left-width']) {
-    data['--style-border-left-width'] = borderWidth['border-left-width']
+    data['--style-border-left-width'] = `${parseInt(borderWidth['border-left-width'])}px`
   }
 
   if (borderWidth['border-right-width']) {
-    data['--style-border-right-width'] = borderWidth['border-right-width']
+    data['--style-border-right-width'] = `${parseInt(borderWidth['border-right-width'])}px`
   }
 
   if (parseInt(css['border-bottom-width']) === 0) {
