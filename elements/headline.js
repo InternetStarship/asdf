@@ -182,7 +182,7 @@ const headlineUtils = {
     const underline = dom.querySelector('u')
     const span = dom.querySelector('span')
 
-    if (link && link.textContent.trim() !== '') {
+    if (link && link.textContent !== '') {
       const linkId = app.makeId()
       const linkAId = app.makeId()
       const linkTextId = app.makeId()
@@ -211,7 +211,7 @@ const headlineUtils = {
             children: [
               {
                 type: 'text',
-                innerText: link.textContent.trim() + ' ',
+                innerText: link.textContent + ' ',
                 id: linkTextId,
                 version: 0,
                 parentId: linkAId,
@@ -223,7 +223,7 @@ const headlineUtils = {
       }
     }
 
-    if (bold && bold.textContent.trim() !== '') {
+    if (bold && bold.textContent !== '') {
       const boldId = app.makeId()
       const boldTextId = app.makeId()
       const boldBId = app.makeId()
@@ -245,7 +245,7 @@ const headlineUtils = {
             children: [
               {
                 type: 'text',
-                innerText: bold.textContent.trim() + ' ',
+                innerText: bold.textContent + ' ',
                 id: boldTextId,
                 version: 0,
                 parentId: boldBId,
@@ -257,7 +257,7 @@ const headlineUtils = {
       }
     }
 
-    if (strong && strong.textContent.trim() !== '') {
+    if (strong && strong.textContent !== '') {
       const strongId = app.makeId()
       const strongTextId = app.makeId()
       const strongBId = app.makeId()
@@ -279,7 +279,7 @@ const headlineUtils = {
             children: [
               {
                 type: 'text',
-                innerText: strong.textContent.trim() + ' ',
+                innerText: strong.textContent + ' ',
                 id: strongTextId,
                 version: 0,
                 parentId: strongBId,
@@ -291,7 +291,7 @@ const headlineUtils = {
       }
     }
 
-    if (underline && underline.textContent.trim() !== '') {
+    if (underline && underline.textContent !== '') {
       const underlineId = app.makeId()
       const underlineUId = app.makeId()
       const underlineTextId = app.makeId()
@@ -313,7 +313,7 @@ const headlineUtils = {
             children: [
               {
                 type: 'text',
-                innerText: underline.textContent.trim() + ' ',
+                innerText: underline.textContent + ' ',
                 id: underlineTextId,
                 version: 0,
                 parentId: underlineUId,
@@ -325,7 +325,7 @@ const headlineUtils = {
       }
     }
 
-    if (italic && italic.textContent.trim() !== '') {
+    if (italic && italic.textContent !== '') {
       const italicId = app.makeId()
       const italicUId = app.makeId()
       const italicTextId = app.makeId()
@@ -347,7 +347,7 @@ const headlineUtils = {
             children: [
               {
                 type: 'text',
-                innerText: italic.textContent.trim() + ' ',
+                innerText: italic.textContent + ' ',
                 id: italicTextId,
                 version: 0,
                 parentId: italicUId,
@@ -359,7 +359,7 @@ const headlineUtils = {
       }
     }
 
-    if (strike && strike.textContent.trim() !== '') {
+    if (strike && strike.textContent !== '') {
       const strikeId = app.makeId()
       const strikeUId = app.makeId()
       const strikeTextId = app.makeId()
@@ -381,7 +381,7 @@ const headlineUtils = {
             children: [
               {
                 type: 'text',
-                innerText: strike.textContent.trim() + ' ',
+                innerText: strike.textContent + ' ',
                 id: strikeTextId,
                 version: 0,
                 parentId: strikeUId,
@@ -393,7 +393,7 @@ const headlineUtils = {
       }
     }
 
-    if (span && span.textContent.trim() !== '') {
+    if (span && span.textContent !== '') {
       const spanId = app.makeId()
       const spanTextId = app.makeId()
       return {
@@ -406,7 +406,7 @@ const headlineUtils = {
         children: [
           {
             type: 'text',
-            innerText: span.textContent.trim() + ' ',
+            innerText: span.textContent + ' ',
             id: spanTextId,
             version: 0,
             parentId: spanId,
