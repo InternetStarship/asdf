@@ -84,10 +84,6 @@ const app = {
   },
 
   convertBackgroundPositionClassName: (backgroundClasses, callback) => {
-    if (!(backgroundClasses instanceof Set) || typeof callback !== 'function') {
-      throw new Error('Invalid arguments')
-    }
-
     const classesMap = {
       bgCover: 'bgCoverV2',
       bgCover100: 'bgW100',
