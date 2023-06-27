@@ -130,6 +130,7 @@ const properties = {
         'text-shadow',
         'z-index',
         'display',
+        'opacity',
       ]
 
       for (let index = 0; index < computed.length; index++) {
