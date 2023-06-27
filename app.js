@@ -83,7 +83,7 @@ const app = {
     return output
   },
 
-  convertBackgroundPositionClassName: (columnId, callback) => {
+  convertBackgroundPositionClassName: (backgroundClasses, callback) => {
     const classesMap = {
       bgCover: 'bgCoverV2',
       bgCover100: 'bgW100',
@@ -93,18 +93,15 @@ const app = {
       bgRepeatXBottom: 'bgRepeatX',
     }
 
-    const element = document.querySelector(`[id="${columnId}"]`)
-    const backgroundClasses = [...element.classList] // Convert DOMTokenList to array
+    // convert DOMTokenList to an array
+    const bgClassesArray = Array.from(backgroundClasses)
 
-    for (let i = 0; i < backgroundClasses.length; i++) {
-      let className = backgroundClasses[i]
-      if (classesMap.hasOwnProperty(className)) {
-        element.classList.remove(className)
-        element.classList.add(classesMap[className])
+    for (let classic in classesMap) {
+      if (bgClassesArray.includes(classic)) {
+        callback(classesMap[classic])
+        return
       }
     }
-
-    callback([...element.classList])
   },
 
   checkImagesLoaded: (parentSelector, callback) => {
