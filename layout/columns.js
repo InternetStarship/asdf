@@ -35,13 +35,14 @@ const columns = (columns, parentId) => {
             'padding-right': columnContainer.style.paddingRight || 0,
           },
         },
+        params: params(column.css, 'column', column.id),
         id: id,
         version: 0,
         parentId: parentId,
         fractionalIndex: `a${index}`,
         selectors: {
           '& > .col-inner': {
-            params: params(columnCSS, 'column', column.id),
+            // params: params(columnCSS, 'column', column.id),
             attrs: {
               className: `${backgroundPosition}`,
               style: {

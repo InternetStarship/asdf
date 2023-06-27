@@ -194,6 +194,7 @@ const properties = {
     let color = top
 
     borderColor.forEach(item => {
+      // default border color in classic, check for any other color, otherwise default to top.
       if (item !== 'rgb(47, 47, 47)') {
         color = item
       }
