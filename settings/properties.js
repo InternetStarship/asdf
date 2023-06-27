@@ -191,6 +191,9 @@ const properties = {
     const right = css['border-right-color']
     const borderColor = [top, bottom, left, right]
 
+    console.log({
+      'border-color': borderColor[0] || borderColor[1] || borderColor[2] || borderColor[3],
+    })
     return {
       'border-color': borderColor[0] || borderColor[1] || borderColor[2] || borderColor[3],
     }
