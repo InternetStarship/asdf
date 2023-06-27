@@ -27,7 +27,7 @@ const image = data => {
       'padding-right': parseInt(css['padding-right']) || 0,
       'background-color': css['background-color'],
       'z-index': parseInt(css['z-index']) || 0,
-      opacity: parseInt(css['opacity']) || 1,
+      opacity: parseFloat(css['opacity']) || 1,
     },
     'data-skip-corners-settings': 'false',
     'data-skip-borders-settings': 'false',
