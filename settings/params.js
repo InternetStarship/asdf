@@ -152,7 +152,8 @@ const params = (css, type = null, id = null, params = {}) => {
 
   const borderStyle = properties.borderStyle(css)
   if (borderStyle['border-style']) {
-    data['--style-border-style'] = borderStyle['border-style']
+    data['--style-border-style'] =
+      borderStyle['border-style'] === 'none' ? 'solid' : borderStyle['border-style']
   } else {
     data['--style-border-style'] = 'solid'
   }
