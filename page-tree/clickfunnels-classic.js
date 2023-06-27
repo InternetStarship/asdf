@@ -44,7 +44,7 @@ const clickfunnels_classic_page_tree = {
         type: 'column',
         title: column.dataset.title,
         id: column.id,
-        css: properties.css(column.id),
+        css: properties.css(column.id, 'column'),
         size: app.columnSize(column),
         elements: clickfunnels_classic_page_tree.elements(column),
       })
