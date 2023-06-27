@@ -85,7 +85,7 @@ const app = {
 
   convertBackgroundPositionClassName: (backgroundClasses, callback) => {
     const classic_classnames = ['bgCover', 'bgCover100', 'bgNoRepeat', 'bgRepeat', 'bgRepeatX', 'bgRepeatY']
-    const cf2_classnames = ['bgCoverCenter', 'bgW100', 'bgNoRepeat', 'bgRepeat', 'bgRepeatX', 'bgRepeatY']
+    const cf2_classnames = ['bgCoverV2', 'bgW100', 'bgNoRepeat', 'bgRepeat', 'bgRepeatX', 'bgRepeatY']
 
     classic_classnames.forEach((item, index) => {
       if (backgroundClasses.contains(item)) {
