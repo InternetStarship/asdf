@@ -159,19 +159,19 @@ const params = (css, type = null, id = null, params = {}) => {
   }
 
   if (parseInt(css['border-bottom-width']) === 0) {
-    data['--style-border-bottom'] = '0px'
+    data['--style-border-bottom-width'] = '0px'
   }
 
   if (parseInt(css['border-top-width']) === 0) {
-    data['--style-border-top'] = '0px'
+    data['--style-border-top-widt'] = '0px'
   }
 
   if (parseInt(css['border-left-width']) === 0) {
-    data['--style-border-left'] = '0px'
+    data['--style-border-left-widt'] = '0px'
   }
 
   if (parseInt(css['border-right-width']) === 0) {
-    data['--style-border-right'] = '0px'
+    data['--style-border-right-widt'] = '0px'
   }
 
   return { ...data, ...params }
