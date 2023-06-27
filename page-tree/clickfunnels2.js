@@ -83,6 +83,12 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
     }
 
     backgroundAttrs['style']['background-position'] = `${data.horizontal} ${data.vertical} !important`
+
+    if (backgroundClasses.contains('bgRepeatXBottom')) {
+      backgroundAttrs['style']['background-position'] = `bottom !important`
+    } else if (backgroundClasses.contains('bgRepeatXTop')) {
+      backgroundAttrs['style']['background-position'] = `top !important`
+    }
   }
 
   app.convertBackgroundPositionClassName(backgroundClasses, className => {

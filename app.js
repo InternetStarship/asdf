@@ -84,14 +84,25 @@ const app = {
   },
 
   convertBackgroundPositionClassName: (backgroundClasses, callback) => {
-    const classic_classnames = ['bgCover', 'bgCover100', 'bgNoRepeat', 'bgRepeat', 'bgRepeatX', 'bgRepeatY']
-    const cf2_classnames = ['bgCoverV2', 'bgW100', 'bgNoRepeat', 'bgRepeat', 'bgRepeatX', 'bgRepeatY']
+    if (!(backgroundClasses instanceof Set) || typeof callback !== 'function') {
+      throw new Error('Invalid arguments')
+    }
 
-    classic_classnames.forEach((item, index) => {
-      if (backgroundClasses.contains(item)) {
-        callback(cf2_classnames[index])
+    const classesMap = {
+      bgCover: 'bgCoverV2',
+      bgCover100: 'bgW100',
+      bgNoRepeat: 'bgNoRepeat',
+      bgRepeat: 'bgRepeat',
+      bgRepeatXTop: 'bgRepeatX',
+      bgRepeatXBottom: 'bgRepeatX',
+    }
+
+    for (let classic in classesMap) {
+      if (backgroundClasses.has(classic)) {
+        callback(classesMap[classic])
+        return
       }
-    })
+    }
   },
 
   checkImagesLoaded: (parentSelector, callback) => {
