@@ -35,7 +35,7 @@ const image = data => {
       'z-index': parseInt(css['z-index']) || 0,
       opacity: parseFloat(css['opacity']) || 1,
       width: parseInt(element.content.width),
-      height: parseInt(element.content.height),
+      height: 'auto',
     },
     'data-skip-corners-settings': 'false',
     'data-skip-borders-settings': 'false',
