@@ -64,7 +64,7 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
       }
 
       if (parseInt(checkCSS[0]) === 0) {
-        data.vertical = 'top'
+        data.vertical = ''
       }
     }
 
@@ -78,7 +78,7 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
       }
 
       if (parseInt(checkCSS[1]) === 0) {
-        data.horizontal = 'center'
+        data.horizontal = ''
       }
     }
 
