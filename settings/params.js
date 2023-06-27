@@ -179,15 +179,15 @@ const params = (css, type = null, id = null, params = {}) => {
   }
 
   if (parseInt(css['border-top-width']) === 0) {
-    data['--style-border-top-widt'] = '0px'
+    data['--style-border-top-width'] = '0px'
   }
 
   if (parseInt(css['border-left-width']) === 0) {
-    data['--style-border-left-widt'] = '0px'
+    data['--style-border-left-width'] = '0px'
   }
 
   if (parseInt(css['border-right-width']) === 0) {
-    data['--style-border-right-widt'] = '0px'
+    data['--style-border-right-width'] = '0px'
   }
 
   return { ...data, ...params }
