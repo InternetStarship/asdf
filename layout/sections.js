@@ -44,6 +44,7 @@ const sections = (sections, parentId) => {
           'data-skip-background-settings': 'false',
           'data-skip-shadow-settings': 'false',
           'data-skip-corners-settings': 'false',
+          'data-skip-borders-settings': 'false',
         },
         params: params(section.css, 'section', section.id),
         id: id,

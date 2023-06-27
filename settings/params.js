@@ -146,12 +146,18 @@ const params = (css, type = null, id = null, params = {}) => {
   const borderColor = properties.borderColor(css)
   if (borderColor['border-color']) {
     data['--style-border-color'] = borderColor['border-color']
+  } else {
+    data['--style-border-color'] = 'transparent'
   }
 
   const borderStyle = properties.borderStyle(css)
   if (borderStyle['border-style']) {
     data['--style-border-style'] = borderStyle['border-style']
+  } else {
+    data['--style-border-style'] = 'solid'
   }
+
+  console.log(borderStyle['border-style'], borderColor['border-color'], type, 'check me')
 
   const borderWidth = properties.borderWidth(css)
   // if (borderWidth['border-width']) {
@@ -160,35 +166,45 @@ const params = (css, type = null, id = null, params = {}) => {
 
   if (borderWidth['border-bottom-width']) {
     data['--style-border-bottom-width'] = `${parseInt(borderWidth['border-bottom-width'])}px`
+  } else {
+    data['--style-border-bottom-width'] = '0px'
   }
 
   if (borderWidth['border-top-width']) {
     data['--style-border-top-width'] = `${parseInt(borderWidth['border-top-width'])}px`
+  } else {
+    data['--style-border-top-width'] = '0px'
   }
 
   if (borderWidth['border-left-width']) {
     data['--style-border-left-width'] = `${parseInt(borderWidth['border-left-width'])}px`
+  } else {
+    data['--style-border-left-width'] = '0px'
   }
 
   if (borderWidth['border-right-width']) {
     data['--style-border-right-width'] = `${parseInt(borderWidth['border-right-width'])}px`
-  }
-
-  if (parseInt(css['border-bottom-width']) === 0) {
-    data['--style-border-bottom-width'] = '0px'
-  }
-
-  if (parseInt(css['border-top-width']) === 0) {
-    data['--style-border-top-width'] = '0px'
-  }
-
-  if (parseInt(css['border-left-width']) === 0) {
-    data['--style-border-left-width'] = '0px'
-  }
-
-  if (parseInt(css['border-right-width']) === 0) {
+  } else {
     data['--style-border-right-width'] = '0px'
   }
+
+  // // check if 0 and make 0px
+
+  // if (parseInt(css['border-bottom-width']) === 0) {
+  //   data['--style-border-bottom-width'] = '0px'
+  // }
+
+  // if (parseInt(css['border-top-width']) === 0) {
+  //   data['--style-border-top-width'] = '0px'
+  // }
+
+  // if (parseInt(css['border-left-width']) === 0) {
+  //   data['--style-border-left-width'] = '0px'
+  // }
+
+  // if (parseInt(css['border-right-width']) === 0) {
+  //   data['--style-border-right-width'] = '0px'
+  // }
 
   return { ...data, ...params }
 }
