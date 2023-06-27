@@ -30,6 +30,10 @@ const params = (css, type = null, id = null, params = {}) => {
     'separate-corners': !borderRadiusCorner,
   }
 
+  if (type === 'column') {
+    console.log('column', css['background-color'])
+  }
+
   if (css['background-color'] !== undefined) {
     data['--style-background-color'] = css['background-color']
   }
