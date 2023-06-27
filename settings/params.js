@@ -158,10 +158,6 @@ const params = (css, type = null, id = null, params = {}) => {
     data['--style-border-style'] = 'solid'
   }
 
-  if (type === 'row') {
-    console.log(borderStyle['border-style'], borderColor['border-color'], type, 'check me')
-  }
-
   const borderWidth = properties.borderWidth(css)
   // if (borderWidth['border-width']) {
   //   data['--style-border-width'] = borderWidth['border-width']

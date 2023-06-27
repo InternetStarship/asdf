@@ -3,7 +3,7 @@ const properties = {
     let dom
 
     if (type === 'column') {
-      dom = document.querySelector(`.containerWrapper #${elementId}`)
+      dom = document.querySelector(`.containerWrapper #${elementId} .col-inner`)
     } else if (type === 'image') {
       dom = document.querySelector(`#${elementId} img`)
     } else if (type === 'icon') {
