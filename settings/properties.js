@@ -191,11 +191,16 @@ const properties = {
     const right = css['border-right-color']
     const borderColor = [top, bottom, left, right]
 
-    console.log({
-      'border-color': borderColor[0] || borderColor[1] || borderColor[2] || borderColor[3],
+    let color = top
+
+    borderColor.forEach(item => {
+      if (item !== 'rgb(47, 47, 47)') {
+        color = item
+      }
     })
+
     return {
-      'border-color': borderColor[0] || borderColor[1] || borderColor[2] || borderColor[3],
+      'border-color': color,
     }
   },
 

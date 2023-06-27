@@ -158,7 +158,7 @@ const params = (css, type = null, id = null, params = {}) => {
     data['--style-border-style'] = 'solid'
   }
 
-  if (type === 'section') {
+  if (type === 'row') {
     console.log(borderStyle['border-style'], borderColor['border-color'], type, 'check me')
   }
 
