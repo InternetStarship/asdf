@@ -12,7 +12,6 @@ const image = data => {
     'padding-bottom--unit': 'px',
     'padding-left--unit': 'px',
     'padding-right--unit': 'px',
-    'filter-grayscale': 0,
   }
 
   output.params = Object.assign(output.params, theParams)
@@ -46,10 +45,12 @@ const image = data => {
             innerText: element.content.src,
           },
         ],
+        imageUrl: [{ type: 'text', innerText: element.content.src }],
         'data-blurry-image-enabled': false,
         style: {
           width: parseInt(element.content.width),
           height: parseInt(element.content.height),
+          'filter-grayscale': 0.8,
           'object-fit': 'fill',
           'object-position': 'center',
           'max-width': '100%',
@@ -59,6 +60,7 @@ const image = data => {
           '-moz-box-sizing': 'border-box',
           'box-sizing': 'border-box',
         },
+
         'data-lazy-loading': 'false',
         'data-image-quality': 100,
       },
