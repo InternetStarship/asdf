@@ -154,8 +154,24 @@ const params = (css, type = null, id = null, params = {}) => {
   }
 
   const borderWidth = properties.borderWidth(css)
-  if (borderWidth['border-width']) {
-    data['--style-border-width'] = borderWidth['border-width']
+  // if (borderWidth['border-width']) {
+  //   data['--style-border-width'] = borderWidth['border-width']
+  // }
+
+  if (borderWidth['border-bottom-width']) {
+    data['--style-border-bottom-width'] = borderWidth['border-bottom-width']
+  }
+
+  if (borderWidth['border-top-width']) {
+    data['--style-border-top-width'] = borderWidth['border-top-width']
+  }
+
+  if (borderWidth['border-left-width']) {
+    data['--style-border-left-width'] = borderWidth['border-left-width']
+  }
+
+  if (borderWidth['border-right-width']) {
+    data['--style-border-right-width'] = borderWidth['border-right-width']
   }
 
   if (parseInt(css['border-bottom-width']) === 0) {
