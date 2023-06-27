@@ -29,6 +29,8 @@ const rows = (rows, parentId) => {
             'margin-top': parseInt(row.css['margin-top']) || 0,
             'padding-top': parseInt(row.css['padding-top']) || 0,
             'padding-bottom': parseInt(row.css['padding-bottom']) || 0,
+            'padding-left': parseInt(row.css['padding-left']) || 0,
+            'padding-right': parseInt(row.css['padding-right']) || 0,
             position: row.css['position'] || 'relative',
             'z-index': parseInt(row.css['z-index']) || 0,
           },
