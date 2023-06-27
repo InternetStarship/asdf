@@ -94,7 +94,7 @@ const app = {
     }
 
     for (let classic in classesMap) {
-      if (backgroundClasses.has(classic)) {
+      if (backgroundClasses.includes(classic)) {
         callback(classesMap[classic])
         return
       }
