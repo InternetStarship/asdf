@@ -88,6 +88,8 @@ const headline = (
       'margin-top': parseInt(element.css['margin-top']) || 0,
       'padding-top': parseInt(css['padding-top']) || 0,
       'padding-bottom': parseInt(css['padding-bottom']) || 0,
+      'padding-left': parseInt(css['padding-left']) || 0,
+      'padding-right': parseInt(css['padding-right']) || 0,
       position: css['position'] || 'relative',
       'z-index': parseInt(css['z-index']) || 0,
     },
