@@ -100,8 +100,8 @@ const headline = (
         style: {
           'font-family': css['font-family'],
           'font-weight': fontWeight,
-          'letter-spacing': parseInt(css['letter-spacing']) || 0,
-          'line-height': 'normal',
+          'letter-spacing': css['letter-spacing'] || 0,
+          'line-height': css['line-height'] || 0,
           'font-size': parseInt(css['font-size']) || 26,
           color: css['color'],
           'text-transform': css['text-transform'],

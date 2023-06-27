@@ -93,7 +93,6 @@ const app = {
       bgRepeatXBottom: 'bgRepeatX',
     }
 
-    // convert DOMTokenList to an array
     const bgClassesArray = Array.from(backgroundClasses)
 
     for (let classic in classesMap) {
