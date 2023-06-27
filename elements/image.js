@@ -50,7 +50,7 @@ const image = data => {
         style: {
           width: parseInt(element.content.width),
           height: parseInt(element.content.height),
-          'filter-grayscale': 0.8,
+          filter: css['filter'] || 'none',
           'object-fit': 'fill',
           'object-position': 'center',
           'max-width': '100%',

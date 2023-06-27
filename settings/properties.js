@@ -131,6 +131,7 @@ const properties = {
         'z-index',
         'display',
         'opacity',
+        'filter',
       ]
 
       for (let index = 0; index < computed.length; index++) {
