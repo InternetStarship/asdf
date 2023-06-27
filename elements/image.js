@@ -12,6 +12,7 @@ const image = data => {
     'padding-bottom--unit': 'px',
     'padding-left--unit': 'px',
     'padding-right--unit': 'px',
+    'filter-grayscale': 0,
   }
 
   output.params = Object.assign(output.params, theParams)
