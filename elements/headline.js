@@ -26,7 +26,9 @@ const headline = (
       document.querySelector(`#${element.id} .elHeadline b`) &&
       document.querySelector(`style#bold_style_${element.id}`)
     ) {
-      const boldColorStyle = document.querySelector(`style#bold_style_${element.id}`).textContent.replace(/ /g, '&nbsp;')
+      const boldColorStyle = document
+        .querySelector(`style#bold_style_${element.id}`)
+        .textContent.replace(/ /g, '&nbsp;')
       boldColor = boldColorStyle.split('color:')[1].replace(';', '').replace('}', '').trim()
     }
   } else {
@@ -160,7 +162,7 @@ const headlineUtils = {
     for (let i = 0; i < nodes.length; i++) {
       if (nodes[i].nodeType == 3) {
         const span = document.createElement('span')
-        span.textContent.replace(/ /g, '&nbsp;') = nodes[i].textContent.replace(/ /g, '&nbsp;')
+        span.textContent = nodes[i].textContent.replace(/ /g, '&nbsp;')
         dom.replaceChild(span, nodes[i])
       }
     }
