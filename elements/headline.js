@@ -260,6 +260,7 @@ const headlineUtils = {
           version: 0,
           parentId: parentId,
           fractionalIndex: `a${fractionalIndexCounter++}`,
+          innerText: node.textContent.trim(),
         }
         if (tagName === 'a') {
           nodeData.attrs = {
