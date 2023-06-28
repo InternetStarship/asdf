@@ -67,6 +67,7 @@ const headline = (
           'margin-right': parseInt(cssPrepend['margin-right']) || 0,
           'font-size': parseInt(cssPrepend['font-size']) || 0,
           color: cssPrepend['color'],
+          width: 'auto',
         },
       },
       params: {
