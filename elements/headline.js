@@ -40,7 +40,9 @@ const headline = (
         })
       } else {
         // console.log(node.outerHTML)
-        children.push(headlineUtils.parser(node.outerHTML, contentEditableNodeId, index, element.css))
+        const child = headlineUtils.parser(node.outerHTML, contentEditableNodeId, index, element.css)
+        console.log(child, node.outerHTML, contentEditableNodeId)
+        children.push(child)
       }
     })
 
