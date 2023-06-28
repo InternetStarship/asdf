@@ -84,8 +84,59 @@ const clickfunnels_classic_page_tree = {
         visible: app.checkVisibility(dom),
         text: element.textContent,
         html: element.innerHTML,
+        json: htmlToJson(element.innerHTML),
       }
+
+      console.log('headline json', json)
       return data
+    }
+
+    function htmlToJson(htmlString) {
+      const parser = new DOMParser()
+      const doc = parser.parseFromString(htmlString, 'text/html')
+      const divs = Array.from(doc.body.childNodes).filter(node => node.nodeType === Node.ELEMENT_NODE)
+      let results = []
+
+      function processElement(element, parentTag = '') {
+        const tagName = element.tagName.toLowerCase()
+
+        if (tagName === 'br') {
+          results.push({
+            type: 'br',
+            content: '',
+            nested: parentTag,
+          })
+          return
+        }
+
+        const nested = parentTag ? `${parentTag}>${tagName}` : tagName
+
+        if (tagName === 'div') {
+          if (element.childNodes.length > 0) {
+            Array.from(element.childNodes).forEach(child => {
+              processElement(child, nested)
+            })
+          } else {
+            results.push({
+              type: 'text',
+              content: element.innerText,
+              nested: nested,
+            })
+          }
+        } else if (['b', 'i', 'u', 'strike', 'a'].includes(tagName)) {
+          results.push({
+            type: tagName,
+            content: element.innerText,
+            nested: nested,
+          })
+          Array.from(element.childNodes).forEach(child => {
+            processElement(child, nested)
+          })
+        }
+      }
+
+      divs.forEach(div => processElement(div))
+      return results
     }
 
     if (dom.getAttribute('data-de-type') === 'quote') {
