@@ -66,6 +66,8 @@ const headline = (
       }
     })
 
+    children = finalObjectArray
+
     console.log(finalObjectArray)
 
     // dom.querySelectorAll('*').forEach((node, index) => {
