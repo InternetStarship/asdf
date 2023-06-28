@@ -242,25 +242,20 @@ const headlineUtils = {
 
     const createNode = (node, parentId = contentEditableNodeId) => {
       let tagName = node.nodeName.toLowerCase()
-      const nodeId = app.makeId()
-
-      // Handle BR and DIV tags
-      if (tagName === 'br' || tagName === 'div') {
+      if (node.nodeType === 3) {
+        // Text node
+        const nodeId = app.makeId()
         return {
-          type: tagName,
+          type: 'text',
+          innerText: node.nodeValue.trim(),
           id: nodeId,
           version: 0,
           parentId: parentId,
           fractionalIndex: `a${fractionalIndexCounter++}`,
-          innerText: tagName === 'div' ? node.innerText.trim() : '',
         }
-      }
-
-      if (node.nodeType === 3) {
-        // Text node
-        return node.nodeValue.trim()
       } else if (node.nodeType === 1 && allowedTags.includes(tagName)) {
         // HTML Element
+        const nodeId = app.makeId()
         let nodeData = {
           type: tagName,
           id: nodeId,
@@ -282,16 +277,7 @@ const headlineUtils = {
           Array.from(node.childNodes).forEach(childNode => {
             const childData = createNode(childNode, nodeId)
             if (childData) {
-              // If childData is a string, it's a text node and should be added to innerText
-              if (typeof childData === 'string') {
-                if (nodeData.innerText) {
-                  nodeData.innerText += ' ' + childData
-                } else {
-                  nodeData.innerText = childData
-                }
-              } else {
-                nodeData.children.push(childData)
-              }
+              nodeData.children.push(childData)
             }
           })
           if (nodeData.children.length === 0) delete nodeData.children // Delete empty children array
