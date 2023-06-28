@@ -26,8 +26,6 @@ const headline = (
   if (/<\/?[a-z][\s\S]*>/i.test(html)) {
     const dom = app.htmlToDom(html)
 
-    console.log(dom.innerHTML)
-
     dom.querySelectorAll('*').forEach((node, index) => {
       if (node.outerHTML === '<br>') {
         const plainTextId = app.makeId()
@@ -41,7 +39,7 @@ const headline = (
       } else {
         // console.log(node.outerHTML)
         const child = headlineUtils.parser(node.innerHTML, contentEditableNodeId, index, element.css)
-        console.log(child, node.innerHTML, contentEditableNodeId)
+        // console.log(child, node.innerHTML, contentEditableNodeId)
         children.push(child)
       }
     })
@@ -64,6 +62,8 @@ const headline = (
       fractionalIndex: 'a0',
     })
   }
+
+  console.log('children', children)
 
   const borderRadius = properties.borderRadius(element.css)
 
