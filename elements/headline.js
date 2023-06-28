@@ -10,7 +10,7 @@ const headline = (
   // const html = headlineUtils.wrapSpan(element.content.html)
   const css = properties.css(element.id, type)
 
-  console.log(element.content.html, headlineUtils.wrapSpan(element.content.html), elememt.id)
+  console.log(element.content.html, headlineUtils.wrapSpan(element.content.html), element.id)
 
   let children = []
   let fontWeight = css['font-weight']
