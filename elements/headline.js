@@ -193,6 +193,29 @@ const headlineUtils = {
     return output
   },
 
+  wrapSpan: html => {
+    const dom = app.htmlToDom(html.replaceAll(/&nbsp;/g, '').replaceAll(/\n/g, ''))
+    headlineUtils.wrapTextNodes(dom)
+    let output = dom.innerHTML
+    output = output.replaceAll(/\n/g, '').replaceAll(/<span><\/span>/g, '')
+    output = output.replaceAll(/<div><br><\/div>/g, '<br>')
+    return output
+  },
+
+  wrapTextNodes: node => {
+    if (node.nodeType === 3) {
+      // 3 is the nodeType of a Text node
+      const wrapper = document.createElement('div')
+      wrapper.textContent = node.nodeValue
+      node.parentNode.replaceChild(wrapper, node)
+    } else if (node.nodeType === 1) {
+      // 1 is the nodeType of an Element node (like <p>, <div>, etc.)
+      for (let i = 0; i < node.childNodes.length; i++) {
+        headlineUtils.wrapTextNodes(node.childNodes[i])
+      }
+    }
+  },
+
   parse: (parentNode, html, contentEditableNodeId, index, css) => {
     if (parentNode.nodeName !== 'DIV') return false
 
