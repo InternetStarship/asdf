@@ -97,51 +97,34 @@ const clickfunnels_classic_page_tree = {
       const divs = Array.from(doc.body.childNodes).filter(node => node.nodeType === Node.ELEMENT_NODE)
       let results = []
 
-      function processElement(element, parentTag = '') {
+      function processElement(element, parentElement) {
         if (element.nodeType !== Node.ELEMENT_NODE) {
           return
         }
 
         const tagName = element.tagName.toLowerCase()
-        const nested = parentTag ? `${parentTag}>${tagName}` : tagName
 
-        if (tagName === 'div') {
-          if (element.childNodes.length > 0) {
-            Array.from(element.childNodes).forEach(child => {
-              processElement(child, tagName)
-            })
-          } else {
-            results.push({
-              type: 'text',
-              content: element.innerText,
-              nested: false,
-            })
-          }
-        } else if (['b', 'i', 'u', 'strike', 'a'].includes(tagName)) {
-          results.push({
-            type: tagName,
-            content: element.innerText,
-            nested: parentTag || false,
-          })
-          Array.from(element.childNodes).forEach(child => {
-            processElement(child, nested)
-          })
-        } else if (tagName === 'br') {
-          results.push({
-            type: 'br',
-            content: '',
-            nested: parentTag || false,
-          })
-        } else {
-          results.push({
-            type: 'text',
-            content: element.textContent,
-            nested: parentTag || false,
-          })
+        // Create a new JSON object for this element
+        const jsonObject = {
+          type: tagName,
+          content: tagName === 'br' ? '' : element.innerText,
+          children: [],
         }
+
+        // Add the JSON object to its parent's children
+        if (parentElement) {
+          parentElement.children.push(jsonObject)
+        } else {
+          results.push(jsonObject)
+        }
+
+        // Process the children of the current element
+        Array.from(element.childNodes).forEach(child => {
+          processElement(child, jsonObject)
+        })
       }
 
-      divs.forEach(div => processElement(div))
+      divs.forEach(div => processElement(div, null))
       return results
     }
 
