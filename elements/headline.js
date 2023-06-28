@@ -220,7 +220,7 @@ const headlineUtils = {
         // HTML Element
         const nodeId = app.makeId()
         if (tagName === 'div') {
-          tagName = 'text'
+          tagName = 'span'
         }
         let nodeData = {
           type: tagName,
