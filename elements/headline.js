@@ -26,9 +26,7 @@ const headline = (
       document.querySelector(`#${element.id} .elHeadline b`) &&
       document.querySelector(`style#bold_style_${element.id}`)
     ) {
-      const boldColorStyle = document
-        .querySelector(`style#bold_style_${element.id}`)
-        .textContent.replace(/ /g, '&nbsp;')
+      const boldColorStyle = document.querySelector(`style#bold_style_${element.id}`).textContent
       boldColor = boldColorStyle.split('color:')[1].replace(';', '').replace('}', '').trim()
     }
   } else {
@@ -162,7 +160,7 @@ const headlineUtils = {
     for (let i = 0; i < nodes.length; i++) {
       if (nodes[i].nodeType == 3) {
         const span = document.createElement('span')
-        span.textContent = nodes[i].textContent.replace(/ /g, '&nbsp;')
+        span.textContent = nodes[i].textContent
         dom.replaceChild(span, nodes[i])
       }
     }
@@ -214,7 +212,7 @@ const headlineUtils = {
             children: [
               {
                 type: 'text',
-                innerText: link.textContent.replace(/ /g, '&nbsp;') + ' ',
+                innerText: link.textContent + ' ',
                 id: linkTextId,
                 version: 0,
                 parentId: linkAId,
@@ -226,7 +224,7 @@ const headlineUtils = {
       }
     }
 
-    if (bold && bold.textContent.replace(/ /g, '&nbsp;') !== '') {
+    if (bold && bold.textContent !== '') {
       const boldId = app.makeId()
       const boldTextId = app.makeId()
       const boldBId = app.makeId()
@@ -248,7 +246,7 @@ const headlineUtils = {
             children: [
               {
                 type: 'text',
-                innerText: bold.textContent.replace(/ /g, '&nbsp;') + ' ',
+                innerText: bold.textContent + ' ',
                 id: boldTextId,
                 version: 0,
                 parentId: boldBId,
@@ -282,7 +280,7 @@ const headlineUtils = {
             children: [
               {
                 type: 'text',
-                innerText: strong.textContent.replace(/ /g, '&nbsp;') + ' ',
+                innerText: strong.textContent + ' ',
                 id: strongTextId,
                 version: 0,
                 parentId: strongBId,
@@ -316,7 +314,7 @@ const headlineUtils = {
             children: [
               {
                 type: 'text',
-                innerText: underline.textContent.replace(/ /g, '&nbsp;') + ' ',
+                innerText: underline.textContent + ' ',
                 id: underlineTextId,
                 version: 0,
                 parentId: underlineUId,
@@ -350,7 +348,7 @@ const headlineUtils = {
             children: [
               {
                 type: 'text',
-                innerText: italic.textContent.replace(/ /g, '&nbsp;') + ' ',
+                innerText: italic.textContent + ' ',
                 id: italicTextId,
                 version: 0,
                 parentId: italicUId,
@@ -384,7 +382,7 @@ const headlineUtils = {
             children: [
               {
                 type: 'text',
-                innerText: strike.textContent.replace(/ /g, '&nbsp;') + ' ',
+                innerText: strike.textContent + ' ',
                 id: strikeTextId,
                 version: 0,
                 parentId: strikeUId,
@@ -409,7 +407,7 @@ const headlineUtils = {
         children: [
           {
             type: 'text',
-            innerText: span.textContent.replace(/ /g, '&nbsp;') + ' ',
+            innerText: span.textContent + ' ',
             id: spanTextId,
             version: 0,
             parentId: spanId,
