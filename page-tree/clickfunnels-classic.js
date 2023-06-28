@@ -107,7 +107,6 @@ const clickfunnels_classic_page_tree = {
         // Create a new JSON object for this element
         const jsonObject = {
           type: tagName,
-          content: tagName === 'br' ? '' : element.innerText,
           children: [],
         }
 
@@ -122,6 +121,11 @@ const clickfunnels_classic_page_tree = {
         Array.from(element.childNodes).forEach(child => {
           processElement(child, jsonObject)
         })
+
+        // If the element has no children, add its innerText as content
+        if (jsonObject.children.length === 0) {
+          jsonObject.content = tagName === 'br' ? '' : element.innerText
+        }
       }
 
       divs.forEach(div => processElement(div, null))
