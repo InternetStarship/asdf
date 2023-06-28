@@ -19,6 +19,9 @@ const headline = (
   const html = headlineUtils.addSpanTagsToText(element.content.html)
   const css = properties.css(element.id, type)
 
+  console.log('compare difference original:', element.content.html)
+  console.log('compare difference clean:', html)
+
   // console.log(element.content.html, headlineUtils.wrapSpan(element.content.html), element.id)
 
   let children = []
