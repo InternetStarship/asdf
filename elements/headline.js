@@ -206,14 +206,13 @@ const headlineUtils = {
     const dom = app.htmlToDom(html.replaceAll(/&nbsp;/g, '').replaceAll(/\n/g, ''))
     headlineUtils.wrapTextNodes(dom)
     let output = dom.innerHTML
-    output = output.replaceAll(/\n/g, '').replaceAll(/<span><\/span>/g, '')
-    output = output.replaceAll(/<div><br><\/div>/g, '<br>')
+    output = output.replaceAll(/\n/g, '')
     return output
   },
 
   wrapTextNodes: node => {
-    if (node.nodeType === 3) {
-      const wrapper = document.createElement('div')
+    if (node.nodeType === 3 && node.nodeValue.trim() !== '') {
+      const wrapper = document.createElement('span')
       wrapper.textContent = node.nodeValue
       node.parentNode.replaceChild(wrapper, node)
     } else if (node.nodeType === 1) {
