@@ -98,39 +98,45 @@ const clickfunnels_classic_page_tree = {
       let results = []
 
       function processElement(element, parentTag = '') {
-        const tagName = element.tagName.toLowerCase()
-
-        if (tagName === 'br') {
-          results.push({
-            type: 'br',
-            content: '',
-            nested: parentTag,
-          })
+        if (element.nodeType !== Node.ELEMENT_NODE) {
           return
         }
 
+        const tagName = element.tagName.toLowerCase()
         const nested = parentTag ? `${parentTag}>${tagName}` : tagName
 
         if (tagName === 'div') {
           if (element.childNodes.length > 0) {
             Array.from(element.childNodes).forEach(child => {
-              processElement(child, nested)
+              processElement(child, tagName)
             })
           } else {
             results.push({
               type: 'text',
               content: element.innerText,
-              nested: nested,
+              nested: false,
             })
           }
         } else if (['b', 'i', 'u', 'strike', 'a'].includes(tagName)) {
           results.push({
             type: tagName,
             content: element.innerText,
-            nested: nested,
+            nested: parentTag || false,
           })
           Array.from(element.childNodes).forEach(child => {
             processElement(child, nested)
+          })
+        } else if (tagName === 'br') {
+          results.push({
+            type: 'br',
+            content: '',
+            nested: parentTag || false,
+          })
+        } else {
+          results.push({
+            type: 'text',
+            content: element.textContent,
+            nested: parentTag || false,
           })
         }
       }
