@@ -16,11 +16,11 @@ const headline = (
 
   const output = blueprint(blueprintTitle, data.id, data.parentId, data.index, element)
   const contentEditableNodeId = app.makeId()
-  const html = headlineUtils.addSpanTagsToText(element.content.html)
+  const html = element.content.html //headlineUtils.addSpanTagsToText(element.content.html)
   const css = properties.css(element.id, type)
 
   console.log('compare difference original:', element.content.html)
-  console.log('compare difference clean:', html)
+  console.log('compare difference clean:', headlineUtils.wrapSpan(element.content.html))
 
   // console.log(element.content.html, headlineUtils.wrapSpan(element.content.html), element.id)
 
