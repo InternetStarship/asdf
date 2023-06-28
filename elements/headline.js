@@ -16,13 +16,47 @@ const headline = (
 
   if (/<\/?[a-z][\s\S]*>/i.test(html)) {
     const dom = app.htmlToDom(html)
+
+    const finalObjectArray = []
+    const parseNode = node => {
+      let childrenArray = []
+      for (const child of node.childNodes) {
+        if (child.nodeType === Node.TEXT_NODE) {
+          if (child.textContent.trim() !== '') {
+            childrenArray.push({ type: 'text', innerText: child.textContent.trim() })
+          }
+        } else {
+          let childObject = { type: child.nodeName.toLowerCase() }
+          if (childObject.type === 'br') {
+            childrenArray.push(childObject)
+          } else {
+            const grandChildren = parseNode(child)
+            if (grandChildren.length > 0) {
+              childObject.children = grandChildren
+            } else {
+              childObject.innerText = child.innerText
+            }
+            childrenArray.push(childObject)
+          }
+        }
+      }
+      return childrenArray
+    }
+
     dom.querySelectorAll('*').forEach((node, index) => {
-      console.log(node.outerHTML, 'headline node')
+      const parsedNode = parseNode(node)
+      if (parsedNode.length > 0) {
+        finalObjectArray.push({ type: node.nodeName.toLowerCase(), children: parsedNode })
+      }
+    })
+
+    console.log(finalObjectArray)
+
+    dom.querySelectorAll('*').forEach((node, index) => {
       if (node.outerHTML === '<br>') {
         const plainTextId = app.makeId()
         children.push({
-          type: 'text',
-          innerText: '<br>',
+          type: 'br',
           id: plainTextId,
           version: 0,
           parentId: contentEditableNodeId,
