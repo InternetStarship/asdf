@@ -29,24 +29,6 @@ const headline = (
   let boldColor = ''
 
   if (/<\/?[a-z][\s\S]*>/i.test(html)) {
-    // const dom = app.htmlToDom(html)
-
-    // dom.querySelectorAll('*').forEach((node, index) => {
-    //   if (node.outerHTML === '<br>') {
-    //     const plainTextId = app.makeId()
-    //     children.push({
-    //       type: 'br',
-    //       id: plainTextId,
-    //       version: 0,
-    //       parentId: contentEditableNodeId,
-    //       fractionalIndex: `a${index}`,
-    //     })
-    //   } else {
-    //     const child = headlineUtils.parser(node.outerHTML, contentEditableNodeId, index, element.css)
-    //     children = children.concat(child)
-    //   }
-    // })
-
     const htmlToJSON = (html, contentEditableNodeId) => {
       const dom = app.htmlToDom(html)
       const output = headlineUtils.parser(dom.outerHTML, contentEditableNodeId)
@@ -188,25 +170,6 @@ const headline = (
 }
 
 const headlineUtils = {
-  // wrapSpan: html => {
-  //   const dom = app.htmlToDom(html.replaceAll(/&nbsp;/g, '').replaceAll(/\n/g, ''))
-  //   const nodes = dom.childNodes
-
-  //   for (let i = 0; i < nodes.length; i++) {
-  //     if (nodes[i].nodeType == 3) {
-  //       const span = document.createElement('div')
-  //       span.textContent = nodes[i].textContent
-  //       dom.replaceChild(span, nodes[i])
-  //     }
-  //   }
-
-  //   let output = dom.innerHTML
-  //   output = output.replaceAll(/\n/g, '').replaceAll(/<span><\/span>/g, '')
-  //   output = output.replaceAll(/<div><br><\/div>/g, '<br>')
-
-  //   return output
-  // },
-
   wrapSpan: html => {
     const dom = app.htmlToDom(html.replaceAll(/&nbsp;/g, '').replaceAll(/\n/g, ''))
     headlineUtils.wrapTextNodes(dom)
