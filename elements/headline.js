@@ -256,6 +256,9 @@ const headlineUtils = {
       } else if (node.nodeType === 1 && allowedTags.includes(tagName)) {
         // HTML Element
         const nodeId = app.makeId()
+        if (tagName === 'div') {
+          tagName = 'text'
+        }
         let nodeData = {
           type: tagName,
           id: nodeId,
