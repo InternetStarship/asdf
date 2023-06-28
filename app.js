@@ -91,6 +91,7 @@ const app = {
       bgRepeat: 'bgRepeat',
       bgRepeatXTop: 'bgRepeatX',
       bgRepeatXBottom: 'bgRepeatX',
+      bgRepeatY: 'bgRepeatY',
     }
 
     const bgClassesArray = Array.from(backgroundClasses)
