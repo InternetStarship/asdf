@@ -37,6 +37,8 @@ const sections = (sections, parentId) => {
             'margin-top': parseInt(section.css['margin-top']) || 0,
             'padding-top': parseInt(section.css['padding-top']) || 0,
             'padding-bottom': parseInt(section.css['padding-bottom']) || 0,
+            'padding-left': parseInt(row.css['padding-left']) || 0,
+            'padding-right': parseInt(row.css['padding-right']) || 0,
             position: section.css['position'] || 'relative',
             'z-index': parseInt(section.css['z-index']) || 0,
           },

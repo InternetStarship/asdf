@@ -33,11 +33,13 @@ const columns = (columns, parentId) => {
         },
         attrs: {
           style: {
-            'margin-top': parseInt(columnContainer.style.marginTop) || 0,
-            'margin-left': parseInt(columnContainer.style.marginLeft) || 0,
-            'margin-right': parseInt(columnContainer.style.marginRight) || 0,
-            'padding-left': columnContainer.style.paddingLeft || 0,
-            'padding-right': columnContainer.style.paddingRight || 0,
+            'margin-top': parseInt(columnCSS['margin-top']) || 0,
+            'margin-left': parseInt(columnCSS['margin-left']) || 0,
+            'margin-right': parseInt(columnCSS['margin-right']) || 0,
+            'padding-left': columnCSS['padding-left'] || 0,
+            'padding-right': columnCSS['padding-right'] || 0,
+            'padding-top': columnCSS['padding-top'] || 0,
+            'padding-right': columnCSS['padding-right'] || 0,
           },
         },
         id: id,
