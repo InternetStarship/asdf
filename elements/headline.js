@@ -48,7 +48,7 @@ const headline = (
       return output
     }
 
-    children = htmlToJSON(inputHTML, contentEditableNodeId)
+    children = htmlToJSON(html, contentEditableNodeId)
 
     if (
       document.querySelector(`#${element.id} .elHeadline b`) &&
