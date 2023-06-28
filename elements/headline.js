@@ -8,6 +8,7 @@ const headline = (
 
   let blueprintTitle = 'Headline/V1'
 
+  console.log(element, element.title)
   if (element.title === 'sub headline') {
     blueprintTitle = 'SubHeadline/V1'
   } else if (element.title === 'paragraph') {
@@ -22,67 +23,12 @@ const headline = (
   console.log('compare difference original:', element.content.html)
   console.log('compare difference clean:', headlineUtils.wrapSpan(element.content.html))
 
-  // console.log(element.content.html, headlineUtils.wrapSpan(element.content.html), element.id)
-
   let children = []
   let fontWeight = css['font-weight']
   let boldColor = ''
 
   if (/<\/?[a-z][\s\S]*>/i.test(html)) {
     const dom = app.htmlToDom(html)
-
-    // const finalObjectArray = []
-    // let i = 0
-    // const parseNode = node => {
-    //   let childrenArray = []
-    //   for (const child of node.childNodes) {
-    //     const plainTextId = app.makeId()
-
-    //     if (child.nodeType === Node.TEXT_NODE) {
-    //       if (child.textContent.trim() !== '') {
-    //         childrenArray.push({
-    //           type: 'text',
-    //           innerText: child.textContent.trim(),
-    //           id: plainTextId,
-    //           version: 0,
-    //           parentId: contentEditableNodeId,
-    //           fractionalIndex: `a${i++}`,
-    //         })
-    //       }
-    //     } else {
-    //       let childObject = {
-    //         type: child.nodeName.toLowerCase(),
-    //         id: plainTextId,
-    //         version: 0,
-    //         parentId: contentEditableNodeId,
-    //         fractionalIndex: `a${i++}`,
-    //       }
-    //       if (childObject.type === 'br') {
-    //         childrenArray.push(childObject)
-    //       } else {
-    //         const grandChildren = parseNode(child)
-    //         if (grandChildren.length > 0) {
-    //           childObject.children = grandChildren
-    //         } else {
-    //           childObject.innerText = child.innerText
-    //         }
-    //         childrenArray.push(childObject)
-    //       }
-    //     }
-    //   }
-    //   return childrenArray
-    // }
-
-    // dom.querySelectorAll('*').forEach((node, index) => {
-    //   const parsedNode = parseNode(node)
-    //   if (parsedNode.length > 0) {
-    //     finalObjectArray.push({ type: node.nodeName.toLowerCase(), children: parsedNode })
-    //   }
-    // })
-
-    // children = finalObjectArray
-
-    // console.log(finalObjectArray)
 
     dom.querySelectorAll('*').forEach((node, index) => {
       if (node.outerHTML === '<br>') {
