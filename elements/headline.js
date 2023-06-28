@@ -38,7 +38,7 @@ const headline = (
         })
       } else {
         // console.log(node.outerHTML)
-        const child = headlineUtils.parser(node.innerHTML, contentEditableNodeId, index, element.css)
+        const child = headlineUtils.parser(node.outerHTML, contentEditableNodeId, index, element.css)
         // console.log(child, node.innerHTML, contentEditableNodeId)
         children = children.concat(child)
       }
@@ -239,7 +239,7 @@ const headlineUtils = {
         const nodeId = app.makeId()
         return {
           type: 'text',
-          innerText: node.textContent.trim(),
+          innerText: node.nodeValue.trim(),
           id: nodeId,
           version: 0,
           parentId: parentId,
@@ -247,9 +247,6 @@ const headlineUtils = {
         }
       } else if (node.nodeType === 1 && allowedTags.includes(tagName)) {
         // HTML Element
-        if (tagName === 'div' && node.innerHTML.trim() === '') {
-          return null // Skip empty div elements
-        }
         const nodeId = app.makeId()
         if (tagName === 'div') {
           tagName = 'text'
@@ -260,7 +257,6 @@ const headlineUtils = {
           version: 0,
           parentId: parentId,
           fractionalIndex: `a${fractionalIndexCounter++}`,
-          innerText: node.textContent.trim(),
         }
         if (tagName === 'a') {
           nodeData.attrs = {
@@ -271,7 +267,7 @@ const headlineUtils = {
             style: { color: node.style.color },
           }
         }
-        if (node.childNodes && node.childNodes.length > 0 && tagName === 'a') {
+        if (node.childNodes && node.childNodes.length > 0) {
           nodeData.children = []
           Array.from(node.childNodes).forEach(childNode => {
             const childData = createNode(childNode, nodeId)
@@ -296,6 +292,7 @@ const headlineUtils = {
 
     return outputArray
   },
+
   parse: (parentNode, html, contentEditableNodeId, index, css) => {
     if (parentNode.nodeName !== 'DIV') return false
 
