@@ -4,6 +4,8 @@ const properties = {
 
     if (type === 'column') {
       dom = document.querySelector(`.containerWrapper #${elementId} .col-inner`)
+    } else if (type === 'columnContainer') {
+      dom = document.querySelector(`.containerWrapper #${elementId}`)
     } else if (type === 'image') {
       dom = document.querySelector(`#${elementId} img`)
     } else if (type === 'icon') {

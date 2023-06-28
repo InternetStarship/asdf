@@ -2,6 +2,7 @@ const columns = (columns, parentId) => {
   return columns.map((column, index) => {
     if (column) {
       const columnCSS = properties.css(column.id, 'column')
+      const columnContainerCSS = properties.css(column.id, 'columnContainer')
       const id = app.makeId()
 
       app.idList.push({
@@ -38,8 +39,8 @@ const columns = (columns, parentId) => {
             'margin-right': parseInt(columnCSS['margin-right']) || 0,
             'padding-left': columnCSS['padding-left'] || 0,
             'padding-right': columnCSS['padding-right'] || 0,
-            'padding-top': columnCSS['padding-top'] || 0,
-            'padding-right': columnCSS['padding-right'] || 0,
+            'padding-left': parseInt(columnCSS['padding-left']) || 0,
+            'padding-right': parseInt(columnCSS['padding-right']) || 0,
           },
         },
         id: id,
