@@ -19,6 +19,11 @@ const headline = (
   const html = headlineUtils.wrapSpan(element.content.html)
   const css = properties.css(element.id, type)
 
+  console.log('\n\n\n')
+  console.log('original html', element.content.html)
+  console.log('new html', html)
+  console.log('\n\n\n')
+
   let children = []
   let fontWeight = css['font-weight']
   let boldColor = ''
