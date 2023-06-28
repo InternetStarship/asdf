@@ -16,7 +16,7 @@ const headline = (
 
   const output = blueprint(blueprintTitle, data.id, data.parentId, data.index, element)
   const contentEditableNodeId = app.makeId()
-  const html = element.content.html //headlineUtils.addSpanTagsToText(element.content.html)
+  const html = headlineUtils.wrapSpan(element.content.html)
   const css = properties.css(element.id, type)
 
   console.log('compare difference original:', element.content.html)
@@ -233,7 +233,7 @@ const headline = (
 
 const headlineUtils = {
   wrapSpan: html => {
-    const dom = app.htmlToDom(html.replace(/&nbsp;/g, ''))
+    const dom = app.htmlToDom(html.replaceAll(/&nbsp;/g, '').replaceAll(/\n/g, ''))
     const nodes = dom.childNodes
 
     for (let i = 0; i < nodes.length; i++) {
@@ -244,7 +244,10 @@ const headlineUtils = {
       }
     }
 
-    return dom.innerHTML
+    let output = dom.innerHTML
+    output = output.replaceAll(/\n/g, '').replaceAll(/<span><\/span>/g, '')
+
+    return output
   },
 
   addSpanTagsToText: input => {
