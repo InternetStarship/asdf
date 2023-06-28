@@ -3,7 +3,6 @@ const params = (css, type = null, id = null, params = {}) => {
 
   const borderRadiusCorner = properties.borderRadius(css, 'check')
   const data = {
-    // '--style-padding-horizontal--unit': checkParamType(css['padding-left']),
     'margin-top--unit': checkParamType(css['margin-top']),
     'padding-top--unit': checkParamType(css['padding-top']),
     'padding-bottom--unit': checkParamType(css['padding-bottom']),
@@ -22,16 +21,11 @@ const params = (css, type = null, id = null, params = {}) => {
     'border-left-width--unit': checkParamType(css['border-left-width']),
     'border-right-width--unit': checkParamType(css['border-right-width']),
     'border-width--unit': checkParamType(css['border-width']),
-    // '--style-margin-horizontal--unit': checkParamType(css['margin-left'] || css['margin-right']),
     'width--unit': checkParamType(css['width']),
     'letter-spacing--unit': checkParamType(css['letter-spacing']),
     'line-height--unit': checkParamType(css['line-height']),
     'font-size--unit': checkParamType(css['font-size']),
     'separate-corners': !borderRadiusCorner,
-  }
-
-  if (type === 'column') {
-    console.log('column', css['background-color'])
   }
 
   if (css['background-color'] !== undefined) {
@@ -85,36 +79,6 @@ const params = (css, type = null, id = null, params = {}) => {
     data['--style-background-position'] = `${position.horizontal} ${position.vertical} !important`
   }
 
-  // if (type === 'section') {
-  //   const paddingLeft = document.querySelector(`.container[id="${id}"] .containerInner`).style.paddingLeft
-  //   if (paddingLeft) {
-  //     data['--style-padding-horizontal'] = parseInt(paddingLeft)
-  //   }
-  // } else if (type === 'column') {
-  //   if (css['padding-left'] !== undefined) {
-  //     data['--style-margin-horizontal'] = parseInt(css['margin-left'])
-  //     data['--style-padding-horizontal'] = parseInt(css['padding-left'])
-  //   }
-  // } else if (type === 'headline') {
-  //   if (document.querySelector(`.elHeadlineWrapper[id="${id}"]`)) {
-  //     const paddingLeft = document.querySelector(`.elHeadlineWrapper[id="${id}"]`).style.paddingLeft
-  //     data['--style-padding-horizontal'] = parseInt(paddingLeft) || 0
-  //   } else {
-  //     data['--style-padding-horizontal'] = parseInt(css['padding-left'])
-  //   }
-  // } else if (type === 'input') {
-  //   if (document.querySelector(`.elInputWrapper[id="${id}"] elInput`)) {
-  //     const paddingLeft = document.querySelector(`.elInputWrapper[id="${id}"] elInput`).style.paddingLeft
-  //     data['--style-padding-horizontal'] = parseInt(paddingLeft) || 0
-  //   } else {
-  //     data['--style-padding-horizontal'] = parseInt(css['padding-left'])
-  //   }
-  // } else {
-  //   if (css['padding-left'] !== undefined) {
-  //     data['--style-padding-horizontal'] = parseInt(css['padding-left'])
-  //   }
-  // }
-
   if (css['box-shadow']) {
     const boxShadow = css['box-shadow']
     const shadowArray = boxShadow.match(/(?:[^\s\(\)]+|\([^\(\)]*\))+/g)
@@ -163,9 +127,6 @@ const params = (css, type = null, id = null, params = {}) => {
   }
 
   const borderWidth = properties.borderWidth(css)
-  // if (borderWidth['border-width']) {
-  //   data['--style-border-width'] = borderWidth['border-width']
-  // }
 
   if (borderWidth['border-bottom-width']) {
     data['--style-border-bottom-width'] = `${parseInt(borderWidth['border-bottom-width'])}px`
@@ -190,24 +151,6 @@ const params = (css, type = null, id = null, params = {}) => {
   } else {
     data['--style-border-right-width'] = '0px'
   }
-
-  // // check if 0 and make 0px
-
-  // if (parseInt(css['border-bottom-width']) === 0) {
-  //   data['--style-border-bottom-width'] = '0px'
-  // }
-
-  // if (parseInt(css['border-top-width']) === 0) {
-  //   data['--style-border-top-width'] = '0px'
-  // }
-
-  // if (parseInt(css['border-left-width']) === 0) {
-  //   data['--style-border-left-width'] = '0px'
-  // }
-
-  // if (parseInt(css['border-right-width']) === 0) {
-  //   data['--style-border-right-width'] = '0px'
-  // }
 
   return { ...data, ...params }
 }
