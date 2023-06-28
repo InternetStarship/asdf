@@ -40,7 +40,7 @@ const headline = (
         // console.log(node.outerHTML)
         const child = headlineUtils.parser(node.innerHTML, contentEditableNodeId, index, element.css)
         // console.log(child, node.innerHTML, contentEditableNodeId)
-        children.push(child)
+        children = children.concat(child)
       }
     })
 
