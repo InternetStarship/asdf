@@ -5,7 +5,16 @@ const headline = (
   fa_prepended_class = 'fa_prepended'
 ) => {
   const element = data.element
-  const output = blueprint('Headline/V1', data.id, data.parentId, data.index, element)
+
+  let blueprintTitle = 'Headline/V1'
+
+  if (element.title === 'sub headline') {
+    blueprintTitle = 'Subheadline/V1'
+  } else if (element.title === 'paragraph') {
+    blueprintTitle = 'Paragraph/V1'
+  }
+
+  const output = blueprint(blueprintTitle, data.id, data.parentId, data.index, element)
   const contentEditableNodeId = app.makeId()
   const html = headlineUtils.addSpanTagsToText(element.content.html)
   const css = properties.css(element.id, type)
@@ -236,31 +245,50 @@ const headlineUtils = {
   },
 
   addSpanTagsToText: htmlString => {
-    // create a temporary div to hold the HTML
-    var tempDiv = document.createElement('div')
-    tempDiv.innerHTML = htmlString
+    // Define the allowed tags and attributes
+    var allowedTags = ['br', 'strong', 'em', 'i', 'b', 'u', 'span', 'div', 'a']
+    var allowedAttributes = ['href', 'src', 'alt', 'class', 'id']
 
-    // recursive function to go through all nodes
-    function recurse(element) {
-      for (var i = 0; i < element.childNodes.length; i++) {
-        var node = element.childNodes[i]
+    // Parse the HTML with DOMParser
+    var parser = new DOMParser()
+    var doc = parser.parseFromString(input, 'text/html')
 
-        // if it's a text node and not only whitespace, wrap it in a span
-        if (node.nodeType === 3 && node.textContent.trim() !== '') {
-          var span = document.createElement('span')
-          span.textContent = node.textContent
-          node.parentNode.replaceChild(span, node)
-        } else if (node.nodeType === 1) {
-          // if it's an element node, recurse on it
-          recurse(node)
+    // Traverse the document and clean up the tags and attributes
+    traverse(doc.body)
+
+    function traverse(node) {
+      if (node.nodeType === 1) {
+        // element node
+        // Remove disallowed attributes
+        if (node.attributes) {
+          var attrToRemove = []
+          for (var i = 0; i < node.attributes.length; i++) {
+            var attrName = node.attributes[i].name
+            if (allowedAttributes.indexOf(attrName) === -1) {
+              attrToRemove.push(attrName)
+            }
+          }
+          for (var i = 0; i < attrToRemove.length; i++) {
+            node.removeAttribute(attrToRemove[i])
+          }
+        }
+
+        // If it's a disallowed tag, replace the node with a text node
+        if (allowedTags.indexOf(node.tagName.toLowerCase()) === -1) {
+          var textNode = document.createTextNode(node.textContent)
+          node.parentNode.replaceChild(textNode, node)
+          return
+        }
+
+        // Traverse the child nodes
+        var children = Array.prototype.slice.call(node.childNodes)
+        for (var i = 0; i < children.length; i++) {
+          traverse(children[i])
         }
       }
     }
 
-    recurse(tempDiv)
-
-    // return the modified HTML
-    return tempDiv.innerHTML
+    return doc.body.innerHTML
   },
 
   parse: (parentNode, html, contentEditableNodeId, index, css) => {
