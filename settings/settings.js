@@ -19,8 +19,10 @@ const settings = () => {
 
   app.idList.map(item => {
     app.copiedCSS = app.copiedCSS.replaceAll(`#${item.cf1_id}`, `.id-${item.cf2_id}`)
-    app.copiedJS = app.copiedJS.replaceAll(`#${item.cf1_id}`, `.id-${item.cf2_id}`)
   })
+
+  // Note: Tracking code for Header and Footer is effectively impossible to accurately
+  // grab without having access to the ClickFunnels Classic editor.
 
   return {
     id: settingsId,
@@ -50,7 +52,7 @@ const settings = () => {
         type: 'raw',
         parentId: footerCodeId,
         fractionalIndex: 'a1',
-        innerText: app.copiedJS,
+        innerText: '',
       },
       {
         id: 'css',
