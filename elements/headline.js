@@ -17,6 +17,7 @@ const headline = (
   if (/<\/?[a-z][\s\S]*>/i.test(html)) {
     const dom = app.htmlToDom(html)
     dom.querySelectorAll('*').forEach((node, index) => {
+      console.log(node.outerHTML, 'headline node')
       children.push(
         headlineUtils.parse(node.parentNode, node.outerHTML, contentEditableNodeId, index, element.css)
       )
