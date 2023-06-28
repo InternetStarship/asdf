@@ -21,22 +21,22 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
     videoBg.getAttribute('data-youtube-selectbox') === 'youtube'
   ) {
     console.log('what is up?!?')
-    backgroundParams['--style-video-bg-style-type'] = 'fill'
-    backgroundParams['--style-video-bg-url'] = videoBg.getAttribute('data-youtube-background')
-    backgroundParams['--style-video-bg-thumbnail-background'] = true
-    backgroundParams['--style-video-bg-use-background-as-overlay'] = false
-    backgroundParams['--style-video-bg-type'] = 'youtube'
+    backgroundParams['video-bg-style-type'] = 'fill'
+    backgroundParams['video-bg-url'] = videoBg.getAttribute('data-youtube-background')
+    backgroundParams['video-bg-thumbnail-background'] = true
+    backgroundParams['video-bg-use-background-as-overlay'] = false
+    backgroundParams['video-bg-type'] = 'youtube'
 
     console.log(videoBg.getAttribute('data-youtube-background'))
 
     const endaction = videoBg.getAttribute('data-youtube-endaction')
     switch (endaction) {
       case 'popup':
-        backgroundParams['--style-video-bg-endaction'] = 'open-popup'
+        backgroundParams['video-bg-endaction'] = 'open-popup'
         break
       case 'redirect':
-        backgroundParams['--style-video-bg-endaction'] = 'redirect'
-        backgroundParams['--style-video-bg-redirect-url'] = videoBg.getAttribute('data-youtube-redirecturl')
+        backgroundParams['video-bg-endaction'] = 'redirect'
+        backgroundParams['video-bg-redirect-url'] = videoBg.getAttribute('data-youtube-redirecturl')
         break
     }
   }
