@@ -251,6 +251,9 @@ const headlineUtils = {
           return null // Skip empty div elements
         }
         const nodeId = app.makeId()
+        if (tagName === 'div') {
+          tagName = 'text'
+        }
         let nodeData = {
           type: tagName,
           id: nodeId,
