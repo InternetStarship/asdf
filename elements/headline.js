@@ -7,7 +7,7 @@ const headline = (
   const element = data.element
   const output = blueprint('Headline/V1', data.id, data.parentId, data.index, element)
   const contentEditableNodeId = app.makeId()
-  const html = headlineUtils.wrapSpan(element.content.html)
+  const html = headlineUtils.addSpanTagsToText(element.content.html)
   const css = properties.css(element.id, type)
 
   // console.log(element.content.html, headlineUtils.wrapSpan(element.content.html), element.id)
@@ -233,6 +233,34 @@ const headlineUtils = {
     }
 
     return dom.innerHTML
+  },
+
+  addSpanTagsToText: htmlString => {
+    // create a temporary div to hold the HTML
+    var tempDiv = document.createElement('div')
+    tempDiv.innerHTML = htmlString
+
+    // recursive function to go through all nodes
+    function recurse(element) {
+      for (var i = 0; i < element.childNodes.length; i++) {
+        var node = element.childNodes[i]
+
+        // if it's a text node and not only whitespace, wrap it in a span
+        if (node.nodeType === 3 && node.textContent.trim() !== '') {
+          var span = document.createElement('span')
+          span.textContent = node.textContent
+          node.parentNode.replaceChild(span, node)
+        } else if (node.nodeType === 1) {
+          // if it's an element node, recurse on it
+          recurse(node)
+        }
+      }
+    }
+
+    recurse(tempDiv)
+
+    // return the modified HTML
+    return tempDiv.innerHTML
   },
 
   parse: (parentNode, html, contentEditableNodeId, index, css) => {
