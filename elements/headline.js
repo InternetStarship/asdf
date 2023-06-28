@@ -230,44 +230,56 @@ const headlineUtils = {
       },
     }
 
+    const allowedTags = ['a', 'b', 'strong', 'u', 'i', 'strike', 'div', 'br']
+
     const createNode = (node, parentId = contentEditableNodeId) => {
       let tagName = node.nodeName.toLowerCase()
-      if (node.nodeType === 3) tagName = 'text' // Text node
-      const nodeId = app.makeId()
-
-      let nodeData = {
-        type: tagName,
-        id: nodeId,
-        version: 0,
-        parentId: parentId,
-        fractionalIndex: `a${fractionalIndexCounter++}`,
-      }
-
-      if (tagName === 'a') {
-        nodeData.attrs = {
-          ...attrs[tagName],
-          href: node.getAttribute('href'),
-          id: node.getAttribute('id') || '',
-          target: node.getAttribute('target') === '_blank' ? 'enable' : 'disable',
-          style: { color: node.style.color },
+      if (node.nodeType === 3) {
+        // Text node
+        const nodeId = app.makeId()
+        return {
+          type: 'text',
+          innerText: node.textContent.trim(),
+          id: nodeId,
+          version: 0,
+          parentId: parentId,
+          fractionalIndex: `a${fractionalIndexCounter++}`,
         }
-      }
-
-      if (tagName === 'text') {
-        nodeData.innerText = node.textContent
-      }
-
-      if (node.childNodes && node.childNodes.length > 0) {
-        nodeData.children = []
-        Array.from(node.childNodes).forEach(childNode => {
-          const childData = createNode(childNode, nodeId)
-          if (childData) {
-            nodeData.children.push(childData)
+      } else if (node.nodeType === 1 && allowedTags.includes(tagName)) {
+        // HTML Element
+        if (tagName === 'div' && node.innerHTML.trim() === '') {
+          return null // Skip empty div elements
+        }
+        const nodeId = app.makeId()
+        let nodeData = {
+          type: tagName,
+          id: nodeId,
+          version: 0,
+          parentId: parentId,
+          fractionalIndex: `a${fractionalIndexCounter++}`,
+        }
+        if (tagName === 'a') {
+          nodeData.attrs = {
+            ...attrs[tagName],
+            href: node.getAttribute('href'),
+            id: node.getAttribute('id') || '',
+            target: node.getAttribute('target') === '_blank' ? 'enable' : 'disable',
+            style: { color: node.style.color },
           }
-        })
+        }
+        if (node.childNodes && node.childNodes.length > 0 && tagName === 'a') {
+          nodeData.children = []
+          Array.from(node.childNodes).forEach(childNode => {
+            const childData = createNode(childNode, nodeId)
+            if (childData) {
+              nodeData.children.push(childData)
+            }
+          })
+          if (nodeData.children.length === 0) delete nodeData.children // Delete empty children array
+        }
+        return nodeData
       }
-
-      return nodeData
+      return null // Skip other node types
     }
 
     let outputArray = []
