@@ -87,7 +87,7 @@ const clickfunnels_classic_page_tree = {
         json: htmlToJson(element.innerHTML),
       }
 
-      console.log('headline json', json)
+      console.log('headline json', data.content.json)
       return data
     }
 
