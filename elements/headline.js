@@ -37,6 +37,7 @@ const headline = (
           fractionalIndex: `a${index}`,
         })
       } else {
+        console.log(node.outerHTML)
         children.push(
           headlineUtils.parse(node.parentNode, node.outerHTML, contentEditableNodeId, index, element.css)
         )
