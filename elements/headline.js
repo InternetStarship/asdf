@@ -7,17 +7,17 @@ const headline = (
   const element = data.element
   const output = blueprint('Headline/V1', data.id, data.parentId, data.index, element)
   const contentEditableNodeId = app.makeId()
-  // const html = headlineUtils.wrapSpan(element.content.html)
+  const html = headlineUtils.wrapSpan(element.content.html)
   const css = properties.css(element.id, type)
 
-  console.log(element.content.html, headlineUtils.wrapSpan(element.content.html), element.id)
+  // console.log(element.content.html, headlineUtils.wrapSpan(element.content.html), element.id)
 
   let children = []
   let fontWeight = css['font-weight']
   let boldColor = ''
 
-  if (/<\/?[a-z][\s\S]*>/i.test(element.content.html)) {
-    const dom = app.htmlToDom(element.content.html)
+  if (/<\/?[a-z][\s\S]*>/i.test(html)) {
+    const dom = app.htmlToDom(html)
 
     // const finalObjectArray = []
     // let i = 0
