@@ -7,85 +7,85 @@ const headline = (
   const element = data.element
   const output = blueprint('Headline/V1', data.id, data.parentId, data.index, element)
   const contentEditableNodeId = app.makeId()
-  const html = headlineUtils.wrapSpan(element.content.html)
+  // const html = headlineUtils.wrapSpan(element.content.html)
   const css = properties.css(element.id, type)
 
   let children = []
   let fontWeight = css['font-weight']
   let boldColor = ''
 
-  if (/<\/?[a-z][\s\S]*>/i.test(html)) {
-    const dom = app.htmlToDom(html)
+  if (/<\/?[a-z][\s\S]*>/i.test(element.content.html)) {
+    const dom = app.htmlToDom(element.content.html)
 
-    const finalObjectArray = []
-    let i = 0
-    const parseNode = node => {
-      let childrenArray = []
-      for (const child of node.childNodes) {
-        const plainTextId = app.makeId()
+    // const finalObjectArray = []
+    // let i = 0
+    // const parseNode = node => {
+    //   let childrenArray = []
+    //   for (const child of node.childNodes) {
+    //     const plainTextId = app.makeId()
 
-        if (child.nodeType === Node.TEXT_NODE) {
-          if (child.textContent.trim() !== '') {
-            childrenArray.push({
-              type: 'text',
-              innerText: child.textContent.trim(),
-              id: plainTextId,
-              version: 0,
-              parentId: contentEditableNodeId,
-              fractionalIndex: `a${i++}`,
-            })
-          }
-        } else {
-          let childObject = {
-            type: child.nodeName.toLowerCase(),
-            id: plainTextId,
-            version: 0,
-            parentId: contentEditableNodeId,
-            fractionalIndex: `a${i++}`,
-          }
-          if (childObject.type === 'br') {
-            childrenArray.push(childObject)
-          } else {
-            const grandChildren = parseNode(child)
-            if (grandChildren.length > 0) {
-              childObject.children = grandChildren
-            } else {
-              childObject.innerText = child.innerText
-            }
-            childrenArray.push(childObject)
-          }
-        }
-      }
-      return childrenArray
-    }
-
-    dom.querySelectorAll('*').forEach((node, index) => {
-      const parsedNode = parseNode(node)
-      if (parsedNode.length > 0) {
-        finalObjectArray.push({ type: node.nodeName.toLowerCase(), children: parsedNode })
-      }
-    })
-
-    children = finalObjectArray
-
-    console.log(finalObjectArray)
+    //     if (child.nodeType === Node.TEXT_NODE) {
+    //       if (child.textContent.trim() !== '') {
+    //         childrenArray.push({
+    //           type: 'text',
+    //           innerText: child.textContent.trim(),
+    //           id: plainTextId,
+    //           version: 0,
+    //           parentId: contentEditableNodeId,
+    //           fractionalIndex: `a${i++}`,
+    //         })
+    //       }
+    //     } else {
+    //       let childObject = {
+    //         type: child.nodeName.toLowerCase(),
+    //         id: plainTextId,
+    //         version: 0,
+    //         parentId: contentEditableNodeId,
+    //         fractionalIndex: `a${i++}`,
+    //       }
+    //       if (childObject.type === 'br') {
+    //         childrenArray.push(childObject)
+    //       } else {
+    //         const grandChildren = parseNode(child)
+    //         if (grandChildren.length > 0) {
+    //           childObject.children = grandChildren
+    //         } else {
+    //           childObject.innerText = child.innerText
+    //         }
+    //         childrenArray.push(childObject)
+    //       }
+    //     }
+    //   }
+    //   return childrenArray
+    // }
 
     // dom.querySelectorAll('*').forEach((node, index) => {
-    //   if (node.outerHTML === '<br>') {
-    //     const plainTextId = app.makeId()
-    //     children.push({
-    //       type: 'br',
-    //       id: plainTextId,
-    //       version: 0,
-    //       parentId: contentEditableNodeId,
-    //       fractionalIndex: `a${index}`,
-    //     })
-    //   } else {
-    //     children.push(
-    //       headlineUtils.parse(node.parentNode, node.outerHTML, contentEditableNodeId, index, element.css)
-    //     )
+    //   const parsedNode = parseNode(node)
+    //   if (parsedNode.length > 0) {
+    //     finalObjectArray.push({ type: node.nodeName.toLowerCase(), children: parsedNode })
     //   }
     // })
+
+    // children = finalObjectArray
+
+    // console.log(finalObjectArray)
+
+    dom.querySelectorAll('*').forEach((node, index) => {
+      if (node.outerHTML === '<br>') {
+        const plainTextId = app.makeId()
+        children.push({
+          type: 'br',
+          id: plainTextId,
+          version: 0,
+          parentId: contentEditableNodeId,
+          fractionalIndex: `a${index}`,
+        })
+      } else {
+        children.push(
+          headlineUtils.parse(node.parentNode, node.outerHTML, contentEditableNodeId, index, element.css)
+        )
+      }
+    })
 
     if (
       document.querySelector(`#${element.id} .elHeadline b`) &&
