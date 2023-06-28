@@ -183,24 +183,24 @@ const headline = (
 }
 
 const headlineUtils = {
-  wrapSpan: html => {
-    const dom = app.htmlToDom(html.replaceAll(/&nbsp;/g, '').replaceAll(/\n/g, ''))
-    const nodes = dom.childNodes
+  // wrapSpan: html => {
+  //   const dom = app.htmlToDom(html.replaceAll(/&nbsp;/g, '').replaceAll(/\n/g, ''))
+  //   const nodes = dom.childNodes
 
-    for (let i = 0; i < nodes.length; i++) {
-      if (nodes[i].nodeType == 3) {
-        const span = document.createElement('div')
-        span.textContent = nodes[i].textContent
-        dom.replaceChild(span, nodes[i])
-      }
-    }
+  //   for (let i = 0; i < nodes.length; i++) {
+  //     if (nodes[i].nodeType == 3) {
+  //       const span = document.createElement('div')
+  //       span.textContent = nodes[i].textContent
+  //       dom.replaceChild(span, nodes[i])
+  //     }
+  //   }
 
-    let output = dom.innerHTML
-    output = output.replaceAll(/\n/g, '').replaceAll(/<span><\/span>/g, '')
-    output = output.replaceAll(/<div><br><\/div>/g, '<br>')
+  //   let output = dom.innerHTML
+  //   output = output.replaceAll(/\n/g, '').replaceAll(/<span><\/span>/g, '')
+  //   output = output.replaceAll(/<div><br><\/div>/g, '<br>')
 
-    return output
-  },
+  //   return output
+  // },
 
   wrapSpan: html => {
     const dom = app.htmlToDom(html.replaceAll(/&nbsp;/g, '').replaceAll(/\n/g, ''))
@@ -213,12 +213,10 @@ const headlineUtils = {
 
   wrapTextNodes: node => {
     if (node.nodeType === 3) {
-      // 3 is the nodeType of a Text node
       const wrapper = document.createElement('div')
       wrapper.textContent = node.nodeValue
       node.parentNode.replaceChild(wrapper, node)
     } else if (node.nodeType === 1) {
-      // 1 is the nodeType of an Element node (like <p>, <div>, etc.)
       for (let i = 0; i < node.childNodes.length; i++) {
         headlineUtils.wrapTextNodes(node.childNodes[i])
       }
@@ -282,7 +280,7 @@ const headlineUtils = {
         }
         return nodeData
       }
-      return null // Skip other node types
+      return null
     }
 
     let outputArray = []
@@ -294,60 +292,5 @@ const headlineUtils = {
     })
 
     return outputArray.filter(node => !node.parentId || node.parentId === contentEditableNodeId)
-  },
-
-  parse: (parentNode, html, contentEditableNodeId, index, css) => {
-    if (parentNode.nodeName !== 'DIV') return false
-
-    const dom = app.htmlToDom(html)
-    const nodes = ['a', 'b', 'strong', 'u', 'i', 'strike', 'div']
-    const attrs = {
-      a: {
-        className: 'elTypographyLink',
-        rel: 'noopener noreferrer',
-      },
-    }
-
-    const createNode = (node, tagName) => {
-      if (node && node.textContent !== '') {
-        const nodeId = app.makeId()
-        const textId = app.makeId()
-
-        let nodeAttrs = {}
-        if (tagName === 'a') {
-          nodeAttrs = {
-            href: node.getAttribute('href'),
-            id: node.getAttribute('id') || '',
-            target: node.getAttribute('target') === '_blank' ? 'enable' : 'disable',
-            style: { color: node.style.color },
-          }
-        }
-
-        return {
-          type: tagName,
-          attrs: { ...attrs[tagName], ...nodeAttrs },
-          id: nodeId,
-          version: 0,
-          parentId: contentEditableNodeId,
-          fractionalIndex: `a${index}`,
-          children: [
-            {
-              type: 'text',
-              innerText: node.textContent + ' ',
-              id: textId,
-              version: 0,
-              parentId: nodeId,
-              fractionalIndex: 'a0',
-            },
-          ],
-        }
-      }
-    }
-
-    for (let i = 0; i < nodes.length; i++) {
-      const node = dom.querySelector(nodes[i])
-      const result = createNode(node, nodes[i])
-      if (result) return result
-    }
   },
 }
