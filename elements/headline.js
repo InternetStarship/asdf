@@ -287,7 +287,7 @@ const headlineUtils = {
       }
     })
 
-    return outputArray
+    return outputArray.filter(node => !node.parentId || node.parentId === contentEditableNodeId)
   },
 
   parse: (parentNode, html, contentEditableNodeId, index, css) => {
