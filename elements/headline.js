@@ -8,7 +8,6 @@ const headline = (
 
   let blueprintTitle = 'Headline/V1'
 
-  console.log(element, element.title)
   if (element.title === 'sub-headline') {
     blueprintTitle = 'SubHeadline/V1'
   } else if (element.title === 'Paragraph') {
@@ -19,9 +18,6 @@ const headline = (
   const contentEditableNodeId = app.makeId()
   const html = headlineUtils.wrapSpan(element.content.html)
   const css = properties.css(element.id, type)
-
-  console.log('compare difference original:', element.content.html)
-  console.log('compare difference clean:', headlineUtils.wrapSpan(element.content.html))
 
   let children = []
   let fontWeight = css['font-weight']
@@ -200,250 +196,55 @@ const headlineUtils = {
   parse: (parentNode, html, contentEditableNodeId, index, css) => {
     if (parentNode.nodeName !== 'DIV') return false
 
-    // html = html.replace(/<div/g, '<span').replace(/<\/div>/g, '</span>')
-
     const dom = app.htmlToDom(html)
+    const nodes = ['a', 'b', 'strong', 'u', 'i', 'strike', 'div']
+    const attrs = {
+      a: {
+        className: 'elTypographyLink',
+        rel: 'noopener noreferrer',
+      },
+    }
 
-    const bold = dom.querySelector('b')
-    const strong = dom.querySelector('strong')
-    const link = dom.querySelector('a')
-    const italic = dom.querySelector('i')
-    const strike = dom.querySelector('strike')
-    const underline = dom.querySelector('u')
-    const span = dom.querySelector('div')
+    const createNode = (node, tagName) => {
+      if (node && node.textContent !== '') {
+        const nodeId = app.makeId()
+        const textId = app.makeId()
 
-    if (link && link.textContent !== '') {
-      const linkId = app.makeId()
-      const linkAId = app.makeId()
-      const linkTextId = app.makeId()
-      return {
-        type: 'span',
-        // attrs: { css },
-        id: linkId,
-        version: 0,
-        parentId: contentEditableNodeId,
-        fractionalIndex: `a${index}`,
-        children: [
-          {
-            type: 'a',
-            attrs: {
-              href: link.getAttribute('href'),
-              id: link.getAttribute('id') || '',
-              target: link.getAttribute('target') === '_blank' ? 'enable' : 'disable',
-              className: 'elTypographyLink',
-              rel: 'noopener noreferrer',
-              style: { color: link.style.color },
+        let nodeAttrs = {}
+        if (tagName === 'a') {
+          nodeAttrs = {
+            href: node.getAttribute('href'),
+            id: node.getAttribute('id') || '',
+            target: node.getAttribute('target') === '_blank' ? 'enable' : 'disable',
+            style: { color: node.style.color },
+          }
+        }
+
+        return {
+          type: tagName,
+          attrs: { ...attrs[tagName], ...nodeAttrs },
+          id: nodeId,
+          version: 0,
+          parentId: contentEditableNodeId,
+          fractionalIndex: `a${index}`,
+          children: [
+            {
+              type: 'text',
+              innerText: node.textContent + ' ',
+              id: textId,
+              version: 0,
+              parentId: nodeId,
+              fractionalIndex: 'a0',
             },
-            id: linkAId,
-            version: 0,
-            parentId: linkId,
-            fractionalIndex: 'a0',
-            children: [
-              {
-                type: 'text',
-                innerText: link.textContent + ' ',
-                id: linkTextId,
-                version: 0,
-                parentId: linkAId,
-                fractionalIndex: 'a0',
-              },
-            ],
-          },
-        ],
+          ],
+        }
       }
     }
 
-    if (bold && bold.textContent !== '') {
-      const boldId = app.makeId()
-      const boldTextId = app.makeId()
-      const boldBId = app.makeId()
-      return {
-        type: 'span',
-        // attrs: { css },
-        id: boldId,
-        version: 0,
-        parentId: contentEditableNodeId,
-        fractionalIndex: `a${index}`,
-        children: [
-          {
-            type: 'b',
-            attrs: { className: '' },
-            id: boldBId,
-            version: 0,
-            parentId: boldId,
-            fractionalIndex: 'a0',
-            children: [
-              {
-                type: 'text',
-                innerText: bold.textContent + ' ',
-                id: boldTextId,
-                version: 0,
-                parentId: boldBId,
-                fractionalIndex: 'a0',
-              },
-            ],
-          },
-        ],
-      }
-    }
-
-    if (strong && strong.textContent !== '') {
-      const strongId = app.makeId()
-      const strongTextId = app.makeId()
-      const strongBId = app.makeId()
-      return {
-        type: 'span',
-        // attrs: { css },
-        id: strongId,
-        version: 0,
-        parentId: contentEditableNodeId,
-        fractionalIndex: `a${index}`,
-        children: [
-          {
-            type: 'b',
-            attrs: { className: '' },
-            id: strongBId,
-            version: 0,
-            parentId: strongId,
-            fractionalIndex: 'a0',
-            children: [
-              {
-                type: 'text',
-                innerText: strong.textContent + ' ',
-                id: strongTextId,
-                version: 0,
-                parentId: strongBId,
-                fractionalIndex: 'a0',
-              },
-            ],
-          },
-        ],
-      }
-    }
-
-    if (underline && underline.textContent !== '') {
-      const underlineId = app.makeId()
-      const underlineUId = app.makeId()
-      const underlineTextId = app.makeId()
-      return {
-        type: 'span',
-        // attrs: { css },
-        id: underlineId,
-        version: 0,
-        parentId: contentEditableNodeId,
-        fractionalIndex: `a${index}`,
-        children: [
-          {
-            type: 'u',
-            attrs: { className: '' },
-            id: underlineUId,
-            version: 0,
-            parentId: underlineId,
-            fractionalIndex: 'a0',
-            children: [
-              {
-                type: 'text',
-                innerText: underline.textContent + ' ',
-                id: underlineTextId,
-                version: 0,
-                parentId: underlineUId,
-                fractionalIndex: 'a0',
-              },
-            ],
-          },
-        ],
-      }
-    }
-
-    if (italic && italic.textContent !== '') {
-      const italicId = app.makeId()
-      const italicUId = app.makeId()
-      const italicTextId = app.makeId()
-      return {
-        type: 'span',
-        // attrs: { css },
-        id: italicId,
-        version: 0,
-        parentId: contentEditableNodeId,
-        fractionalIndex: `a${index}`,
-        children: [
-          {
-            type: 'i',
-            attrs: { className: '' },
-            id: italicUId,
-            version: 0,
-            parentId: italicId,
-            fractionalIndex: 'a0',
-            children: [
-              {
-                type: 'text',
-                innerText: italic.textContent + ' ',
-                id: italicTextId,
-                version: 0,
-                parentId: italicUId,
-                fractionalIndex: 'a0',
-              },
-            ],
-          },
-        ],
-      }
-    }
-
-    if (strike && strike.textContent !== '') {
-      const strikeId = app.makeId()
-      const strikeUId = app.makeId()
-      const strikeTextId = app.makeId()
-      return {
-        type: 'span',
-        // attrs: { css },
-        id: strikeId,
-        version: 0,
-        parentId: contentEditableNodeId,
-        fractionalIndex: `a${index}`,
-        children: [
-          {
-            type: 'strike',
-            attrs: { className: '' },
-            id: strikeUId,
-            version: 0,
-            parentId: strikeId,
-            fractionalIndex: 'a0',
-            children: [
-              {
-                type: 'text',
-                innerText: strike.textContent + ' ',
-                id: strikeTextId,
-                version: 0,
-                parentId: strikeUId,
-                fractionalIndex: 'a0',
-              },
-            ],
-          },
-        ],
-      }
-    }
-
-    if (span && span.textContent !== '') {
-      const spanId = app.makeId()
-      const spanTextId = app.makeId()
-      return {
-        type: 'span',
-        // attrs: { css },
-        id: spanId,
-        version: 0,
-        parentId: contentEditableNodeId,
-        fractionalIndex: `a${index}`,
-        children: [
-          {
-            type: 'text',
-            innerText: span.textContent + ' ',
-            id: spanTextId,
-            version: 0,
-            parentId: spanId,
-            fractionalIndex: 'a0',
-          },
-        ],
-      }
+    for (let i = 0; i < nodes.length; i++) {
+      const node = dom.querySelector(nodes[i])
+      const result = createNode(node, nodes[i])
+      if (result) return result
     }
   },
 }
