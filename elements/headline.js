@@ -299,7 +299,7 @@ const headlineUtils = {
   },
 
   parse: (parentNode, html, contentEditableNodeId, index, css) => {
-    if (parentNode.nodeName !== 'DIV') return false
+    // if (parentNode.nodeName !== 'DIV') return false
 
     html = html.replace(/<div/g, '<span').replace(/<\/div>/g, '</span>')
 
