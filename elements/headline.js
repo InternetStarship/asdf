@@ -238,7 +238,7 @@ const headlineUtils = {
 
     for (let i = 0; i < nodes.length; i++) {
       if (nodes[i].nodeType == 3) {
-        const span = document.createElement('span')
+        const span = document.createElement('div')
         span.textContent = nodes[i].textContent
         dom.replaceChild(span, nodes[i])
       }
@@ -246,6 +246,7 @@ const headlineUtils = {
 
     let output = dom.innerHTML
     output = output.replaceAll(/\n/g, '').replaceAll(/<span><\/span>/g, '')
+    output = output.replaceAll(/<div><br><\/div>/g, '<br>')
 
     return output
   },
