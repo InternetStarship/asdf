@@ -26,6 +26,8 @@ const headline = (
   if (/<\/?[a-z][\s\S]*>/i.test(html)) {
     const dom = app.htmlToDom(html)
 
+    console.log(dom.innerHTML)
+
     dom.querySelectorAll('*').forEach((node, index) => {
       if (node.outerHTML === '<br>') {
         const plainTextId = app.makeId()
@@ -37,7 +39,7 @@ const headline = (
           fractionalIndex: `a${index}`,
         })
       } else {
-        console.log(node.outerHTML)
+        // console.log(node.outerHTML)
         children.push(
           headlineUtils.parse(node.parentNode, node.outerHTML, contentEditableNodeId, index, element.css)
         )
