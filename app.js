@@ -89,6 +89,7 @@ const app = {
       bgCover100: 'bgW100',
       bgNoRepeat: 'bgNoRepeat',
       bgRepeat: 'bgRepeat',
+      bgRepeatX: 'bgRepeatX',
       bgRepeatXTop: 'bgRepeatX',
       bgRepeatXBottom: 'bgRepeatX',
       bgRepeatY: 'bgRepeatY',
