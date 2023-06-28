@@ -251,55 +251,8 @@ const headlineUtils = {
     return output
   },
 
-  addSpanTagsToText: input => {
-    // Define the allowed tags and attributes
-    var allowedTags = ['br', 'strong', 'em', 'i', 'b', 'u', 'span', 'div', 'a']
-    var allowedAttributes = ['href', 'src', 'alt', 'class', 'id']
-
-    // Parse the HTML with DOMParser
-    var parser = new DOMParser()
-    var doc = parser.parseFromString(input, 'text/html')
-
-    // Traverse the document and clean up the tags and attributes
-    traverse(doc.body)
-
-    function traverse(node) {
-      if (node.nodeType === 1) {
-        // element node
-        // Remove disallowed attributes
-        if (node.attributes) {
-          var attrToRemove = []
-          for (var i = 0; i < node.attributes.length; i++) {
-            var attrName = node.attributes[i].name
-            if (allowedAttributes.indexOf(attrName) === -1) {
-              attrToRemove.push(attrName)
-            }
-          }
-          for (var i = 0; i < attrToRemove.length; i++) {
-            node.removeAttribute(attrToRemove[i])
-          }
-        }
-
-        // If it's a disallowed tag, replace the node with a text node
-        if (allowedTags.indexOf(node.tagName.toLowerCase()) === -1) {
-          var textNode = document.createTextNode(node.textContent)
-          node.parentNode.replaceChild(textNode, node)
-          return
-        }
-
-        // Traverse the child nodes
-        var children = Array.prototype.slice.call(node.childNodes)
-        for (var i = 0; i < children.length; i++) {
-          traverse(children[i])
-        }
-      }
-    }
-
-    return doc.body.innerHTML
-  },
-
   parse: (parentNode, html, contentEditableNodeId, index, css) => {
-    // if (parentNode.nodeName !== 'DIV') return false
+    if (parentNode.nodeName !== 'DIV') return false
 
     // html = html.replace(/<div/g, '<span').replace(/<\/div>/g, '</span>')
 
