@@ -18,9 +18,21 @@ const headline = (
     const dom = app.htmlToDom(html)
     dom.querySelectorAll('*').forEach((node, index) => {
       console.log(node.outerHTML, 'headline node')
-      children.push(
-        headlineUtils.parse(node.parentNode, node.outerHTML, contentEditableNodeId, index, element.css)
-      )
+      if (node.outerHTML === '<br>') {
+        const plainTextId = app.makeId()
+        children.push({
+          type: 'text',
+          innerText: '<br>',
+          id: plainTextId,
+          version: 0,
+          parentId: contentEditableNodeId,
+          fractionalIndex: 'a0',
+        })
+      } else {
+        children.push(
+          headlineUtils.parse(node.parentNode, node.outerHTML, contentEditableNodeId, index, element.css)
+        )
+      }
     })
 
     if (
