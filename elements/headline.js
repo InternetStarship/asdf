@@ -41,7 +41,7 @@ const headline = (
       } else {
         // console.log(node.outerHTML)
         children.push(
-          headlineUtils.parse(node.parentNode, node.outerHTML, contentEditableNodeId, index, element.css)
+          headlineUtils.parser(node.parentNode, node.outerHTML, contentEditableNodeId, index, element.css)
         )
       }
     })
@@ -219,6 +219,77 @@ const headlineUtils = {
     }
   },
 
+  parser: (parentNode, html, contentEditableNodeId, index, css) => {
+    if (parentNode.nodeName !== 'DIV') return false
+
+    const dom = new DOMParser().parseFromString(html, 'text/html')
+    const nodes = ['a', 'b', 'strong', 'u', 'i', 'strike', 'div', 'text']
+    const attrs = {
+      a: {
+        className: 'elTypographyLink',
+        rel: 'noopener noreferrer',
+      },
+    }
+
+    const createNode = (node, tagName, parentId = contentEditableNodeId, fractionalIndex = `a${index}`) => {
+      if (node && (node.textContent !== '' || tagName === 'a')) {
+        const nodeId = app.makeId()
+
+        let nodeAttrs = {}
+        if (tagName === 'a') {
+          nodeAttrs = {
+            href: node.getAttribute('href'),
+            id: node.getAttribute('id') || '',
+            target: node.getAttribute('target') === '_blank' ? 'enable' : 'disable',
+            style: { color: node.style.color },
+          }
+        }
+
+        const output = {
+          type: tagName,
+          attrs: { ...attrs[tagName], ...nodeAttrs },
+          id: nodeId,
+          version: 0,
+          parentId: parentId,
+          fractionalIndex: fractionalIndex,
+        }
+
+        if (tagName !== 'a') {
+          output.innerText = node.textContent + ' '
+        }
+
+        if (node.childNodes && node.childNodes.length > 0) {
+          output.children = []
+
+          Array.from(node.childNodes).forEach((childNode, childIndex) => {
+            const childTagName = childNode.nodeName.toLowerCase()
+            if (nodes.includes(childTagName)) {
+              const childOutput = createNode(childNode, childTagName, nodeId, `a${childIndex}`)
+              if (childOutput) {
+                output.children.push(childOutput)
+              }
+            }
+          })
+        }
+
+        return output
+      }
+    }
+
+    const outputArray = []
+
+    Array.from(dom.body.childNodes).forEach((node, nodeIndex) => {
+      const tagName = node.nodeName.toLowerCase()
+      if (nodes.includes(tagName)) {
+        const result = createNode(node, tagName, contentEditableNodeId, `a${nodeIndex}`)
+        if (result) {
+          outputArray.push(result)
+        }
+      }
+    })
+
+    return outputArray
+  },
   parse: (parentNode, html, contentEditableNodeId, index, css) => {
     if (parentNode.nodeName !== 'DIV') return false
 
