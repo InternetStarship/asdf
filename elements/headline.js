@@ -301,7 +301,7 @@ const headlineUtils = {
   parse: (parentNode, html, contentEditableNodeId, index, css) => {
     // if (parentNode.nodeName !== 'DIV') return false
 
-    html = html.replace(/<div/g, '<span').replace(/<\/div>/g, '</span>')
+    // html = html.replace(/<div/g, '<span').replace(/<\/div>/g, '</span>')
 
     const dom = app.htmlToDom(html)
 
@@ -311,7 +311,7 @@ const headlineUtils = {
     const italic = dom.querySelector('i')
     const strike = dom.querySelector('strike')
     const underline = dom.querySelector('u')
-    const span = dom.querySelector('span')
+    const span = dom.querySelector('div')
 
     if (link && link.textContent !== '') {
       const linkId = app.makeId()
