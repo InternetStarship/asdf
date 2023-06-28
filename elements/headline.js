@@ -247,7 +247,7 @@ const headlineUtils = {
     return dom.innerHTML
   },
 
-  addSpanTagsToText: htmlString => {
+  addSpanTagsToText: input => {
     // Define the allowed tags and attributes
     var allowedTags = ['br', 'strong', 'em', 'i', 'b', 'u', 'span', 'div', 'a']
     var allowedAttributes = ['href', 'src', 'alt', 'class', 'id']
