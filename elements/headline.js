@@ -284,7 +284,7 @@ const headlineUtils = {
       const linkTextId = app.makeId()
       return {
         type: 'span',
-        attrs: { css },
+        // attrs: { css },
         id: linkId,
         version: 0,
         parentId: contentEditableNodeId,
@@ -325,7 +325,7 @@ const headlineUtils = {
       const boldBId = app.makeId()
       return {
         type: 'span',
-        attrs: { css },
+        // attrs: { css },
         id: boldId,
         version: 0,
         parentId: contentEditableNodeId,
@@ -359,7 +359,7 @@ const headlineUtils = {
       const strongBId = app.makeId()
       return {
         type: 'span',
-        attrs: { css },
+        // attrs: { css },
         id: strongId,
         version: 0,
         parentId: contentEditableNodeId,
@@ -393,7 +393,7 @@ const headlineUtils = {
       const underlineTextId = app.makeId()
       return {
         type: 'span',
-        attrs: { css },
+        // attrs: { css },
         id: underlineId,
         version: 0,
         parentId: contentEditableNodeId,
@@ -427,7 +427,7 @@ const headlineUtils = {
       const italicTextId = app.makeId()
       return {
         type: 'span',
-        attrs: { css },
+        // attrs: { css },
         id: italicId,
         version: 0,
         parentId: contentEditableNodeId,
@@ -461,7 +461,7 @@ const headlineUtils = {
       const strikeTextId = app.makeId()
       return {
         type: 'span',
-        attrs: { css },
+        // attrs: { css },
         id: strikeId,
         version: 0,
         parentId: contentEditableNodeId,
@@ -494,7 +494,7 @@ const headlineUtils = {
       const spanTextId = app.makeId()
       return {
         type: 'span',
-        attrs: { css },
+        // attrs: { css },
         id: spanId,
         version: 0,
         parentId: contentEditableNodeId,
