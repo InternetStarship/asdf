@@ -9,7 +9,7 @@ const headline = (
   let blueprintTitle = 'Headline/V1'
 
   if (element.title === 'sub headline') {
-    blueprintTitle = 'Subheadline/V1'
+    blueprintTitle = 'SubHeadline/V1'
   } else if (element.title === 'paragraph') {
     blueprintTitle = 'Paragraph/V1'
   }
