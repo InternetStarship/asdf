@@ -24,25 +24,31 @@ const headline = (
   let boldColor = ''
 
   if (/<\/?[a-z][\s\S]*>/i.test(html)) {
-    const dom = app.htmlToDom(html)
+    // const dom = app.htmlToDom(html)
 
-    dom.querySelectorAll('*').forEach((node, index) => {
-      if (node.outerHTML === '<br>') {
-        const plainTextId = app.makeId()
-        children.push({
-          type: 'br',
-          id: plainTextId,
-          version: 0,
-          parentId: contentEditableNodeId,
-          fractionalIndex: `a${index}`,
-        })
-      } else {
-        // console.log(node.outerHTML)
-        const child = headlineUtils.parser(node.outerHTML, contentEditableNodeId, index, element.css)
-        // console.log(child, node.innerHTML, contentEditableNodeId)
-        children = children.concat(child)
-      }
-    })
+    // dom.querySelectorAll('*').forEach((node, index) => {
+    //   if (node.outerHTML === '<br>') {
+    //     const plainTextId = app.makeId()
+    //     children.push({
+    //       type: 'br',
+    //       id: plainTextId,
+    //       version: 0,
+    //       parentId: contentEditableNodeId,
+    //       fractionalIndex: `a${index}`,
+    //     })
+    //   } else {
+    //     const child = headlineUtils.parser(node.outerHTML, contentEditableNodeId, index, element.css)
+    //     children = children.concat(child)
+    //   }
+    // })
+
+    const htmlToJSON = (html, contentEditableNodeId) => {
+      const dom = app.htmlToDom(html)
+      const output = headlineUtils.parser(dom.outerHTML, contentEditableNodeId)
+      return output
+    }
+
+    children = htmlToJSON(inputHTML, contentEditableNodeId)
 
     if (
       document.querySelector(`#${element.id} .elHeadline b`) &&
