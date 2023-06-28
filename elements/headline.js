@@ -18,6 +18,7 @@ const headline = (
     const dom = app.htmlToDom(html)
 
     const finalObjectArray = []
+    let i = 0
     const parseNode = node => {
       let childrenArray = []
       for (const child of node.childNodes) {
@@ -31,7 +32,7 @@ const headline = (
               id: plainTextId,
               version: 0,
               parentId: contentEditableNodeId,
-              fractionalIndex: `a${index}`,
+              fractionalIndex: `a${i++}`,
             })
           }
         } else {
@@ -40,7 +41,7 @@ const headline = (
             id: plainTextId,
             version: 0,
             parentId: contentEditableNodeId,
-            fractionalIndex: `a${index}`,
+            fractionalIndex: `a${i++}`,
           }
           if (childObject.type === 'br') {
             childrenArray.push(childObject)
