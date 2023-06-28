@@ -20,11 +20,14 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
     videoBg.getAttribute('data-youtube-selectbox') &&
     videoBg.getAttribute('data-youtube-selectbox') === 'youtube'
   ) {
+    console.log('what is up?!?')
     backgroundParams['--style-video-bg-style-type'] = 'fill'
     backgroundParams['--style-video-bg-url'] = videoBg.getAttribute('data-youtube-background')
-    backgroundParams['--style-video-bg-thumbnail-background'] = false
+    backgroundParams['--style-video-bg-thumbnail-background'] = true
     backgroundParams['--style-video-bg-use-background-as-overlay'] = false
     backgroundParams['--style-video-bg-type'] = 'youtube'
+
+    console.log(videoBg.getAttribute('data-youtube-background'))
 
     const endaction = videoBg.getAttribute('data-youtube-endaction')
     switch (endaction) {
