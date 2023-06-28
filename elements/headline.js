@@ -21,12 +21,27 @@ const headline = (
     const parseNode = node => {
       let childrenArray = []
       for (const child of node.childNodes) {
+        const plainTextId = app.makeId()
+
         if (child.nodeType === Node.TEXT_NODE) {
           if (child.textContent.trim() !== '') {
-            childrenArray.push({ type: 'text', innerText: child.textContent.trim() })
+            childrenArray.push({
+              type: 'text',
+              innerText: child.textContent.trim(),
+              id: plainTextId,
+              version: 0,
+              parentId: contentEditableNodeId,
+              fractionalIndex: `a${index}`,
+            })
           }
         } else {
-          let childObject = { type: child.nodeName.toLowerCase() }
+          let childObject = {
+            type: child.nodeName.toLowerCase(),
+            id: plainTextId,
+            version: 0,
+            parentId: contentEditableNodeId,
+            fractionalIndex: `a${index}`,
+          }
           if (childObject.type === 'br') {
             childrenArray.push(childObject)
           } else {
@@ -52,22 +67,22 @@ const headline = (
 
     console.log(finalObjectArray)
 
-    dom.querySelectorAll('*').forEach((node, index) => {
-      if (node.outerHTML === '<br>') {
-        const plainTextId = app.makeId()
-        children.push({
-          type: 'br',
-          id: plainTextId,
-          version: 0,
-          parentId: contentEditableNodeId,
-          fractionalIndex: 'a0',
-        })
-      } else {
-        children.push(
-          headlineUtils.parse(node.parentNode, node.outerHTML, contentEditableNodeId, index, element.css)
-        )
-      }
-    })
+    // dom.querySelectorAll('*').forEach((node, index) => {
+    //   if (node.outerHTML === '<br>') {
+    //     const plainTextId = app.makeId()
+    //     children.push({
+    //       type: 'br',
+    //       id: plainTextId,
+    //       version: 0,
+    //       parentId: contentEditableNodeId,
+    //       fractionalIndex: `a${index}`,
+    //     })
+    //   } else {
+    //     children.push(
+    //       headlineUtils.parse(node.parentNode, node.outerHTML, contentEditableNodeId, index, element.css)
+    //     )
+    //   }
+    // })
 
     if (
       document.querySelector(`#${element.id} .elHeadline b`) &&
