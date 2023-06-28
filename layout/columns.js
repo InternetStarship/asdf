@@ -20,8 +20,6 @@ const columns = (columns, parentId) => {
         backgroundPosition = className
       })
 
-      const columnContainer = document.querySelector(`[id="${column.id}"] .col-inner`)
-
       const data = {
         type: 'ColContainer/V1',
         params: {
@@ -34,13 +32,11 @@ const columns = (columns, parentId) => {
         },
         attrs: {
           style: {
-            'margin-top': parseInt(columnCSS['margin-top']) || 0,
-            'margin-left': parseInt(columnCSS['margin-left']) || 0,
-            'margin-right': parseInt(columnCSS['margin-right']) || 0,
-            'padding-left': columnCSS['padding-left'] || 0,
-            'padding-right': columnCSS['padding-right'] || 0,
-            'padding-left': parseInt(columnCSS['padding-left']) || 0,
-            'padding-right': parseInt(columnCSS['padding-right']) || 0,
+            'margin-top': parseInt(columnContainerCSS['margin-top']) || 0,
+            'margin-left': parseInt(columnContainerCSS['margin-left']) || 0,
+            'margin-right': parseInt(columnContainerCSS['margin-right']) || 0,
+            'padding-left': parseInt(columnContainerCSS['padding-left']) || 0,
+            'padding-right': parseInt(columnContainerCSS['padding-right']) || 0,
           },
         },
         id: id,
