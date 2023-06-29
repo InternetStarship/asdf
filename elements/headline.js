@@ -66,7 +66,7 @@ const headline = (
         className: fa_prependDom.getAttribute('class').replace(`${fa_prepended_class} `, ''),
         style: {
           'margin-left': parseInt(cssPrepend['margin-left']) || 0,
-          'margin-right': parseInt(cssPrepend['margin-right']) || 0,
+          'margin-right': 10,
           'font-size': parseInt(cssPrepend['font-size']) || 0,
           color: cssPrepend['color'],
           width: 'auto',
@@ -105,7 +105,7 @@ const headline = (
         style: {
           'font-family': css['font-family'],
           'font-weight': fontWeight,
-          'letter-spacing': css['letter-spacing'] || 0,
+          'letter-spacing': css['letter-spacing'] || 'normal',
           'line-height': css['line-height'] || 0,
           'font-size': parseInt(css['font-size']) || 26,
           color: css['color'],
@@ -151,6 +151,8 @@ const headline = (
 
   output.attrs.style = Object.assign(output.attrs.style, borderRadius)
 
+  console.log('headline output', output.children[0].children.length, output)
+
   return output
 }
 
@@ -171,6 +173,17 @@ function headlinePageTree(classicHeadlineArray, mainParentId) {
       version: 0,
       parentId: mainParentId,
       fractionalIndex: fractionalIndex,
+    }
+
+    if (headline.type === 'a') {
+      if (!output.attrs) {
+        output.attrs = {}
+      }
+      output.attrs['className'] = 'elTypographyLink'
+
+      if (output.attrs.class) {
+        delete output.attrs.class
+      }
     }
 
     if (headline.children) {

@@ -80,18 +80,22 @@ const clickfunnels_classic_page_tree = {
     if (dom.querySelector('.elHeadline')) {
       data.type = 'headline'
       const element = dom.querySelector('.elHeadline')
+      let htmlForJSON = element.innerHTML
+      htmlForJSON = htmlForJSON.replace(/<i class="fa_prepended.*?<\/i>/g, '')
+      htmlForJSON = htmlForJSON.replace(/<i class="fa_appended.*?<\/i>/g, '')
       data.content = {
         visible: app.checkVisibility(dom),
         text: element.textContent,
         html: element.innerHTML,
-        json: parseHtml(element.innerHTML),
+        json: parseHtml(htmlForJSON, dom.id),
       }
 
-      console.log('headline json', data.content.json)
+      console.log('data.content.json', data.content.json)
+
       return data
     }
 
-    function parseHtml(htmlString) {
+    function parseHtml(htmlString, domId) {
       const parser = new DOMParser()
       const html = parser.parseFromString(htmlString, 'text/html')
 
@@ -100,16 +104,36 @@ const clickfunnels_classic_page_tree = {
           return null
         }
 
-        const obj = {}
+        let objs = []
 
         switch (node.nodeType) {
           case Node.TEXT_NODE:
-            obj.type = 'text'
-            obj.innerText = node.nodeValue + ' '
+            let parts = node.nodeValue.split('\n')
+            parts.forEach((part, index) => {
+              if (part !== '') {
+                objs.push({
+                  type: 'text',
+                  innerText: part,
+                })
+                objs.push({
+                  type: 'text',
+                  innerText: ' ',
+                })
+              }
+
+              if (index < parts.length - 1) {
+                objs.push({
+                  type: 'div',
+                  innerText: ' ',
+                })
+              }
+            })
             break
 
           case Node.ELEMENT_NODE:
-            obj.type = node.tagName.toLowerCase()
+            let obj = {
+              type: node.tagName.toLowerCase(),
+            }
 
             if (node.hasAttributes()) {
               obj.attrs = Array.from(node.attributes).reduce((attrs, attr) => {
@@ -118,19 +142,37 @@ const clickfunnels_classic_page_tree = {
               }, {})
             }
 
+            if (obj.type === 'a') {
+              const nodeIndex = Array.from(node.parentNode.childNodes).indexOf(node)
+              const el = document.querySelector(`#${domId} a:nth-child(${nodeIndex + 1})`)
+              const style = window.getComputedStyle(el)
+              obj.attrs.style = {
+                color: style.color,
+              }
+            }
+
             if (node.hasChildNodes()) {
               obj.children = Array.from(node.childNodes)
-                .map(traverse)
+                .flatMap(traverse)
                 .filter(child => child !== null)
+            }
+
+            if (
+              obj.type === 'div' &&
+              obj.children &&
+              obj.children.length === 1 &&
+              obj.children[0].type === 'br'
+            ) {
+              objs.push({ type: 'div', children: [{ type: 'br' }] })
+            } else if (obj.type === 'div' && obj.children && obj.children.length > 0) {
+              objs = objs.concat(obj.children)
+            } else {
+              objs.push(obj)
             }
             break
         }
 
-        if (obj.type === 'div' && obj.children && obj.children.length > 0) {
-          return obj.children
-        }
-
-        return obj
+        return objs
       }
 
       return Array.from(html.body.childNodes)
