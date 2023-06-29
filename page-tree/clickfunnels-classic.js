@@ -103,28 +103,22 @@ const clickfunnels_classic_page_tree = {
         }
 
         const tagName = element.tagName.toLowerCase()
-
-        // Create a new JSON object for this element
         const jsonObject = {
           type: tagName,
           children: [],
         }
 
-        // Add the JSON object to its parent's children
-        if (parentElement) {
+        if (tagName !== 'div' && parentElement) {
           parentElement.children.push(jsonObject)
-        } else {
+        } else if (!parentElement) {
           results.push(jsonObject)
         }
 
-        // Check if the element has child nodes
         if (element.childNodes && element.childNodes.length > 0) {
-          // If it does, process the children
           Array.from(element.childNodes).forEach(child => {
             processElement(child, jsonObject)
           })
         } else {
-          // If it doesn't, add its innerText as content
           jsonObject.content = tagName === 'br' ? '' : element.innerText
         }
       }
