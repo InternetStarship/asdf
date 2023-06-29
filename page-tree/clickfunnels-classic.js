@@ -84,49 +84,58 @@ const clickfunnels_classic_page_tree = {
         visible: app.checkVisibility(dom),
         text: element.textContent,
         html: element.innerHTML,
-        json: htmlToJson(element.innerHTML),
+        json: parseHtml(element.innerHTML),
       }
 
       console.log('headline json', data.content.json)
       return data
     }
 
-    function htmlToJson(htmlString) {
+    function parseHtml(htmlString) {
       const parser = new DOMParser()
-      const doc = parser.parseFromString(htmlString, 'text/html')
-      const divs = Array.from(doc.body.childNodes)
-      let results = []
+      const html = parser.parseFromString(htmlString, 'text/html')
 
-      function processNode(node, parentElement) {
-        if (node.nodeType === Node.TEXT_NODE) {
-          const text = node.textContent.trim()
-          if (text) {
-            parentElement.children.push({
-              type: 'text',
-              content: text,
-            })
-          }
-        } else if (node.nodeType === Node.ELEMENT_NODE) {
-          const tagName = node.tagName.toLowerCase()
-          const jsonObject = {
-            type: tagName,
-            content: node.textContent.trim(),
-          }
-
-          if (tagName !== 'div' && parentElement) {
-            parentElement.children.push(jsonObject)
-          } else if (!parentElement) {
-            results.push(jsonObject)
-          }
-
-          Array.from(node.childNodes).forEach(child => {
-            processNode(child, jsonObject)
-          })
+      function traverse(node) {
+        if (node.nodeType === Node.TEXT_NODE && !/\S/.test(node.nodeValue)) {
+          return null
         }
+
+        const obj = {}
+
+        switch (node.nodeType) {
+          case Node.TEXT_NODE:
+            obj.type = 'text'
+            obj.innerText = node.nodeValue + ' '
+            break
+
+          case Node.ELEMENT_NODE:
+            obj.type = node.tagName.toLowerCase()
+
+            if (node.hasAttributes()) {
+              obj.attrs = Array.from(node.attributes).reduce((attrs, attr) => {
+                attrs[attr.name] = attr.value
+                return attrs
+              }, {})
+            }
+
+            if (node.hasChildNodes()) {
+              obj.children = Array.from(node.childNodes)
+                .map(traverse)
+                .filter(child => child !== null)
+            }
+            break
+        }
+
+        if (obj.type === 'div' && obj.children && obj.children.length > 0) {
+          return obj.children
+        }
+
+        return obj
       }
 
-      divs.forEach(div => processNode(div, null))
-      return results
+      return Array.from(html.body.childNodes)
+        .flatMap(traverse)
+        .filter(child => child !== null)
     }
 
     if (dom.getAttribute('data-de-type') === 'quote') {

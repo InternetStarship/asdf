@@ -8,35 +8,20 @@ const headline = (
 
   let blueprintTitle = 'Headline/V1'
 
-  if (element.title === 'sub-headline') {
-    blueprintTitle = 'SubHeadline/V1'
-  } else if (element.title === 'Paragraph') {
-    blueprintTitle = 'Paragraph/V1'
-  }
+  // if (element.title === 'sub-headline') {
+  //   blueprintTitle = 'SubHeadline/V1'
+  // } else if (element.title === 'Paragraph') {
+  //   blueprintTitle = 'Paragraph/V1'
+  // }
 
   const output = blueprint(blueprintTitle, data.id, data.parentId, data.index, element)
   const contentEditableNodeId = app.makeId()
-  const html = headlineUtils.wrapSpan(element.content.html)
   const css = properties.css(element.id, type)
-
-  // console.log('\n\n\n')
-  // console.log('original html', element.content.html)
-  // console.log('new html', html)
-  // console.log('\n\n\n')
-
-  let children = []
+  let children = headlinePageTree(element.content.json, contentEditableNodeId)
   let fontWeight = css['font-weight']
   let boldColor = ''
 
-  if (/<\/?[a-z][\s\S]*>/i.test(html)) {
-    const htmlToJSON = (html, contentEditableNodeId) => {
-      const dom = app.htmlToDom(html)
-      const output = headlineUtils.parser(dom.outerHTML, contentEditableNodeId)
-      return output
-    }
-
-    children = htmlToJSON(html, contentEditableNodeId)
-
+  if (/<\/?[a-z][\s\S]*>/i.test(element.content.html)) {
     if (
       document.querySelector(`#${element.id} .elHeadline b`) &&
       document.querySelector(`style#bold_style_${element.id}`)
@@ -46,17 +31,17 @@ const headline = (
     }
   } else {
     const plainTextId = app.makeId()
-    children.push({
-      type: 'text',
-      innerText: element.content.text,
-      id: plainTextId,
-      version: 0,
-      parentId: contentEditableNodeId,
-      fractionalIndex: 'a0',
-    })
+    children = [
+      {
+        type: 'text',
+        innerText: element.content.text,
+        id: plainTextId,
+        version: 0,
+        parentId: contentEditableNodeId,
+        fractionalIndex: 'a0',
+      },
+    ]
   }
-
-  // console.log('children', children)
 
   const borderRadius = properties.borderRadius(element.css)
 
@@ -169,98 +154,31 @@ const headline = (
   return output
 }
 
-const headlineUtils = {
-  wrapSpan: html => {
-    const dom = app.htmlToDom(html.replaceAll(/&nbsp;/g, '').replaceAll(/\n/g, ''))
-    headlineUtils.wrapTextNodes(dom)
-    let output = dom.innerHTML
-    output = output.replaceAll(/\n/g, '')
-    return output
-  },
+function headlinePageTree(classicHeadlineArray, mainParentId) {
+  let outputArray = []
 
-  wrapTextNodes: node => {
-    if (node.nodeType === 3 && node.nodeValue.trim() !== '') {
-      const wrapper = document.createElement('span')
-      wrapper.textContent = node.nodeValue
-      node.parentNode.replaceChild(wrapper, node)
-    } else if (node.nodeType === 1) {
-      for (let i = 0; i < node.childNodes.length; i++) {
-        headlineUtils.wrapTextNodes(node.childNodes[i])
-      }
-    }
-  },
+  if (!classicHeadlineArray) {
+    return outputArray
+  }
 
-  parser: (html, contentEditableNodeId, index = 0, css) => {
-    const dom = new DOMParser().parseFromString(html, 'text/html').body
-    let fractionalIndexCounter = 0
+  classicHeadlineArray.forEach((headline, index) => {
+    const id = app.makeId()
+    const fractionalIndex = 'a' + (index + 1).toString(36)
 
-    const attrs = {
-      a: {
-        className: 'elTypographyLink',
-        rel: 'noopener noreferrer',
-      },
+    let output = {
+      ...headline,
+      id: id,
+      version: 0,
+      parentId: mainParentId,
+      fractionalIndex: fractionalIndex,
     }
 
-    const allowedTags = ['a', 'b', 'strong', 'u', 'i', 'strike', 'div', 'br']
-
-    const createNode = (node, parentId = contentEditableNodeId) => {
-      let tagName = node.nodeName.toLowerCase()
-      if (node.nodeType === 3) {
-        // Text node
-        const nodeId = app.makeId()
-        return {
-          type: 'text',
-          innerText: node.nodeValue.trim(),
-          id: nodeId,
-          version: 0,
-          parentId: parentId,
-          fractionalIndex: `a${fractionalIndexCounter++}`,
-        }
-      } else if (node.nodeType === 1 && allowedTags.includes(tagName)) {
-        // HTML Element
-        const nodeId = app.makeId()
-        if (tagName === 'div') {
-          tagName = 'span'
-        }
-        let nodeData = {
-          type: tagName,
-          id: nodeId,
-          version: 0,
-          parentId: parentId,
-          fractionalIndex: `a${fractionalIndexCounter++}`,
-        }
-        if (tagName === 'a') {
-          nodeData.attrs = {
-            ...attrs[tagName],
-            href: node.getAttribute('href'),
-            id: node.getAttribute('id') || '',
-            target: node.getAttribute('target') === '_blank' ? 'enable' : 'disable',
-            style: { color: node.style.color },
-          }
-        }
-        if (node.childNodes && node.childNodes.length > 0) {
-          nodeData.children = []
-          Array.from(node.childNodes).forEach(childNode => {
-            const childData = createNode(childNode, nodeId)
-            if (childData) {
-              nodeData.children.push(childData)
-            }
-          })
-          if (nodeData.children.length === 0) delete nodeData.children // Delete empty children array
-        }
-        return nodeData
-      }
-      return null
+    if (headline.children) {
+      output.children = headlinePageTree(headline.children, id)
     }
 
-    let outputArray = []
-    Array.from(dom.childNodes).forEach(node => {
-      const nodeData = createNode(node)
-      if (nodeData) {
-        outputArray.push(nodeData)
-      }
-    })
+    outputArray.push(output)
+  })
 
-    return outputArray.filter(node => !node.parentId || node.parentId === contentEditableNodeId)
-  },
+  return outputArray
 }
