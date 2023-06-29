@@ -110,7 +110,7 @@ const clickfunnels_classic_page_tree = {
           const tagName = node.tagName.toLowerCase()
           const jsonObject = {
             type: tagName,
-            content: node.nextContent.trim(),
+            content: node.textContent.trim(),
           }
 
           if (tagName !== 'div' && parentElement) {
