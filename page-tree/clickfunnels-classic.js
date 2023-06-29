@@ -94,36 +94,38 @@ const clickfunnels_classic_page_tree = {
     function htmlToJson(htmlString) {
       const parser = new DOMParser()
       const doc = parser.parseFromString(htmlString, 'text/html')
-      const divs = Array.from(doc.body.childNodes).filter(node => node.nodeType === Node.ELEMENT_NODE)
+      const divs = Array.from(doc.body.childNodes)
       let results = []
 
-      function processElement(element, parentElement) {
-        if (element.nodeType !== Node.ELEMENT_NODE) {
-          return
-        }
+      function processNode(node, parentElement) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const text = node.textContent.trim()
+          if (text) {
+            parentElement.children.push({
+              type: 'text',
+              content: text,
+            })
+          }
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          const tagName = node.tagName.toLowerCase()
+          const jsonObject = {
+            type: tagName,
+            children: [],
+          }
 
-        const tagName = element.tagName.toLowerCase()
-        const jsonObject = {
-          type: tagName,
-          children: [],
-        }
+          if (tagName !== 'div' && parentElement) {
+            parentElement.children.push(jsonObject)
+          } else if (!parentElement) {
+            results.push(jsonObject)
+          }
 
-        if (tagName !== 'div' && parentElement) {
-          parentElement.children.push(jsonObject)
-        } else if (!parentElement) {
-          results.push(jsonObject)
-        }
-
-        if (element.childNodes && element.childNodes.length > 0) {
-          Array.from(element.childNodes).forEach(child => {
-            processElement(child, jsonObject)
+          Array.from(node.childNodes).forEach(child => {
+            processNode(child, jsonObject)
           })
-        } else {
-          jsonObject.content = tagName === 'br' ? '' : element.innerText
         }
       }
 
-      divs.forEach(div => processElement(div, null))
+      divs.forEach(div => processNode(div, null))
       return results
     }
 
