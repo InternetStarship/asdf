@@ -168,7 +168,7 @@ const app = {
     return outputArray
   },
 
-  parseHtml: (htmlString, domId, listIndex = null) => {
+  parseHtml: (htmlString, domId, listIndex = null, type = null) => {
     const parser = new DOMParser()
     const html = parser.parseFromString(htmlString, 'text/html')
 
@@ -223,6 +223,12 @@ const app = {
               const style = window.getComputedStyle(el)
               color = style.color
             } else if (listIndex !== null) {
+              const el = document.querySelector(`#${node.id}`)
+              if (el) {
+                const style = window.getComputedStyle(el)
+                color = style.color
+              }
+            } else if (type === 'faq_paragraph' || type === 'faq_headline') {
               const el = document.querySelector(`#${node.id}`)
               if (el) {
                 const style = window.getComputedStyle(el)

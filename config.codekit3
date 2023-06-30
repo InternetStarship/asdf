@@ -143,7 +143,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 0,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/elements\/headline-min-min.js",
       "oF" : 0,
       "sC" : 0,
@@ -165,7 +165,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 0,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/elements\/icon-min-min.js",
       "oF" : 0,
       "sC" : 0,
@@ -231,7 +231,7 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 0,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/elements\/list-min-min.js",
       "oF" : 0,
       "sC" : 0,
@@ -785,14 +785,14 @@
     "bowerUseExactVersion" : 0,
     "browserRefreshDelay" : 0,
     "browserslistString" : ">0.2%, last 2 versions, Firefox ESR, not dead",
-    "buildEnvironment" : 1,
+    "buildEnvironment" : 0,
     "buildFolderActive" : 0,
     "buildFolderName" : "build",
     "cleanBuild" : 1,
     "cssoForceMediaMerge" : 0,
     "cssoRestructure" : 0,
     "environmentVariableEntries" : [
-      "NODE_ENV:::development"
+      "NODE_ENV:::production"
     ],
     "esLintConfigFileHandlingType" : 0,
     "esLintECMAVersion" : 7,
@@ -1773,7 +1773,7 @@
       "transpilerStyle" : 1
     },
     "languageDefaultsCSS" : {
-      "autoOutputAction" : 0,
+      "autoOutputAction" : 1,
       "autoOutputPathFilenamePattern" : "*-min.css",
       "autoOutputPathRelativePath" : "",
       "autoOutputPathReplace1" : "",
@@ -1782,7 +1782,7 @@
       "combineImports" : 0,
       "cssoStyle" : 0,
       "purgeCSSStyle" : 0,
-      "shouldRunAutoprefixer" : 1,
+      "shouldRunAutoprefixer" : 0,
       "shouldRunBless" : 0,
       "sourceMapStyle" : 0
     },

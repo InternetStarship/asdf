@@ -412,8 +412,20 @@ const clickfunnels_classic_page_tree = {
         visible: app.checkVisibility(dom),
         headline: dom.querySelector('.faqTitleText').innerHTML,
         headline_text: dom.querySelector('.faqTitleText').textContent,
+        headline_json: app.parseHtml(
+          dom.querySelector('.faqTitleText').innerHTML.replace(/<i class="i.*?<\/i>/g, ''),
+          dom.id,
+          null,
+          'faq_headline'
+        ),
         paragraph: dom.querySelector('.faqAnswer').innerHTML,
         paragraph_text: dom.querySelector('.faqAnswer').textContent,
+        paragraph_json: app.parseHtml(
+          dom.querySelector('.faqAnswer').innerHTML.replace(/<i class="i.*?<\/i>/g, ''),
+          dom.id,
+          null,
+          'faq_paragraph'
+        ),
       }
       return data
     }
