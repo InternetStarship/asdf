@@ -90,7 +90,5 @@ const image_list = data => {
 
   output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
 
-  console.log('image list output', output)
-
   return output
 }

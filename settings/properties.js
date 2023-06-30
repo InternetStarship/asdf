@@ -51,7 +51,6 @@ const properties = {
     } else if (type === 'faq_block_paragraph') {
       dom = document.querySelector(`#${elementId} .faqAnswer`)
     } else if (type === 'image_list_headline') {
-      console.log('image_list_headline')
       dom = document.querySelector(`#${elementId} li`)
     } else if (type && type.includes('text_block_headline_')) {
       const eqIndex = type.split('_')[3]
