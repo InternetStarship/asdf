@@ -505,7 +505,6 @@ const clickfunnels_classic_page_tree = {
     }
 
     if (dom.querySelector('.elBulletList')) {
-      console.log('Bullet List')
       data.type = 'list'
       const list = dom.querySelectorAll('ul.elBulletList li')
       const items = []
@@ -536,6 +535,7 @@ const clickfunnels_classic_page_tree = {
         fontAwesome: dom.querySelector('.eliconelement i').getAttribute('class').trim(),
         href: element.getAttribute('href'),
         target: element.target,
+        html: dom.innerHTML,
       }
       return data
     }
@@ -553,8 +553,34 @@ const clickfunnels_classic_page_tree = {
     if (dom.querySelector('.progress')) {
       data.type = 'progress'
       const element = dom.querySelector('.progress')
+      const computedWraperStyles = getComputedStyle(element)
+      const width = computedWraperStyles.getPropertyValue('width')
+      const height = computedWraperStyles.getPropertyValue('height')
+      let percent = 0
+      const widthClasses = [
+        'progressbar_w_0',
+        'progressbar_w_33',
+        'progressbar_w_50',
+        'progressbar_w_66',
+        'progressbar_w_75',
+        'progressbar_w_85',
+        'progressbar_w_90',
+        'progressbar_w_100',
+      ]
+      widthClasses.forEach(item => {
+        if (element.querySelector('.progress-bar').classList.contains(item)) {
+          percent = item.replace('progressbar_w_', '')
+        }
+      })
+
       data.content = {
         visible: app.checkVisibility(dom),
+        background_color: element.getAttribute('data-color'),
+        percentage: percent,
+        width: parseInt(width.replace('%', '')),
+        height: height,
+        label: element.querySelector('.progress-bar').textContent,
+        html: dom.innerHTML,
       }
       return data
     }

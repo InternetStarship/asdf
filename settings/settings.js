@@ -21,8 +21,6 @@ const settings = () => {
     app.copiedCSS = app.copiedCSS.replaceAll(`#${item.cf1_id}`, `.id-${item.cf2_id}`)
   })
 
-  console.log(app.copiedCSS, 'copiedCSS')
-
   // Note: Tracking code for Header and Footer is effectively impossible to accurately
   // grab without having access to the ClickFunnels Classic editor.
 
