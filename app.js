@@ -35,7 +35,7 @@ const app = {
       v2_pagetree: clickfunnels_v2,
     }
 
-    window.parent.postMessage(response, '*')
+    window.parent.postMessage(JSON.parse(JSON.stringify(response)), '*')
   },
 
   htmlToDom: html => {
@@ -126,5 +126,130 @@ const app = {
     if (imagesToLoad === 0) {
       callback()
     }
+  },
+
+  headlinePageTree: (classicHeadlineArray, mainParentId) => {
+    let outputArray = []
+
+    if (!classicHeadlineArray) {
+      return outputArray
+    }
+
+    classicHeadlineArray.forEach((headline, index) => {
+      const id = app.makeId()
+      const fractionalIndex = 'a' + (index + 1).toString(36)
+
+      let output = {
+        ...headline,
+        id: id,
+        version: 0,
+        parentId: mainParentId,
+        fractionalIndex: fractionalIndex,
+      }
+
+      if (headline.type === 'a') {
+        if (!output.attrs) {
+          output.attrs = {}
+        }
+        output.attrs['className'] = 'elTypographyLink'
+
+        if (output.attrs.class) {
+          delete output.attrs.class
+        }
+      }
+
+      if (headline.children) {
+        output.children = app.headlinePageTree(headline.children, id)
+      }
+
+      outputArray.push(output)
+    })
+
+    return outputArray
+  },
+
+  parseHtml: (htmlString, domId) => {
+    const parser = new DOMParser()
+    const html = parser.parseFromString(htmlString, 'text/html')
+
+    function traverse(node) {
+      if (node.nodeType === Node.TEXT_NODE && !/\S/.test(node.nodeValue)) {
+        return null
+      }
+
+      let objs = []
+
+      switch (node.nodeType) {
+        case Node.TEXT_NODE:
+          let parts = node.nodeValue.split('\n')
+          parts.forEach((part, index) => {
+            if (part !== '') {
+              objs.push({
+                type: 'text',
+                innerText: part,
+              })
+              objs.push({
+                type: 'text',
+                innerText: ' ',
+              })
+            }
+
+            if (index < parts.length - 1) {
+              objs.push({
+                type: 'div',
+                innerText: ' ',
+              })
+            }
+          })
+          break
+
+        case Node.ELEMENT_NODE:
+          let obj = {
+            type: node.tagName.toLowerCase(),
+          }
+
+          if (node.hasAttributes()) {
+            obj.attrs = Array.from(node.attributes).reduce((attrs, attr) => {
+              attrs[attr.name] = attr.value
+              return attrs
+            }, {})
+          }
+
+          if (obj.type === 'a') {
+            const nodeIndex = Array.from(node.parentNode.childNodes).indexOf(node)
+            const el = document.querySelector(`#${domId} a:nth-child(${nodeIndex + 1})`)
+            const style = window.getComputedStyle(el)
+            obj.attrs.style = {
+              color: style.color,
+            }
+          }
+
+          if (node.hasChildNodes()) {
+            obj.children = Array.from(node.childNodes)
+              .flatMap(traverse)
+              .filter(child => child !== null)
+          }
+
+          if (
+            obj.type === 'div' &&
+            obj.children &&
+            obj.children.length === 1 &&
+            obj.children[0].type === 'br'
+          ) {
+            objs.push({ type: 'div', children: [{ type: 'br' }] })
+          } else if (obj.type === 'div' && obj.children && obj.children.length > 0) {
+            objs = objs.concat(obj.children)
+          } else {
+            objs.push(obj)
+          }
+          break
+      }
+
+      return objs
+    }
+
+    return Array.from(html.body.childNodes)
+      .flatMap(traverse)
+      .filter(child => child !== null)
   },
 }

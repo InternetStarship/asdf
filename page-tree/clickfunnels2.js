@@ -180,5 +180,7 @@ const clickfunnels2_pagetree = (clickfunnels_classic_page_tree, new_page_tree) =
     }
   })
 
+  console.log('hey')
+
   return convertedJSON
 }

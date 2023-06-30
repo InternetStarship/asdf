@@ -7,17 +7,21 @@ const headline = (
   const element = data.element
 
   let blueprintTitle = 'Headline/V1'
+  let blueprintClassname = '.elHeadline'
 
+  // Fix for later: The settings for subheadline and paragraph are not the same as Headline.
   // if (element.title === 'sub-headline') {
   //   blueprintTitle = 'SubHeadline/V1'
+  //   blueprintClassname = '.elSubHeadline'
   // } else if (element.title === 'Paragraph') {
   //   blueprintTitle = 'Paragraph/V1'
+  //   blueprintClassname = '.elParagraph'
   // }
 
   const output = blueprint(blueprintTitle, data.id, data.parentId, data.index, element)
   const contentEditableNodeId = app.makeId()
   const css = properties.css(element.id, type)
-  let children = headlinePageTree(element.content.json, contentEditableNodeId)
+  let children = app.headlinePageTree(element.content.json, contentEditableNodeId)
   let fontWeight = css['font-weight']
   let boldColor = ''
 
@@ -48,9 +52,9 @@ const headline = (
   if (fontWeight === 'normal') {
     fontWeight = '400'
   } else if (fontWeight === 'bold') {
-    fontWeight = '700'
+    fontWeight = '600'
   } else if (fontWeight === 'bolder') {
-    fontWeight = '900'
+    fontWeight = '800'
   } else if (fontWeight === 'lighter') {
     fontWeight = '200'
   }
@@ -100,7 +104,7 @@ const headline = (
   }
 
   output.selectors = {
-    '.elHeadline': {
+    [blueprintClassname]: {
       attrs: {
         style: {
           'font-family': css['font-family'],
@@ -109,13 +113,13 @@ const headline = (
           'line-height': css['line-height'] || 0,
           'font-size': parseInt(css['font-size']) || 26,
           color: css['color'],
-          'text-transform': css['text-transform'],
-          'text-decoration': css['text-decoration'],
-          'text-align': css['text-align'],
+          'text-transform': css['text-transform'] || 'none',
+          'text-decoration': css['text-decoration'] || 'none',
+          'text-align': css['text-align'] || 'center',
           opacity: parseInt(css['opacity']) || 1,
         },
       },
-      '.elHeadline b,\\n.elHeadline strong': {
+      [`${blueprintClassname} b,\\n${blueprintClassname} strong`]: {
         attrs: {
           style: {
             color: boldColor || css['color'],
@@ -123,7 +127,7 @@ const headline = (
         },
       },
     },
-    '.elHeadline b,\\n.elHeadline strong': {
+    [`${blueprintClassname} b,\\n${blueprintClassname} strong`]: {
       attrs: {
         style: {
           color: boldColor || css['color'],
@@ -136,7 +140,7 @@ const headline = (
   output.children = [
     {
       type: 'ContentEditableNode',
-      attrs: { 'data-align-selector': '.elHeadline' },
+      attrs: { 'data-align-selector': blueprintClassname },
       id: contentEditableNodeId,
       version: 0,
       parentId: data.id,
@@ -151,47 +155,5 @@ const headline = (
 
   output.attrs.style = Object.assign(output.attrs.style, borderRadius)
 
-  console.log('headline output', output.children[0].children.length, output)
-
   return output
-}
-
-function headlinePageTree(classicHeadlineArray, mainParentId) {
-  let outputArray = []
-
-  if (!classicHeadlineArray) {
-    return outputArray
-  }
-
-  classicHeadlineArray.forEach((headline, index) => {
-    const id = app.makeId()
-    const fractionalIndex = 'a' + (index + 1).toString(36)
-
-    let output = {
-      ...headline,
-      id: id,
-      version: 0,
-      parentId: mainParentId,
-      fractionalIndex: fractionalIndex,
-    }
-
-    if (headline.type === 'a') {
-      if (!output.attrs) {
-        output.attrs = {}
-      }
-      output.attrs['className'] = 'elTypographyLink'
-
-      if (output.attrs.class) {
-        delete output.attrs.class
-      }
-    }
-
-    if (headline.children) {
-      output.children = headlinePageTree(headline.children, id)
-    }
-
-    outputArray.push(output)
-  })
-
-  return outputArray
 }
