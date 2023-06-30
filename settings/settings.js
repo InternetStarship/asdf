@@ -11,7 +11,7 @@ const settings = () => {
   const textColor = document.querySelector('html').style.color
   const fontFamily = document.querySelector('html').style.fontFamily
 
-  app.copiedCSS = document.querySelector('#custom-css').innerText
+  app.copiedCSS = app.copiedCSS + document.querySelector('#custom-css').innerText
 
   app.copiedCSS = app.copiedCSS.replaceAll(`;`, ` !important;`)
   app.copiedCSS = app.copiedCSS.replaceAll(`!important !important;`, ` !important;`)
@@ -20,6 +20,8 @@ const settings = () => {
   app.idList.map(item => {
     app.copiedCSS = app.copiedCSS.replaceAll(`#${item.cf1_id}`, `.id-${item.cf2_id}`)
   })
+
+  console.log(app.copiedCSS, 'copiedCSS')
 
   // Note: Tracking code for Header and Footer is effectively impossible to accurately
   // grab without having access to the ClickFunnels Classic editor.

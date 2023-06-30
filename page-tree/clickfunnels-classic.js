@@ -509,20 +509,21 @@ const clickfunnels_classic_page_tree = {
       data.type = 'list'
       const list = dom.querySelectorAll('ul.elBulletList li')
       const items = []
-      list.forEach(item => {
+      list.forEach((item, index) => {
         let content = item.innerText
         content = content.replace('\n', '').trim()
         items.push({
           html: item.innerHTML,
           text: content,
           icon: item.querySelector('i').getAttribute('class'),
-          json: app.parseHtml(item.innerHTML.replace(/<i class="fa.*?<\/i>/g, ''), dom.id),
+          json: app.parseHtml(item.innerHTML.replace(/<i class="fa.*?<\/i>/g, ''), dom.id, index),
           id: dom.id,
         })
       })
       data.content = {
         visible: app.checkVisibility(dom),
         items: items,
+        html: dom.innerHTML,
       }
       return data
     }

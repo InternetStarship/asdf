@@ -757,7 +757,7 @@
     "buildFolderName" : "build",
     "cleanBuild" : 1,
     "cssoForceMediaMerge" : 0,
-    "cssoRestructure" : 1,
+    "cssoRestructure" : 0,
     "environmentVariableEntries" : [
       "NODE_ENV:::development"
     ],

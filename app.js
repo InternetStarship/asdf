@@ -168,7 +168,7 @@ const app = {
     return outputArray
   },
 
-  parseHtml: (htmlString, domId) => {
+  parseHtml: (htmlString, domId, listIndex = null) => {
     const parser = new DOMParser()
     const html = parser.parseFromString(htmlString, 'text/html')
 
@@ -218,9 +218,20 @@ const app = {
           if (obj.type === 'a') {
             const nodeIndex = Array.from(node.parentNode.childNodes).indexOf(node)
             const el = document.querySelector(`#${domId} a:nth-child(${nodeIndex + 1})`)
-            const style = window.getComputedStyle(el)
+            let color = '#000000'
+            if (el) {
+              const style = window.getComputedStyle(el)
+              color = style.color
+            } else if (listIndex !== null) {
+              const el = document.querySelector(`#${node.id}`)
+              if (el) {
+                const style = window.getComputedStyle(el)
+                color = style.color
+              }
+            }
+
             obj.attrs.style = {
-              color: style.color,
+              color: color,
             }
           }
 
