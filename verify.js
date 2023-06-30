@@ -50,6 +50,7 @@ window.addEventListener(
           inject('elements/pricing.js'),
           inject('elements/progress.js'),
           inject('elements/select.js'),
+          inject('elements/social_share.js'),
           inject('elements/shipping.js'),
           inject('elements/text_block.js'),
           inject('elements/video_popup.js'),

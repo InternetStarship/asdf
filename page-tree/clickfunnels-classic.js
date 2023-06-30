@@ -660,6 +660,8 @@ const clickfunnels_classic_page_tree = {
       const element = dom.querySelector('.social-likes')
       data.content = {
         visible: app.checkVisibility(dom),
+        url: element.getAttribute('data-url'),
+        code: element.innerHTML,
       }
       return data
     }

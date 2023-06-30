@@ -37,6 +37,8 @@ const elements = (elements, parentId) => {
           return embed(data)
         case 'fb_comments':
           return fb_comments(data)
+        case 'social_share':
+          return social_share(data)
         case 'countdown':
           return countdown(data)
         case 'headline':

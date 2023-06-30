@@ -1,4 +1,4 @@
-const fb_comments = data => {
+const social_share = data => {
   const element = data.element
   const output = blueprint('CustomHtmlJs/V1', data.id, data.parentId, data.index, element)
   const css = properties.css(element.id, 'embed')
