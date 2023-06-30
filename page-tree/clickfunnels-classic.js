@@ -80,114 +80,15 @@ const clickfunnels_classic_page_tree = {
     if (dom.querySelector('.elHeadline')) {
       data.type = 'headline'
       const element = dom.querySelector('.elHeadline')
-      let htmlForJSON = element.innerHTML
-      htmlForJSON = htmlForJSON.replace(/<i class="fa_prepended.*?<\/i>/g, '')
-      htmlForJSON = htmlForJSON.replace(/<i class="fa_appended.*?<\/i>/g, '')
+      // let htmlForJSON = element.innerHTML
+      // htmlForJSON = element.innerHTML.replace(/<i class="fa_prepended.*?<\/i>/g, '')
       data.content = {
         visible: app.checkVisibility(dom),
         text: element.textContent,
         html: element.innerHTML,
-        json: parseHtml(htmlForJSON, dom.id),
+        json: app.parseHtml(element.innerHTML.replace(/<i class="fa_prepended.*?<\/i>/g, ''), dom.id),
       }
 
-      console.log('data.content.json', data.content.json)
-
-      return data
-    }
-
-    function parseHtml(htmlString, domId) {
-      const parser = new DOMParser()
-      const html = parser.parseFromString(htmlString, 'text/html')
-
-      function traverse(node) {
-        if (node.nodeType === Node.TEXT_NODE && !/\S/.test(node.nodeValue)) {
-          return null
-        }
-
-        let objs = []
-
-        switch (node.nodeType) {
-          case Node.TEXT_NODE:
-            let parts = node.nodeValue.split('\n')
-            parts.forEach((part, index) => {
-              if (part !== '') {
-                objs.push({
-                  type: 'text',
-                  innerText: part,
-                })
-                objs.push({
-                  type: 'text',
-                  innerText: ' ',
-                })
-              }
-
-              if (index < parts.length - 1) {
-                objs.push({
-                  type: 'div',
-                  innerText: ' ',
-                })
-              }
-            })
-            break
-
-          case Node.ELEMENT_NODE:
-            let obj = {
-              type: node.tagName.toLowerCase(),
-            }
-
-            if (node.hasAttributes()) {
-              obj.attrs = Array.from(node.attributes).reduce((attrs, attr) => {
-                attrs[attr.name] = attr.value
-                return attrs
-              }, {})
-            }
-
-            if (obj.type === 'a') {
-              const nodeIndex = Array.from(node.parentNode.childNodes).indexOf(node)
-              const el = document.querySelector(`#${domId} a:nth-child(${nodeIndex + 1})`)
-              const style = window.getComputedStyle(el)
-              obj.attrs.style = {
-                color: style.color,
-              }
-            }
-
-            if (node.hasChildNodes()) {
-              obj.children = Array.from(node.childNodes)
-                .flatMap(traverse)
-                .filter(child => child !== null)
-            }
-
-            if (
-              obj.type === 'div' &&
-              obj.children &&
-              obj.children.length === 1 &&
-              obj.children[0].type === 'br'
-            ) {
-              objs.push({ type: 'div', children: [{ type: 'br' }] })
-            } else if (obj.type === 'div' && obj.children && obj.children.length > 0) {
-              objs = objs.concat(obj.children)
-            } else {
-              objs.push(obj)
-            }
-            break
-        }
-
-        return objs
-      }
-
-      return Array.from(html.body.childNodes)
-        .flatMap(traverse)
-        .filter(child => child !== null)
-    }
-
-    if (dom.getAttribute('data-de-type') === 'quote') {
-      data.type = 'headline'
-      const element = dom.querySelector('.elHeadline')
-      data.content = {
-        visible: app.checkVisibility(dom),
-        text: element.textContent,
-        html: element.innerHTML,
-      }
       return data
     }
 
@@ -604,17 +505,24 @@ const clickfunnels_classic_page_tree = {
     }
 
     if (dom.querySelector('.elBulletList')) {
+      console.log('Bullet List')
       data.type = 'list'
       const list = dom.querySelectorAll('ul.elBulletList li')
       const items = []
       list.forEach(item => {
-        const content = item.innerText
-        items.push(content.replace('\n', '').trim())
+        let content = item.innerText
+        content = content.replace('\n', '').trim()
+        items.push({
+          html: item.innerHTML,
+          text: content,
+          icon: item.querySelector('i').getAttribute('class'),
+          json: app.parseHtml(item.innerHTML.replace(/<i class="fa.*?<\/i>/g, ''), dom.id),
+          id: dom.id,
+        })
       })
       data.content = {
         visible: app.checkVisibility(dom),
         items: items,
-        icon: icon,
       }
       return data
     }
