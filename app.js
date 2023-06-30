@@ -158,6 +158,12 @@ const app = {
         }
       }
 
+      if (headline.type === 'span' && headline.attrs.style) {
+        headline.attrs.style = {
+          color: 'inherit',
+        }
+      }
+
       if (headline.children) {
         output.children = app.headlinePageTree(headline.children, id)
       }
@@ -217,27 +223,42 @@ const app = {
 
           if (obj.type === 'a') {
             const nodeIndex = Array.from(node.parentNode.childNodes).indexOf(node)
-            const el = document.querySelector(`#${domId} a:nth-child(${nodeIndex + 1})`)
-            let color = '#000000'
-            if (el) {
-              const style = window.getComputedStyle(el)
-              color = style.color
-            } else if (listIndex !== null) {
-              const el = document.querySelector(`#${node.id}`)
+            let el = document.querySelector(`#${domId} a:nth-child(${nodeIndex + 1})`)
+            const linkColorDom = document.querySelector('#link_color_style')
+            let color = '#000'
+
+            if (linkColorDom) {
+              color = linkColorDom.innerText.replace('a { color: ', '').replace(';}', '').trim()
+            }
+
+            if (
+              type === 'pricely-label' ||
+              type === 'pricely-amount' ||
+              type === 'pricely-foreword' ||
+              type === 'pricely-item'
+            ) {
+              el = document.querySelector(`#${node.id}`)
               if (el) {
-                const style = window.getComputedStyle(el)
-                color = style.color
+                color = el.style.color
+              }
+            } else if (el) {
+              color = el.style.color
+            } else if (listIndex !== null) {
+              el = document.querySelector(`#${node.id}`)
+              if (el) {
+                color = el.style.color
               }
             } else if (type === 'faq_paragraph' || type === 'faq_headline') {
-              const el = document.querySelector(`#${node.id}`)
+              el = document.querySelector(`#${node.id}`)
               if (el) {
-                const style = window.getComputedStyle(el)
-                color = style.color
+                color = el.style.color
               }
             }
 
-            obj.attrs.style = {
-              color: color,
+            if (app.isColor(color)) {
+              obj.attrs.style = {
+                color: color,
+              }
             }
           }
 
@@ -259,6 +280,7 @@ const app = {
           } else {
             objs.push(obj)
           }
+
           break
       }
 
@@ -268,5 +290,11 @@ const app = {
     return Array.from(html.body.childNodes)
       .flatMap(traverse)
       .filter(child => child !== null)
+  },
+
+  isColor: color => {
+    var s = new Option().style
+    s.color = color
+    return s.color == color
   },
 }

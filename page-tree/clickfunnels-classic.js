@@ -98,6 +98,7 @@ const clickfunnels_classic_page_tree = {
         items.push({
           text: item.textContent,
           html: item.innerHTML,
+          json: app.parseHtml(item.innerHTML, dom.id, null, 'pricely-item'),
         })
       })
 
@@ -108,14 +109,27 @@ const clickfunnels_classic_page_tree = {
           label: {
             text: dom.querySelector('.pricely-label').textContent,
             html: dom.querySelector('.pricely-label').innerHTML,
+            json: app.parseHtml(dom.querySelector('.pricely-label').innerHTML, dom.id, null, 'pricely-label'),
           },
           figure: {
             text: dom.querySelector('.pricely-amount').textContent,
             html: dom.querySelector('.pricely-amount').innerHTML,
+            json: app.parseHtml(
+              dom.querySelector('.pricely-amount').innerHTML,
+              dom.id,
+              null,
+              'pricely-amount'
+            ),
           },
           foreword: {
             text: dom.querySelector('.pricely-foreword').textContent,
             html: dom.querySelector('.pricely-foreword').innerHTML,
+            json: app.parseHtml(
+              dom.querySelector('.pricely-foreword').innerHTML,
+              dom.id,
+              null,
+              'pricely-foreword'
+            ),
           },
         },
       }
@@ -344,10 +358,6 @@ const clickfunnels_classic_page_tree = {
     if (dom.getAttribute('data-de-type') === 'featureimage') {
       data.type = 'featured_image'
       let element = dom
-      // if (!element) {
-      //   element = dom
-      // }
-
       const image = element.querySelector('.elScreenshot_image img').getBoundingClientRect()
 
       let headlineHTML = element.querySelector('.elScreenshot_text_headline').innerHTML
@@ -367,8 +377,10 @@ const clickfunnels_classic_page_tree = {
         image_height: image.height,
         headline: headlineHTML,
         headline_text: element.querySelector('.elScreenshot_text_headline').textContent,
+        headline_json: app.parseHtml(element.querySelector('.elScreenshot_text_headline').innerHTML, dom.id),
         paragraph: paragraphHTML,
         paragraph_text: element.querySelector('.elScreenshot_text_body').textContent,
+        paragraph_json: app.parseHtml(element.querySelector('.elScreenshot_text_body').innerHTML, dom.id),
       }
       return data
     }
@@ -387,6 +399,7 @@ const clickfunnels_classic_page_tree = {
         visible: app.checkVisibility(dom),
         url: dom.getAttribute('data-audio-url'),
         loop: dom.getAttribute('data-audio-loop'),
+        html: dom.outerHTML,
       }
       return data
     }
@@ -466,6 +479,7 @@ const clickfunnels_classic_page_tree = {
             type: type,
             content_html: item.innerHTML,
             content_text: item.textContent,
+            json: app.parseHtml(item.innerHTML.replace(/<i class="i.*?<\/i>/g, ''), dom.id),
           })
         }
       })
@@ -510,7 +524,11 @@ const clickfunnels_classic_page_tree = {
 
       const listItems = []
       dom.querySelectorAll('.elBulletList li').forEach(item => {
-        listItems.push(item.innerHTML)
+        listItems.push({
+          html: item.innerHTML,
+          text: item.textContent,
+          json: app.parseHtml(item.innerHTML.replace(/<i class="fa.*?<\/i>/g, ''), dom.id),
+        })
       })
       const image = document.querySelectorAll(`#${dom.id} .elBulletList li`)[0]
       const imageComputedStyles = getComputedStyle(image)

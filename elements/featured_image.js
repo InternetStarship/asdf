@@ -1,11 +1,11 @@
 const featured_image = data => {
   const element = data.element
-  const id = data.id
   const parentId = data.parentId
   const index = data.index
   const css_image = properties.css(element.id, 'featured_image_image')
   const css_headline = properties.css(element.id, 'featured_image_headline')
   const css_paragraph = properties.css(element.id, 'featured_image_paragraph')
+  const borderRadius = properties.borderRadius(css_image)
 
   const innerFlexId = app.makeId()
   const innerSecondFlexId = app.makeId()
@@ -45,6 +45,7 @@ const featured_image = data => {
           visible: app.checkVisibility(document.querySelector(`#${element.id}`)),
           text: data.element.content.headline_text,
           html: data.element.content.headline.replace(/<div/g, '<span').replace(/<\/div>/g, '</span>'),
+          json: data.element.content.headline_json,
         },
         id: element.id,
         css: css_headline,
@@ -63,6 +64,7 @@ const featured_image = data => {
           visible: app.checkVisibility(document.querySelector(`#${element.id}`)),
           text: data.element.content.paragraph_text,
           html: data.element.content.paragraph.replace(/<div/g, '<span').replace(/<\/div>/g, '</span>'),
+          json: data.element.content.paragraph_json,
         },
         id: element.id,
         css: css_paragraph,
@@ -74,9 +76,50 @@ const featured_image = data => {
     'featured_image_paragraph'
   )
 
+  const dom = document.querySelector(`#${element.id}`)
+
   const imageContainer = flex_container([imageJSON], parentId, index)
   imageContainer.attrs.style['flex-direction'] = 'column'
   imageContainer.attrs.style['flex-shrink'] = 2.3
+
+  imageJSON.selectors['.elImage'].attrs.style = Object.assign(
+    imageJSON.selectors['.elImage'].attrs.style,
+    borderRadius
+  )
+
+  const radiusCSS = document.querySelector(`#${element.id} .ximg`)
+  const radiusStyle = getComputedStyle(radiusCSS)
+  const radiusValue = radiusStyle.borderRadius
+
+  let radiusUnit = 'px'
+  if (radiusCSS) {
+    radiusUnit = radiusValue.match(/px|%/g)[0]
+  }
+
+  if (dom.classList.contains('elFeatureImage_60_40')) {
+    imageContainer.attrs.style['width'] = 40
+    radiusUnit = '%'
+  } else if (dom.classList.contains('elFeatureImage_80_20')) {
+    imageContainer.attrs.style['width'] = 20
+    radiusUnit = '%'
+  } else if (dom.classList.contains('elFeatureImage_50_50')) {
+    imageContainer.attrs.style['width'] = 50
+    radiusUnit = '%'
+  } else if (dom.classList.contains('elFeatureImage_70_30')) {
+    radiusUnit = '%'
+    imageContainer.attrs.style['width'] = 30
+  } else {
+    imageContainer.attrs.style['width'] = 100
+    imageContainer.params['width--unit'] = '%'
+  }
+
+  imageJSON.params = Object.assign(imageJSON.params, {
+    'border-radius--unit': radiusUnit,
+  })
+
+  imageJSON.selectors['.elImage'].params = Object.assign(imageJSON.params, {
+    'border-radius--unit': radiusUnit,
+  })
 
   let textContainer = ''
   if (data.element.content.headline_text && data.element.content.paragraph_text) {
@@ -92,17 +135,37 @@ const featured_image = data => {
     textContainer.params['--style-padding-horizontal'] = 10
   }
 
-  const output = flex_container([imageContainer, textContainer], parentId, index)
+  if (dom.classList.contains('elFeatureImage_60_40')) {
+    textContainer.attrs.style['width'] = 60
+    radiusUnit = '%'
+  } else if (dom.classList.contains('elFeatureImage_80_20')) {
+    textContainer.attrs.style['width'] = 80
+    radiusUnit = '%'
+  } else if (dom.classList.contains('elFeatureImage_50_50')) {
+    textContainer.attrs.style['width'] = 50
+    radiusUnit = '%'
+  } else if (dom.classList.contains('elFeatureImage_70_30')) {
+    radiusUnit = '%'
+    textContainer.attrs.style['width'] = 70
+  } else {
+    textContainer.attrs.style['width'] = 100
+    textContainer.params['width--unit'] = '%'
+  }
+
+  let flexContainer = [imageContainer, textContainer]
+  if (dom.classList.contains('elScreenshot_left')) {
+    flexContainer = [textContainer, imageContainer]
+  }
+
+  const output = flex_container(flexContainer, parentId, index)
   output.attrs.style['margin-top'] = document.querySelector(`#${element.id}`).style.marginTop || 0
   output.attrs.style['align-items'] = 'flex-start'
 
   if (element.content.visible) {
     output.attrs['data-show-only'] = element.content.visible
-    output.attrs = Object.assign(
-      output.attrs,
-      animations.attrs(document.querySelector(`[id="${element.id}"]`))
-    )
   }
+
+  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
 
   return output
 }

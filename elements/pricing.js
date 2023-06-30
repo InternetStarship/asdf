@@ -2,6 +2,7 @@ const pricing = data => {
   const element = data.element
   const parentId = data.parentId
   const index = data.index
+  const flexParentId = app.makeId()
   const children = []
   const children_header = []
 
@@ -12,6 +13,7 @@ const pricing = data => {
           content: {
             text: data.element.content.header.label.text,
             html: data.element.content.header.label.html,
+            json: data.element.content.header.label.json,
           },
           id: element.id,
           css: properties.css(element.id, `pricing_label_headline`),
@@ -29,6 +31,7 @@ const pricing = data => {
           content: {
             text: data.element.content.header.figure.text,
             html: data.element.content.header.figure.html,
+            json: data.element.content.header.figure.json,
           },
           id: element.id,
           css: properties.css(element.id, `pricing_figure_headline`),
@@ -46,6 +49,7 @@ const pricing = data => {
           content: {
             text: data.element.content.header.foreword.text,
             html: data.element.content.header.foreword.html,
+            json: data.element.content.header.foreword.json,
           },
           id: element.id,
           css: properties.css(element.id, `pricing_foreword_headline`),
@@ -57,7 +61,7 @@ const pricing = data => {
     )
   )
 
-  const header = flex_container(children_header, parentId, index)
+  const header = flex_container(children_header, flexParentId, index)
   header.attrs.style['flex-direction'] = 'column'
 
   const headerContainer = document.querySelector(`#${element.id} .panel-heading`)
@@ -75,6 +79,7 @@ const pricing = data => {
           content: {
             text: data.element.content.items[i].text,
             html: data.element.content.items[i].html,
+            json: data.element.content.items[i].json,
           },
           id: element.id,
           css: properties.css(element.id, `pricing_headline_${i + 1}`),
@@ -84,14 +89,14 @@ const pricing = data => {
       },
       `pricing_headline_${i + 1}`
     )
-    lineItem.selectors['.elHeadline'].params['--style-border-width'] = '0px'
-    lineItem.params['--style-border-bottom'] = '0px'
     children.push(lineItem)
   }
-  const listItems = flex_container(children, parentId, index)
+
+  const listItems = flex_container(children, flexParentId, index)
   listItems.attrs.style['flex-direction'] = 'column'
 
   const output = flex_container([header, listItems], parentId, index)
+
   output.attrs.style['margin-top'] = document.querySelector(`#${element.id}`).style.marginTop || 0
   output.attrs.style['flex-direction'] = 'column'
   output.attrs.style['gap'] = 0
@@ -109,13 +114,18 @@ const pricing = data => {
   output.attrs.style['padding-bottom'] = containerStyles.getPropertyValue('padding-bottom') || '0px'
   output.attrs.style['overflow'] = 'hidden'
 
+  output.params = Object.assign(
+    output.params,
+    params(properties.css(element.id, `pricing`), 'element', element.id)
+  )
+
+  output.params['width--unit'] = '%'
+
   if (element.content.visible) {
     output.attrs['data-show-only'] = element.content.visible
-    output.attrs = Object.assign(
-      output.attrs,
-      animations.attrs(document.querySelector(`[id="${element.id}"]`))
-    )
   }
+
+  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
 
   return output
 }

@@ -26,10 +26,7 @@ const headline = (
   let boldColor = ''
 
   if (/<\/?[a-z][\s\S]*>/i.test(element.content.html)) {
-    if (
-      document.querySelector(`#${element.id} .elHeadline b`) &&
-      document.querySelector(`style#bold_style_${element.id}`)
-    ) {
+    if (document.querySelector(`style#bold_style_${element.id}`)) {
       const boldColorStyle = document.querySelector(`style#bold_style_${element.id}`).textContent
       boldColor = boldColorStyle.split('color:')[1].replace(';', '').replace('}', '').trim()
     }

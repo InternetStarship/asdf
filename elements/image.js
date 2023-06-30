@@ -79,6 +79,20 @@ const image = data => {
     output.selectors['.elImage'].attrs.style,
     borderRadius
   )
+
+  const radiusCSS = document.querySelector(`#${element.id} .ximg`)
+  let radiusUnit = 'px'
+
+  if (radiusCSS) {
+    const radiusStyle = getComputedStyle(radiusCSS)
+    const radiusValue = radiusStyle.borderRadius
+
+    if (radiusCSS) {
+      radiusUnit = radiusValue.match(/px|%/g)[0]
+    }
+  }
+
+  output.params['border-radius--unit'] = radiusUnit
   output.attrs.style = Object.assign(output.attrs.style, borderRadius)
 
   if (element.content.link) {

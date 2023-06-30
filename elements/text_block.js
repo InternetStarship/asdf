@@ -11,6 +11,7 @@ const text_block = data => {
           content: {
             text: data.element.content.items[i].content_text,
             html: data.element.content.items[i].content_html,
+            json: data.element.content.items[i].json,
           },
           id: element.id,
           css: properties.css(
@@ -63,11 +64,9 @@ const text_block = data => {
 
   if (element.content.visible) {
     output.attrs['data-show-only'] = element.content.visible
-    output.attrs = Object.assign(
-      output.attrs,
-      animations.attrs(document.querySelector(`[id="${element.id}"]`))
-    )
   }
+
+  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
 
   return output
 }

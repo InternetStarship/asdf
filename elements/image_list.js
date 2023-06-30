@@ -11,8 +11,9 @@ const image_list = data => {
       {
         element: {
           content: {
-            text: data.element.content.list[i],
-            html: data.element.content.list[i],
+            text: data.element.content.list[i].text,
+            html: data.element.content.list[i].html,
+            json: data.element.content.list[i].json,
           },
           id: element.id,
           css: css_headline,
@@ -29,28 +30,49 @@ const image_list = data => {
       headlineJSON.attrs.style['padding-top'] = 0
     }
 
-    const imageJSON = image({
-      element: {
-        content: {
-          src: data.element.content.image,
-          alt: 'Bullet point',
-          width: 32,
-          height: 32,
-        },
-        id: element.id,
-        css: {
-          width: '32px',
-          height: '32px',
-        },
-      },
-      id: app.makeId(),
-      index: i,
-    })
+    headlineJSON.attrs.style['padding-left'] = 20
 
-    const innerFlexContainer = flex_container([imageJSON, headlineJSON], id, i)
+    let imageJSON = null
+    let flexData = [headlineJSON]
 
-    if (i === 0) {
-      innerFlexContainer.attrs.style['margin-top'] = 10
+    const domContainerList = document.querySelector(`#${element.id} ul`)
+    const domContainerListFirstItem = document.querySelector(`#${element.id} ul li`)
+    let elImage = data.element.content.image
+
+    if (domContainerList.classList.contains('listImage16')) {
+      elImage = null
+    }
+
+    if (elImage) {
+      imageJSON = image({
+        element: {
+          content: {
+            visible: app.checkVisibility(document.querySelector(`#${element.id}`)),
+            src: elImage,
+            alt: 'Bullet point',
+            width: 32,
+            height: 32,
+          },
+          id: element.id,
+          css: {
+            width: '32px',
+            height: '32px',
+          },
+        },
+        id: app.makeId(),
+        index: i,
+      })
+      imageJSON.attrs.style['margin-top'] = 10
+      flexData = [imageJSON, headlineJSON]
+    }
+
+    const innerFlexContainer = flex_container(flexData, id, i)
+
+    if (domContainerListFirstItem) {
+      const itemStyles = getComputedStyle(domContainerListFirstItem)
+      innerFlexContainer.attrs.style['border-bottom-width'] = itemStyles['border-bottom-width']
+      innerFlexContainer.attrs.style['border-color'] = itemStyles['border-color']
+      innerFlexContainer.attrs.style['border-style'] = itemStyles['border-style']
     }
 
     children.push(innerFlexContainer)
@@ -60,14 +82,15 @@ const image_list = data => {
   output.attrs.style['margin-top'] = document.querySelector(`#${element.id}`).style.marginTop || 0
   output.attrs.style['flex-direction'] = 'column'
   output.attrs.style['gap'] = 0.5
+  output.attrs.style['margin-left'] = document.querySelector(`#${element.id}`).style.marginLeft || 0
 
   if (element.content.visible) {
     output.attrs['data-show-only'] = element.content.visible
-    output.attrs = Object.assign(
-      output.attrs,
-      animations.attrs(document.querySelector(`[id="${element.id}"]`))
-    )
   }
+
+  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
+
+  console.log('image list output', output)
 
   return output
 }
