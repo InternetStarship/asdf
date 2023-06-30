@@ -80,8 +80,6 @@ const clickfunnels_classic_page_tree = {
     if (dom.querySelector('.elHeadline')) {
       data.type = 'headline'
       const element = dom.querySelector('.elHeadline')
-      // let htmlForJSON = element.innerHTML
-      // htmlForJSON = element.innerHTML.replace(/<i class="fa_prepended.*?<\/i>/g, '')
       data.content = {
         visible: app.checkVisibility(dom),
         text: element.textContent,
@@ -470,12 +468,22 @@ const clickfunnels_classic_page_tree = {
     if (dom.querySelector('.nodoNav')) {
       data.type = 'navigation'
       const items = []
+      let fontWeight = 'normal'
+      if (dom.querySelector('.nodoNav').classList.contains('elLinkBold')) {
+        fontWeight = 'bold'
+      }
 
       dom.querySelectorAll('.nodoNav .nodoNavItem').forEach(item => {
-        items.push({
-          content_html: item.innerHTML,
-          content_text: item.textContent,
-        })
+        const styles = getComputedStyle(item)
+        const display = styles.getPropertyValue('display')
+        if (display !== 'none') {
+          items.push({
+            content_html: item.innerHTML,
+            content_text: item.textContent,
+            font_weight: fontWeight,
+            json: app.parseHtml(item.innerHTML.replace(/<i class="fa_prepended.*?<\/i>/g, ''), dom.id),
+          })
+        }
       })
 
       data.content = {
@@ -598,6 +606,21 @@ const clickfunnels_classic_page_tree = {
         width: image.width,
         height: image.height,
         popup_image: dom.querySelector('.swipebox').getAttribute('href') || '',
+      }
+      return data
+    }
+
+    if (dom.getAttribute('data-de-type') === 'fbcomments') {
+      data.type = 'fb_comments'
+      const element = dom.querySelector('.fb-comments')
+      const url = element.getAttribute('data-href')
+      let numposts = element.getAttribute('data-numposts') || 5
+      let colorscheme = element.getAttribute('data-colorscheme') || 'light'
+
+      data.content = {
+        visible: app.checkVisibility(dom),
+        code: `<div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v17.0" nonce="PvSz5qfY"></script><div class="fb-comments" data-href="${url}" data-width="100%" data-numposts="${numposts}" data-colorscheme="${colorscheme}"></div>`,
       }
       return data
     }

@@ -52,11 +52,11 @@ const headline = (
   if (fontWeight === 'normal') {
     fontWeight = '400'
   } else if (fontWeight === 'bold') {
-    fontWeight = '600'
+    fontWeight = '700'
   } else if (fontWeight === 'bolder') {
     fontWeight = '800'
   } else if (fontWeight === 'lighter') {
-    fontWeight = '200'
+    fontWeight = '300'
   }
 
   const cssPrepend = properties.css(element.id, prependIconType)
