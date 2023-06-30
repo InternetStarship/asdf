@@ -99,9 +99,9 @@
       "ft" : 64,
       "ma" : 0,
       "mi" : 0,
-      "oA" : 0,
+      "oA" : 1,
       "oAP" : "\/elements\/faq_block-min.js",
-      "oF" : 0,
+      "oF" : 1,
       "sC" : 0,
       "tS" : 0
     },
@@ -138,17 +138,6 @@
       "sC" : 0,
       "tS" : 0
     },
-    "\/elements\/headline-min.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 0,
-      "oA" : 1,
-      "oAP" : "\/elements\/headline-min-min.js",
-      "oF" : 0,
-      "sC" : 0,
-      "tS" : 0
-    },
     "\/elements\/headline.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -156,17 +145,6 @@
       "mi" : 0,
       "oA" : 0,
       "oAP" : "\/elements\/headline-min.js",
-      "oF" : 0,
-      "sC" : 0,
-      "tS" : 0
-    },
-    "\/elements\/icon-min.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 0,
-      "oA" : 1,
-      "oAP" : "\/elements\/icon-min-min.js",
       "oF" : 0,
       "sC" : 0,
       "tS" : 0
@@ -222,17 +200,6 @@
       "mi" : 0,
       "oA" : 0,
       "oAP" : "\/elements\/input-min.js",
-      "oF" : 0,
-      "sC" : 0,
-      "tS" : 0
-    },
-    "\/elements\/list-min.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 0,
-      "oA" : 1,
-      "oAP" : "\/elements\/list-min-min.js",
       "oF" : 0,
       "sC" : 0,
       "tS" : 0
@@ -1775,10 +1742,10 @@
     "languageDefaultsCSS" : {
       "autoOutputAction" : 1,
       "autoOutputPathFilenamePattern" : "*-min.css",
-      "autoOutputPathRelativePath" : "",
+      "autoOutputPathRelativePath" : "\/min",
       "autoOutputPathReplace1" : "",
       "autoOutputPathReplace2" : "",
-      "autoOutputPathStyle" : 0,
+      "autoOutputPathStyle" : 2,
       "combineImports" : 0,
       "cssoStyle" : 0,
       "purgeCSSStyle" : 0,
