@@ -11,8 +11,7 @@ const list = data => {
   let bulletSpacing = null
 
   const cf_classic_themes = [
-    `
-  .elBulletList_theme1 li {
+    `.elBulletList_theme1 li {
       padding: 0;
       margin-bottom: 0
   }
@@ -31,8 +30,7 @@ const list = data => {
   }
   
   `,
-    `
-  .elBulletList_theme2 li {
+    `.elBulletList_theme2 li {
       padding: 0;
       margin-bottom: 0
   }
@@ -49,9 +47,7 @@ const list = data => {
       margin-left: 0 !important;
       display: inline-block
   }`,
-    `
-  
-  .elBulletList_theme3 li {
+    `.elBulletList_theme3 li {
       padding: 0;
       margin-bottom: 0;
       border-bottom: 1px solid #eee
@@ -73,9 +69,7 @@ const list = data => {
       margin-left: 0 !important;
       display: inline-block
   }`,
-    `
-  
-  .elBulletList_theme4 li {
+    `.elBulletList_theme4 li {
       padding: 0;
       margin-bottom: 0;
       border-bottom: 1px solid #eee
@@ -98,9 +92,7 @@ const list = data => {
       display: inline-block
   }`,
 
-    `
-  
-  .elBulletList_theme5 {
+    `.elBulletList_theme5 {
       border-radius: 5px;
       overflow: hidden;
       border: 1px solid #eee;
@@ -133,9 +125,7 @@ const list = data => {
       border-bottom: none
   }`,
 
-    `
-  
-  .elBulletList_theme6 {
+    `.elBulletList_theme6 {
       border-radius: 5px;
       overflow: hidden;
       border: 1px solid #186aa1;
@@ -179,9 +169,7 @@ const list = data => {
   }
 `,
 
-    `
-  
-  .elBulletList_theme7 {
+    `.elBulletList_theme7 {
       border-radius: 5px;
       overflow: hidden;
       border: 1px solid #3cb371;
@@ -236,7 +224,7 @@ const list = data => {
     let css = cf_classic_themes[themeNumber[0] - 1]
     css = css.replace(/\.elBulletList_theme\d+/g, `.id-${id}`)
     bulletSpacing = 0
-    app.copiedCSS += `/* CSS for Bullet List id: ${id} */`
+    app.copiedCSS += `\n\n/* CSS for Bullet List */\n`
     app.copiedCSS += css
     app.recommendations.push({
       type: 'Bullet List Theme',

@@ -86,7 +86,7 @@ const progress = data => {
     if (domElement.classList.contains(theme)) {
       let css = classic_themes_css[theme].css
       css = css.replace(/\.replace-me/g, `.id-${data.id}`)
-      app.copiedCSS += `/* CSS for Progress Bar id: ${data.id} */`
+      app.copiedCSS += `\n\n/* CSS for Progress Bar */\n`
       app.copiedCSS += css
       app.recommendations.push({
         type: 'Progress Bar Theme',

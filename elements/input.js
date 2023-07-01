@@ -145,9 +145,8 @@ function inputRequiredCSS(elementId, id) {
           }
         })
 
-        app.copiedCSS += `/* CSS for Input id: ${id} */`
-        app.copiedCSS += `
-.id-${id}[data-page-element="Input/V1"] .elInput {
+        app.copiedCSS += `\n\n/* CSS for Input */\n`
+        app.copiedCSS += `.id-${id}[data-page-element="Input/V1"] .elInput {
   background: url('https://app.clickfunnels.com/images/${images[index]}${version}.png') no-repeat ${bg_color} ${bg_position}${bg_gradient}  !important;
 }
 .id-${id} .inputHolder, 
