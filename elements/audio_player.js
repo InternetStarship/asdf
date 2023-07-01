@@ -159,7 +159,8 @@ const audio_player = (data, type = 'audio_player') => {
     const themeNumber = themeClass[0].match(/\d+/g)
     let css = cf_classic_themes[themeNumber[0] - 1]
     css = css.replace(/\.elAudioSkin\d+/g, `.id-${data.id}`)
-    app.copiedCSS = app.copiedCSS + css
+    app.copiedCSS += `/* CSS for Audio Player id: ${data.id} */`
+    app.copiedCSS += css
     app.recommendations.push({
       type: 'Audio Player Theme',
       status: 'CSS',

@@ -43,6 +43,8 @@ const elements = (elements, parentId) => {
           return countdown(data)
         case 'headline':
           return headline(data)
+        case 'checkbox_headline':
+          return checkbox(data)
         case 'progress':
           return progress(data)
         case 'featured_image':

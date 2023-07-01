@@ -77,6 +77,22 @@ const clickfunnels_classic_page_tree = {
       return null
     }
 
+    if (dom.getAttribute('data-de-type') === 'cb_headline') {
+      data.type = 'checkbox_headline'
+      const element = dom.querySelector('.elHeadline')
+      const checkbox = dom.querySelector('.elInput')
+      data.content = {
+        visible: app.checkVisibility(dom),
+        text: element.textContent,
+        html: element.innerHTML,
+        json: app.parseHtml(element.innerHTML.replace(/<i class="fa_prepended.*?<\/i>/g, ''), dom.id),
+        name: checkbox.getAttribute('data-custom-type'),
+        required: checkbox.getAttribute('data-required'),
+      }
+
+      return data
+    }
+
     if (dom.querySelector('.elHeadline')) {
       data.type = 'headline'
       const element = dom.querySelector('.elHeadline')
@@ -258,6 +274,7 @@ const clickfunnels_classic_page_tree = {
         placeholder: element.getAttribute('placeholder'),
         name: element.getAttribute('name'),
         type: element.getAttribute('type'),
+        custom_type: element.getAttribute('data-custom-type'),
         required: element.getAttribute('class').includes('required1') ? 'required1' : 'required0',
       }
       return data
@@ -279,11 +296,22 @@ const clickfunnels_classic_page_tree = {
       }
       const video = element.getBoundingClientRect()
       const classes = dom.getAttribute('class')
+      const videoType = dom.getAttribute('data-video-type')
+
+      let blockPause = false
       let stickyEnabled = false
       let stickyCloseable = false
       let stickySize = 'medium'
       let stickyPosition = 'top-left'
       let stickyStyle = ''
+
+      if (videoType === 'youtube') {
+        blockPause = dom.getAttribute('data-youtube-block-pause')
+      } else if (videoType === 'vimeo') {
+        blockPause = dom.getAttribute('data-vimeo-block-pause')
+      } else if (videoType === 'wistia') {
+        blockPause = dom.getAttribute('data-wistia-block-pause')
+      }
 
       if (classes.includes('clickfunnels-sticky-video')) {
         stickyEnabled = true
@@ -327,6 +355,7 @@ const clickfunnels_classic_page_tree = {
         visible: app.checkVisibility(dom),
         starterText: dom.getAttribute('data-session-starter-text'),
         title: dom.getAttribute('data-video-title'),
+        blockPause: blockPause,
         autoplay: dom.getAttribute('data-youtube-autoplay'),
         controls: dom.getAttribute('data-youtube-controls'),
         unmuteLabel: dom.getAttribute('data-youtube-unmute-label'),
@@ -342,14 +371,30 @@ const clickfunnels_classic_page_tree = {
         },
       }
 
-      const videoType = dom.getAttribute('data-video-type')
       data.content.videoType = videoType || 'youtube'
       if (videoType === 'youtube') {
         data.content.url = dom.getAttribute('data-youtube-url')
       } else if (videoType === 'vimeo') {
-        data.content.url = dom.getAttribute('data-vimeo-url')
+        data.content.url = dom.getAttribute('data-cfvimeo-url')
+        data.content.autoplay = dom.getAttribute('data-vimeo-autoplay')
       } else if (videoType === 'wistia') {
         data.content.url = dom.getAttribute('data-wistia-url')
+        data.content.autoplay = dom.getAttribute('data-wistia-autoplay')
+      } else if (videoType === 'custom') {
+        data.content.url = dom.querySelector('.fluid-width-video-wrapper').innerHTML
+      } else if (videoType === 'evp') {
+        data.content.url = ''
+
+        app.recommendations.push({
+          type: 'Video',
+          status: 'Not Supported',
+          id: element.id,
+          explainer:
+            'The EasyVideoSuite is not supported. Please use a different video player or add video manually.',
+        })
+      } else if (videoType === 'html5') {
+        data.content.webm_url = dom.getAttribute('data-webm-url')
+        data.content.url = dom.getAttribute('data-mp4-url')
       }
 
       return data
@@ -658,10 +703,22 @@ const clickfunnels_classic_page_tree = {
     if (dom.querySelector('.social-likes')) {
       data.type = 'social_share'
       const element = dom.querySelector('.social-likes')
+      const twitter = element.querySelector('[data-via]')
+      let via = ''
+      if (twitter) {
+        via = twitter.getAttribute('data-via')
+      }
+      let theme = 'default'
+      if (element.classList.contains('social-classic')) {
+        theme = 'classic'
+      }
       data.content = {
         visible: app.checkVisibility(dom),
         url: element.getAttribute('data-url'),
+        title: element.getAttribute('data-title'),
+        via: via,
         code: element.innerHTML,
+        theme: theme,
       }
       return data
     }

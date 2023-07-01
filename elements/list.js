@@ -236,7 +236,8 @@ const list = data => {
     let css = cf_classic_themes[themeNumber[0] - 1]
     css = css.replace(/\.elBulletList_theme\d+/g, `.id-${id}`)
     bulletSpacing = 0
-    app.copiedCSS = app.copiedCSS + css
+    app.copiedCSS += `/* CSS for Bullet List id: ${id} */`
+    app.copiedCSS += css
     app.recommendations.push({
       type: 'Bullet List Theme',
       status: 'CSS',

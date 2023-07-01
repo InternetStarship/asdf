@@ -380,7 +380,8 @@ const icon = data => {
     const themeNumber = themeClass[0].match(/\d+/g)
     let css = cf_classic_themes[themeNumber[0] - 1]
     css = css.replace(/\.iconelement_theme_\d+/g, `.id-${data.id}`)
-    app.copiedCSS = app.copiedCSS + css
+    app.copiedCSS += `/* CSS for Icon id: ${data.id} */`
+    app.copiedCSS += css
     app.recommendations.push({
       type: 'Icon Theme',
       status: 'CSS',

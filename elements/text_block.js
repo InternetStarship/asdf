@@ -56,10 +56,11 @@ const text_block = data => {
     if (mainContainer.classList.contains('de4column')) {
       columnCount = 4
     }
+    app.copiedCSS += `/* CSS for Text Block id: ${output.id} */`
     app.copiedCSS += `.id-${output.id}[data-page-element="FlexContainer/V1"] { 
-      column-count: ${columnCount} !important;
-      display: block !important;
-    }`
+  column-count: ${columnCount} !important;
+  display: block !important;
+}`
   }
 
   if (element.content.visible) {

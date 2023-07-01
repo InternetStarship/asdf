@@ -5,7 +5,11 @@ function inject(url) {
     const base_url = 'https://4f2102016945-3911214117516183263.ngrok-free.app/'
     const script = document.createElement('script')
     script.type = 'text/javascript'
-    script.src = `${base_url}${url}`
+    if (url.includes('http')) {
+      script.src = url
+    } else {
+      script.src = `${base_url}${url}`
+    }
     script.onload = resolve
     script.onerror = reject
     document.head.appendChild(script)
@@ -18,6 +22,7 @@ window.addEventListener(
     if (event.data.type === 'import-classic') {
       try {
         await Promise.all([
+          inject('https://cdn.jsdelivr.net/npm/cssbeautify@0.3.1/cssbeautify.min.js'),
           inject('app.js'),
           inject('settings/animations.js'),
           inject('settings/params.js'),
@@ -32,6 +37,7 @@ window.addEventListener(
           inject('elements/audio_player.js'),
           inject('elements/billing.js'),
           inject('elements/button.js'),
+          inject('elements/checkbox.js'),
           inject('elements/countdown.js'),
           inject('elements/divider.js'),
           inject('elements/embed.js'),
@@ -53,6 +59,7 @@ window.addEventListener(
           inject('elements/social_share.js'),
           inject('elements/shipping.js'),
           inject('elements/text_block.js'),
+          inject('elements/video.js'),
           inject('elements/video_popup.js'),
           inject('page-tree/clickfunnels-classic.js'),
           inject('page-tree/clickfunnels2.js'),

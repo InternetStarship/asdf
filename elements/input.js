@@ -1,87 +1,111 @@
 const input = data => {
   const element = data.element
-  const id = data.id
-  const parentId = data.parentId
-  const index = data.index
+  const output = blueprint('Input/V1', data.id, data.parentId, data.index, element)
   const css = properties.css(element.id, 'input')
-  const borderRadius = properties.borderRadius(css)
-  const theParams = params(css, 'input', element.id)
-  theParams['label'] = element.content.placeholder || ''
-  delete theParams['--style-background-color']
 
-  theParams['width--unit'] = '%'
+  output.params = {
+    label: element.content.placeholder,
+    labelType: 'on-border',
+    '--style-box-shadow-style-type': 'inset',
+    '--style-box-shadow-distance-x': 0,
+    '--style-box-shadow-distance-y': 1,
+    '--style-box-shadow-blur': 2,
+    '--style-box-shadow-color': 'rgba(130, 137, 150, 0.23)',
+    '--style-background-color': '#fff',
+  }
 
-  // inputRequiredCSS(element.id, id)
+  output.attrs = {
+    type: element.content.name,
+    style: {
+      'margin-top': parseInt(element.css['margin-top']) || 0,
+    },
+  }
 
-  const output = {
-    type: 'Input/V1',
-    id: id,
-    version: 0,
-    parentId: parentId,
-    fractionalIndex: `a${index}`,
-    attrs: {
-      'data-skip-shadow-settings': 'false',
-      type: element.content.name,
-      style: {
-        width: 100,
-        'margin-top': parseInt(element.css['margin-top']) || 0,
+  output.selectors = {
+    '.elInput': {
+      attrs: {
+        name: element.content.name,
+        type: element.content.name,
+        className: element.content.required,
+        'data-custom-type': element.content.custom_type,
       },
     },
-    params: theParams,
-    selectors: {
-      '.elInput': {
-        attrs: {
-          name: element.content.name,
-          type: element.content.name,
-          className: element.content.required,
-          style: {
-            'margin-top': 0,
-            'text-align': css['text-align'] || 'left',
-            'padding-top': parseInt(css['padding-top']) || 0,
-            'padding-bottom': parseInt(css['padding-bottom']) || 0,
-            position: css['position'] || 'relative',
-            'z-index': parseInt(css['z-index']) || 0,
-            'font-size': parseInt(css['font-size']) || 16,
-            color: css['color'] || '#000000',
-          },
-          params: {
-            'font-size--unit': 'px',
-          },
+    '.inputHolder, .borderHolder': {
+      attrs: {
+        style: {
+          'padding-top': '12px',
+          'padding-bottom': '12px',
+          'font-size': parseInt(css['font-size']) || 16,
         },
       },
-      '.inputHolder, .borderHolder': {
-        attrs: {
-          'data-skip-corners-settings': 'false',
-          style: {
-            'margin-top': 0,
-            'text-align': css['text-align'] || 'left',
-            'padding-top': parseInt(css['padding-top']) || 0,
-            'padding-bottom': parseInt(css['padding-bottom']) || 0,
-            position: css['position'] || 'relative',
-            'z-index': parseInt(css['z-index']) || 0,
-            'font-size': parseInt(css['font-size']) || 16,
-            color: css['color'] || '#000000',
-          },
-          params: {
-            'font-size--unit': 'px',
-          },
+      params: {
+        '--style-padding-horizontal': '12px',
+        '--style-border-width': '1px',
+        '--style-border-style': 'solid',
+        '--style-border-color': 'rgba(0, 0, 0, 0.2)',
+        'font-size--unit': 'px',
+      },
+    },
+    '.borderHolder': {
+      params: {
+        '--style-background-color': css['background-color'],
+      },
+    },
+    '&.elFormItemWrapper .labelText': {
+      attrs: {
+        style: {
+          'font-size': parseInt(css['font-size']) || 16,
         },
-        params: params(css, 'input', element.id),
+      },
+      params: {
+        'font-size--unit': 'px',
+      },
+    },
+    '&.elFormItemWrapper.elFormItemWrapper.elInputFocused .labelText': {
+      attrs: {
+        style: {
+          'font-size': parseInt(css['font-size']) - 3 || 16,
+        },
+      },
+      params: {
+        'font-size--unit': 'px',
+      },
+    },
+    '&.elFormItemWrapper.hasValue .labelText': {
+      attrs: {
+        style: {
+          'font-size': parseInt(css['font-size']) - 3 || 16,
+        },
+      },
+      params: {
+        'font-size--unit': 'px',
+      },
+    },
+    '.elInput::placeholder': {
+      attrs: {
+        style: {
+          'font-size': parseInt(css['font-size']) || 16,
+        },
+      },
+      params: {
+        'font-size--unit': 'px',
       },
     },
   }
-  output.selectors['.inputHolder, .borderHolder'].attrs.style = Object.assign(
-    output.selectors['.inputHolder, .borderHolder'].attrs.style,
-    borderRadius
-  )
+
   if (element.content.visible) {
     output.attrs['data-show-only'] = element.content.visible
   }
+
   output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
+
   output.params = Object.assign(
     output.params,
     animations.params(document.querySelector(`[id="${element.id}"]`))
   )
+
+  inputRequiredCSS(element.id, data.id)
+
   return output
 }
 
@@ -121,14 +145,15 @@ function inputRequiredCSS(elementId, id) {
           }
         })
 
+        app.copiedCSS += `/* CSS for Input id: ${id} */`
         app.copiedCSS += `
-        .id-${id}[data-page-element="Input/V1"] .elInput {
-          background: url('https://app.clickfunnels.com/images/${images[index]}${version}.png') no-repeat ${bg_color} ${bg_position}${bg_gradient}  !important;
-        }
-        .id-${id} .inputHolder, 
-        .id-${id} .borderHolder {
-            background: none !important;
-        }
+.id-${id}[data-page-element="Input/V1"] .elInput {
+  background: url('https://app.clickfunnels.com/images/${images[index]}${version}.png') no-repeat ${bg_color} ${bg_position}${bg_gradient}  !important;
+}
+.id-${id} .inputHolder, 
+.id-${id} .borderHolder {
+    background: none !important;
+}
         `
       }
     })

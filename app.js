@@ -297,4 +297,55 @@ const app = {
     s.color = color
     return s.color == color
   },
+
+  buildRecommendations: () => {
+    document.querySelectorAll('.de').forEach(dom => {
+      if (dom.getAttribute('data-de-type') === 'privacy_notice') {
+        app.recommendations.push({
+          type: 'Privacy Notice',
+          status: 'Not Supported',
+          explainer: 'The Privacy Notice element is not supported.',
+        })
+      }
+
+      if (dom.getAttribute('data-de-type') === 'videogallery1') {
+        app.recommendations.push({
+          type: 'Video Popup',
+          status: 'Custom Code',
+          explainer:
+            'The video popup element is not supported inside of ClickFunnels 2.0 yet. This element will be converted to a custom code element.',
+        })
+      }
+
+      if (dom.getAttribute('data-de-type') === 'button') {
+        if (
+          dom.querySelector('a').href.includes('#') &&
+          dom.querySelector('a').href.split('#')[1] === 'fb-optin-url'
+        ) {
+          app.recommendations.push({
+            type: 'FB Optin Button',
+            status: 'Not Supported',
+            explainer:
+              'The Facebook optin button is not supported inside of ClickFunnels 2.0. This element will be converted to a normal button.',
+          })
+        }
+      }
+
+      if (dom.getAttribute('data-de-type') === 'sms') {
+        app.recommendations.push({
+          type: 'SMS',
+          status: 'Not Supported',
+          explainer: 'The SMS element is not supported inside of ClickFunnels 2.0 and has not been copied.',
+        })
+      }
+
+      if (dom.getAttribute('data-de-type') === 'survey') {
+        app.recommendations.push({
+          type: 'Survey',
+          status: 'Coming Soon',
+          explainer: 'The survey element is work-in-progress and should be available soon.',
+        })
+      }
+    })
+  },
 }

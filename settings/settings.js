@@ -59,7 +59,11 @@ const settings = () => {
         type: 'raw',
         parentId: cssCodeId,
         fractionalIndex: 'a2',
-        innerText: app.copiedCSS,
+        innerText: cssbeautify(app.copiedCSS, {
+          indent: '  ',
+          openbrace: 'end-of-line',
+          autosemicolon: true,
+        }),
       },
     ],
   }

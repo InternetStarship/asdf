@@ -26,42 +26,56 @@ const progress = data => {
   ]
   const classic_themes_css = {
     elButtonGradient: {
-      css: `.replace-me .progress-bar { box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2);
-        border: 1px solid rgba(0,0,0,0.1);}`,
+      css: `
+.replace-me .progress-bar { 
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2);
+  border: 1px solid rgba(0,0,0,0.1);
+}`,
     },
     elButtonBottomBorder: {
-      css: `.replace-me .progress-bar {border-bottom: 3px solid rgba(0,0,0,0.2);}`,
+      css: `.replace-me .progress-bar { border-bottom: 3px solid rgba(0,0,0,0.2); }`,
     },
     elButtonSubtle: {
-      css: `.replace-me .progress-bar {border: 1px solid rgba(0,0,0,0.1);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);}`,
+      css: `
+.replace-me .progress-bar {
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+}`,
     },
     'progress-bar-striped': {
-      css: `.replace-me .progress-bar {background-image: linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent);
-      background-size: 40px 40px;}`,
+      css: `
+.replace-me .progress-bar {
+  background-image: linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent);
+  background-size: 40px 40px;
+}`,
     },
     'progress-bar-striped_active': {
-      css: `.replace-me .progress-bar {background-image: linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent);
-      background-size: 40px 40px;
-      animation: progress-bar-stripes 2s linear infinite reverse;}@-webkit-keyframes progress-bar-stripes {
-        from {
-            background-position: 40px 0
-        }
-    
-        to {
-            background-position: 0 0
-        }
-    }
-    
-    @keyframes progress-bar-stripes {
-        from {
-            background-position: 40px 0
-        }
-    
-        to {
-            background-position: 0 0
-        }
-    }
+      css: `
+.replace-me .progress-bar {
+  background-image: linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent);
+  background-size: 40px 40px;
+  animation: progress-bar-stripes 2s linear infinite reverse;
+}
+      
+@-webkit-keyframes progress-bar-stripes {
+  from {
+      background-position: 40px 0
+  }
+
+  to {
+      background-position: 0 0
+  }
+}
+
+@keyframes progress-bar-stripes {
+  from {
+      background-position: 40px 0
+  }
+
+  to {
+      background-position: 0 0
+  }
+}
     `,
     },
   }
@@ -72,6 +86,7 @@ const progress = data => {
     if (domElement.classList.contains(theme)) {
       let css = classic_themes_css[theme].css
       css = css.replace(/\.replace-me/g, `.id-${data.id}`)
+      app.copiedCSS += `/* CSS for Progress Bar id: ${data.id} */`
       app.copiedCSS += css
       app.recommendations.push({
         type: 'Progress Bar Theme',

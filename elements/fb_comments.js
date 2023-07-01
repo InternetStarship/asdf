@@ -18,5 +18,12 @@ const fb_comments = data => {
     },
   }
 
+  app.recommendations.push({
+    type: 'fb_comments',
+    id: element.id,
+    title: 'FB Comments',
+    message: 'The Facebook comments have been converted to a Custom HTML/JS element.',
+  })
+
   return output
 }
