@@ -34,7 +34,6 @@ const audio_player = (data, type = 'audio_player') => {
       border-radius: 5px
   }`,
     `
-  
   .elAudioSkin2 {
       background-color: #FFF;
       border-radius: 5px;
@@ -52,7 +51,6 @@ const audio_player = (data, type = 'audio_player') => {
       border-radius: 5px
   }`,
     `
-  
   .elAudioSkin3 {
       background-color: #175c8d;
       background-image: -webkit-gradient(linear, center top, center bottom, from(#1c72b0), to(#175c8d));
@@ -76,7 +74,6 @@ const audio_player = (data, type = 'audio_player') => {
       border-radius: 5px
   }`,
     `
-  
   .elAudioSkin4 {
       background-color: #F73936;
       background-image: -webkit-gradient(linear, center top, center bottom, from(#f73936), to(#cc302d));
@@ -99,7 +96,8 @@ const audio_player = (data, type = 'audio_player') => {
       box-shadow: 0 1px 10px rgba(0,0,0,0.3);
       border-radius: 5px
   }`,
-    `.elAudioSkin5 {
+    `
+.elAudioSkin5 {
     background-color: #F73936;
     background-image: -webkit-gradient(linear, center top, center bottom, from(#f73936), to(#cc302d));
     background-image: -webkit-linear-gradient(top, #f73936, #cc302d);
@@ -122,7 +120,6 @@ const audio_player = (data, type = 'audio_player') => {
     border-radius: 5px
 }`,
     `
-  
   .elAudioSkin6 {
       background-color: #a5b814;
       background-image: -webkit-gradient(linear, center top, center bottom, from(#a5b814), to(#96a813));
@@ -146,7 +143,6 @@ const audio_player = (data, type = 'audio_player') => {
       border-radius: 5px
   }`,
     `
-  
   .elAudioSkin7 {
       -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.4);
       -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.4);

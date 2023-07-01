@@ -1,6 +1,6 @@
-const input = data => {
+const textarea = data => {
   const element = data.element
-  const output = blueprint('Input/V1', data.id, data.parentId, data.index, element)
+  const output = blueprint('TextArea/V1', data.id, data.parentId, data.index, element)
   const css = properties.css(element.id, 'input')
 
   output.params = {
@@ -22,7 +22,7 @@ const input = data => {
   }
 
   output.selectors = {
-    '.elInput': {
+    '.elTextarea': {
       attrs: {
         name: element.content.name,
         type: element.content.name,
@@ -140,15 +140,15 @@ function inputRequiredCSS(elementId, id) {
           }
         })
 
-        app.copiedCSS += `\n\n/* CSS for Input */\n`
-        app.copiedCSS += `.id-${id}[data-page-element="Input/V1"] .elInput {
-  background: url('https://app.clickfunnels.com/images/${images[index]}${version}.png') no-repeat ${bg_color} ${bg_position}${bg_gradient}  !important;
-}
-.id-${id} .inputHolder, 
-.id-${id} .borderHolder {
-    background: none !important;
-}
-        `
+        app.copiedCSS += `\n\n/* CSS for Textarea */\n`
+        app.copiedCSS += `.id-${id}[data-page-element="TextArea/V1"] .elInput {
+    background: url('https://app.clickfunnels.com/images/${images[index]}${version}.png') no-repeat ${bg_color} ${bg_position}${bg_gradient}  !important;
+  }
+  .id-${id} .inputHolder, 
+  .id-${id} .borderHolder {
+      background: none !important;
+  }
+          `
       }
     })
   })

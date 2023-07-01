@@ -11,7 +11,8 @@ const list = data => {
   let bulletSpacing = null
 
   const cf_classic_themes = [
-    `.elBulletList_theme1 li {
+    `
+.elBulletList_theme1 li {
       padding: 0;
       margin-bottom: 0
   }
@@ -30,7 +31,8 @@ const list = data => {
   }
   
   `,
-    `.elBulletList_theme2 li {
+    `
+.elBulletList_theme2 li {
       padding: 0;
       margin-bottom: 0
   }
@@ -47,7 +49,8 @@ const list = data => {
       margin-left: 0 !important;
       display: inline-block
   }`,
-    `.elBulletList_theme3 li {
+    `
+    .elBulletList_theme3 li {
       padding: 0;
       margin-bottom: 0;
       border-bottom: 1px solid #eee
@@ -69,7 +72,8 @@ const list = data => {
       margin-left: 0 !important;
       display: inline-block
   }`,
-    `.elBulletList_theme4 li {
+    `
+.elBulletList_theme4 li {
       padding: 0;
       margin-bottom: 0;
       border-bottom: 1px solid #eee
@@ -92,7 +96,8 @@ const list = data => {
       display: inline-block
   }`,
 
-    `.elBulletList_theme5 {
+    `
+    .elBulletList_theme5 {
       border-radius: 5px;
       overflow: hidden;
       border: 1px solid #eee;
@@ -125,7 +130,8 @@ const list = data => {
       border-bottom: none
   }`,
 
-    `.elBulletList_theme6 {
+    `
+.elBulletList_theme6 {
       border-radius: 5px;
       overflow: hidden;
       border: 1px solid #186aa1;
@@ -169,44 +175,45 @@ const list = data => {
   }
 `,
 
-    `.elBulletList_theme7 {
-      border-radius: 5px;
-      overflow: hidden;
-      border: 1px solid #3cb371;
-      background: #fff
-  }
-  
-  .elBulletList_theme7 li {
-      padding: 0;
-      margin-bottom: 0;
-      border-bottom: 1px solid #3cb371
-  }
-  
-  .elBulletList_theme7 li:first-child {
-      border-top-right-radius: 5px
-  }
-  
-  .elBulletList_theme7 li:last-child {
-      border-top: none;
-      border-bottom-right-radius: 5px
-  }
-  
-  .elBulletList_theme7 li i.fa,.elBulletList_theme7 li i.far,.elBulletList_theme7 li i.fas,.elBulletList_theme7 li i.fab,.elBulletList_theme7 li i.fad,.elBulletList_theme7[data-list-type=ordered] li::before {
-      padding: 11px 9px;
-      background: #3fcc7c;
-      background-image: -webkit-linear-gradient(top, #3fcc7c, #3cb371);
-      background-image: -moz-linear-gradient(top, #3fcc7c, #3cb371);
-      background-image: -ms-linear-gradient(top, #3fcc7c, #3cb371);
-      background-image: -o-linear-gradient(top, #3fcc7c, #3cb371);
-      background-image: linear-gradient(to bottom, #3fcc7c, #3cb371);
-      color: #fff;
-      border-right: 1px solid #3cb371;
-      border-bottom: 1px solid #3cb371;
-      margin-right: 6px;
-      width: auto;
-      margin-left: 0 !important;
-      display: inline-block
-  }
+    `
+.elBulletList_theme7 {
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid #3cb371;
+    background: #fff
+}
+
+.elBulletList_theme7 li {
+    padding: 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid #3cb371
+}
+
+.elBulletList_theme7 li:first-child {
+    border-top-right-radius: 5px
+}
+
+.elBulletList_theme7 li:last-child {
+    border-top: none;
+    border-bottom-right-radius: 5px
+}
+
+.elBulletList_theme7 li i.fa,.elBulletList_theme7 li i.far,.elBulletList_theme7 li i.fas,.elBulletList_theme7 li i.fab,.elBulletList_theme7 li i.fad,.elBulletList_theme7[data-list-type=ordered] li::before {
+    padding: 11px 9px;
+    background: #3fcc7c;
+    background-image: -webkit-linear-gradient(top, #3fcc7c, #3cb371);
+    background-image: -moz-linear-gradient(top, #3fcc7c, #3cb371);
+    background-image: -ms-linear-gradient(top, #3fcc7c, #3cb371);
+    background-image: -o-linear-gradient(top, #3fcc7c, #3cb371);
+    background-image: linear-gradient(to bottom, #3fcc7c, #3cb371);
+    color: #fff;
+    border-right: 1px solid #3cb371;
+    border-bottom: 1px solid #3cb371;
+    margin-right: 6px;
+    width: auto;
+    margin-left: 0 !important;
+    display: inline-block
+}
   `,
   ]
 

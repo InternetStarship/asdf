@@ -29,6 +29,8 @@ const elements = (elements, parentId) => {
           return list(data)
         case 'input':
           return input(data)
+        case 'textarea':
+          return textarea(data)
         case 'select':
           return select(data)
         case 'divider':

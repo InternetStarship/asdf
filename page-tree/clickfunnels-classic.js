@@ -263,6 +263,23 @@ const clickfunnels_classic_page_tree = {
       return data
     }
 
+    if (dom.getAttribute('data-de-type') === 'textarea') {
+      data.type = 'textarea'
+      const element = dom.querySelector('.elInput')
+      const input = element.getBoundingClientRect()
+      data.content = {
+        visible: app.checkVisibility(dom),
+        width: input.width,
+        height: input.height,
+        placeholder: element.getAttribute('placeholder'),
+        name: element.getAttribute('name'),
+        type: element.getAttribute('type'),
+        custom_type: element.getAttribute('data-custom-type'),
+        required: element.getAttribute('class').includes('required1') ? 'required1' : 'required0',
+      }
+      return data
+    }
+
     if (dom.querySelector('.elInput')) {
       data.type = 'input'
       const element = dom.querySelector('.elInput')

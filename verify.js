@@ -51,6 +51,7 @@ window.addEventListener(
           inject('elements/image_popup.js'),
           inject('elements/image.js'),
           inject('elements/input.js'),
+          inject('elements/textarea.js'),
           inject('elements/list.js'),
           inject('elements/nav.js'),
           inject('elements/pricing.js'),

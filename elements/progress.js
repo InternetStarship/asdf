@@ -33,7 +33,9 @@ const progress = data => {
 }`,
     },
     elButtonBottomBorder: {
-      css: `.replace-me .progress-bar { border-bottom: 3px solid rgba(0,0,0,0.2); }`,
+      css: `
+.replace-me .progress-bar { border-bottom: 3px solid rgba(0,0,0,0.2); }
+`,
     },
     elButtonSubtle: {
       css: `

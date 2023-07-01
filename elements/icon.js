@@ -26,7 +26,6 @@ const icon = data => {
     border-bottom: 2px solid rgba(0,0,0,0.075)
 }`,
     `
-
 .iconelement_theme_2 {
     padding: 0;
     margin: 0;
@@ -50,7 +49,6 @@ const icon = data => {
     border-bottom: 4px solid rgba(0,0,0,0.15)
 }`,
     `
-
 .iconelement_theme_3 {
     padding: 0;
     margin: 0;
@@ -72,7 +70,6 @@ const icon = data => {
     border-bottom: 4px solid rgba(0,0,0,0.075)
 }`,
     `
-
 .iconelement_theme_4 {
     padding: 0;
     margin: 0;
@@ -94,7 +91,6 @@ const icon = data => {
     border-bottom: 4px solid rgba(0,0,0,0.075)
 }`,
     `
-
 .iconelement_theme_5 {
     padding: 0;
     margin: 0;
@@ -113,7 +109,6 @@ const icon = data => {
     border: 2px solid rgba(0,0,0,0.15)
 }`,
     `
-
 .iconelement_theme_6 {
     padding: 0;
     margin: 0;
@@ -132,7 +127,6 @@ const icon = data => {
     border: 2px solid rgba(0,0,0,0.15)
 }`,
     `
-
 .iconelement_theme_7 {
     padding: 0;
     margin: 0;
@@ -165,7 +159,6 @@ const icon = data => {
     text-shadow: 0 1px 1px #316903
 }`,
     `
-
 .iconelement_theme_8 {
     padding: 0;
     margin: 0;
@@ -204,7 +197,6 @@ const icon = data => {
     box-shadow: 0 1px 2px #d6d6d6
 }`,
     `
-
 .iconelement_theme_9 {
     padding: 0;
     margin: 0;
@@ -305,7 +297,6 @@ const icon = data => {
     text-shadow: 0 1px 1px #6f3a02
 }`,
     `
-
 .iconelement_theme_12 {
     padding: 0;
     margin: 0;
@@ -338,7 +329,6 @@ const icon = data => {
     border: 1px solid #314179
 }`,
     `
-
 .iconelement_theme_13 {
     padding: 0;
     margin: 0;
