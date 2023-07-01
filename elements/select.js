@@ -1,110 +1,155 @@
 const select = data => {
   const element = data.element
-  const id = data.id
-  const parentId = data.parentId
-  const index = data.index
+  const output = blueprint('SelectBox/V1', data.id, data.parentId, data.index, element)
   const css = properties.css(element.id, 'select')
-  const borderRadius = properties.borderRadius(css)
-  const theParams = params(css, 'element', element.id)
-  theParams['align'] = 'left'
-  const output = {
-    type: 'SelectBox/V1',
-    id: id,
-    version: 0,
-    parentId: parentId,
-    fractionalIndex: `a${index}`,
-    params: theParams,
-    attrs: {
-      style: {
-        'padding-top': 11,
-        'padding-bottom': 11,
-        'margin-left': '0px',
-        width: element.content.width,
-      },
+  let dataType = element.content.name
+  let selectName = element.content.name
+  let customType = element.content.custom_type
+  let placeholder = null
+
+  if (dataType === 'cfx_all_countries') {
+    dataType = 'all_countries'
+    selectName = 'country'
+    placeholder = 'Select Country'
+  } else if (dataType === 'cfx_states') {
+    dataType = 'all_united_states'
+    selectName = 'state'
+    placeholder = 'Select State'
+  } else if (dataType === 'cfx_canada') {
+    dataType = 'all_canadian_provinces'
+    selectName = 'state'
+    placeholder = 'Select Province'
+  } else {
+    dataType = dataType.replace('cfx_', '')
+  }
+
+  output.attrs = {
+    style: {
+      'padding-top': 11,
+      'padding-bottom': 11,
+      'margin-left': '0px',
+      width: element.content.width,
     },
-    selectors: {
-      '.elSelect': {
-        params: {
-          'padding-top--unit': 'px',
-          'padding-bottom--unit': 'px',
-          '--style-padding-horizontal--unit': 'px',
-          '--style-padding-horizontal': 30,
-        },
-        attrs: {
-          style: {
-            'padding-top': 13,
-            'padding-bottom': 14,
-          },
-          className: 'required1',
-          name: 'custom_type',
-          'data-custom-type': 'dasdasdasd',
-        },
-      },
-      '.elSelectArrow': {
-        attrs: {
-          style: {
-            right: 30,
-          },
-        },
-      },
-      '.elSelect, .elSelectLabel': {
-        attrs: {
-          style: {
-            'font-size': 18,
-            'letter-spacing': 0.27,
-            'text-decoration': 'underline',
-          },
-          'data-skip-text-shadow-settings': 'false',
-        },
-        params: {
-          'font-size--unit': 'px',
-          'letter-spacing--unit': 'rem',
-          '--style-text-shadow-x': 2,
-          '--style-text-shadow-y': 2,
-          '--style-text-shadow-blur': 4,
-          '--style-text-shadow-color': '#aab7c7',
-        },
-      },
-      '.elSelectWrapper': {
-        attrs: {
-          'data-type': 'custom_type',
-        },
-      },
-    },
-    children: [
+  }
+
+  const defaultOptionId = app.makeId()
+
+  if (placeholder) {
+    output.children = [
       {
         type: 'option',
         attrs: {
-          value: 'something',
+          value: 'DEFAULT',
         },
-        id: '6Z-6O4GA-21',
+        id: defaultOptionId,
         version: 0,
-        parentId: '6Z-6O4GA-20',
+        parentId: data.id,
         fractionalIndex: 'a0',
         children: [
           {
             type: 'text',
-            innerText: ' Option ',
-            id: '6Z-6O4GA-22',
+            innerText: placeholder,
+            id: app.makeId(),
             version: 0,
-            parentId: '6Z-6O4GA-21',
+            parentId: defaultOptionId,
             fractionalIndex: 'a0',
           },
         ],
       },
-    ],
+    ]
+  } else {
+    output.children = [
+      {
+        type: 'option',
+        attrs: {
+          value: '',
+        },
+        id: defaultOptionId,
+        version: 0,
+        parentId: data.id,
+        fractionalIndex: 'a0',
+        children: [
+          {
+            type: 'text',
+            innerText: 'Select your option',
+            id: app.makeId,
+            version: 0,
+            parentId: defaultOptionId,
+            fractionalIndex: 'a0',
+          },
+        ],
+      },
+    ]
+
+    element.content.items.forEach(item => {
+      const optionId = app.makeId()
+      output.children.push({
+        type: 'option',
+        attrs: {
+          value: item.value,
+        },
+        id: optionId,
+        version: 0,
+        parentId: data.id,
+        fractionalIndex: 'a1',
+        children: [
+          {
+            type: 'text',
+            innerText: item.text,
+            id: app.makeId(),
+            version: 0,
+            parentId: optionId,
+            fractionalIndex: 'a0',
+          },
+        ],
+      })
+    })
   }
-  output.selectors['.elSelect'].attrs.style = Object.assign(
-    output.selectors['.elSelect'].attrs.style,
-    borderRadius
-  )
-  if (element.content.visible) {
-    output.attrs['data-show-only'] = element.content.visible
+
+  if (dataType === 'states_canada') {
+    selectName = 'something'
+    dataType = null
+    customType = null
+    output.children = []
+    app.recommendations.push({
+      type: 'Select',
+      status: 'Not Supported',
+      explainer: 'Select option for Canada & United States is not supported.',
+    })
   }
-  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
-  output.params = Object.assign(
-    output.params,
-    animations.params(document.querySelector(`[id="${element.id}"]`))
-  )
+
+  output.selectors = {
+    '.elSelect': {
+      attrs: {
+        style: {
+          'padding-top': '12px',
+          'padding-bottom': '12px',
+          'font-size': parseInt(css['font-size']) || 16,
+        },
+        className: element.content.required,
+        name: selectName,
+      },
+    },
+    '.elSelect, .elSelectLabel': {
+      attrs: {
+        style: {
+          'font-size': parseInt(css['font-size']) || 16,
+        },
+        'data-skip-text-shadow-settings': 'false',
+      },
+    },
+    '.elSelectWrapper': {
+      attrs: {},
+    },
+  }
+
+  if (customType) {
+    output.selectors['.elSelect'].attrs['data-custom-type'] = customType
+  }
+
+  if (dataType) {
+    output.selectors['.elSelectWrapper'].attrs['data-type'] = dataType
+  }
+
   return output
 }

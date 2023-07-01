@@ -6,11 +6,6 @@ const input = data => {
   output.params = {
     label: element.content.placeholder,
     labelType: 'on-border',
-    '--style-box-shadow-style-type': 'inset',
-    '--style-box-shadow-distance-x': 0,
-    '--style-box-shadow-distance-y': 1,
-    '--style-box-shadow-blur': 2,
-    '--style-box-shadow-color': 'rgba(130, 137, 150, 0.23)',
     '--style-background-color': '#fff',
   }
 
@@ -86,18 +81,15 @@ const input = data => {
         'font-size--unit': 'px',
       },
     },
+    '&.elFormItemWrapper, .inputHolder, .borderHolder': {
+      attrs: {
+        'data-skip-corners-settings': 'false',
+        style: {
+          'border-radius': '4px',
+        },
+      },
+    },
   }
-
-  if (element.content.visible) {
-    output.attrs['data-show-only'] = element.content.visible
-  }
-
-  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
-
-  output.params = Object.assign(
-    output.params,
-    animations.params(document.querySelector(`[id="${element.id}"]`))
-  )
 
   inputRequiredCSS(element.id, data.id)
 
