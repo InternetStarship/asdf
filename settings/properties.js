@@ -8,6 +8,8 @@ const properties = {
       dom = document.querySelector(`.containerWrapper #${elementId}`)
     } else if (type === 'image') {
       dom = document.querySelector(`#${elementId} img`)
+    } else if (type === 'video_popup') {
+      dom = document.querySelector(`#${elementId} img`)
     } else if (type === 'icon') {
       dom = document.querySelector(`#${elementId} .eliconelement`)
     } else if (type === 'progress') {

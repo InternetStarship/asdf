@@ -53,7 +53,6 @@ const image = data => {
             innerText: element.content.src,
           },
         ],
-
         'data-blurry-image-enabled': false,
         style: {
           width: parseInt(element.content.width),
@@ -68,7 +67,6 @@ const image = data => {
           '-moz-box-sizing': 'border-box',
           'box-sizing': 'border-box',
         },
-
         'data-lazy-loading': 'false',
         'data-image-quality': 100,
       },
