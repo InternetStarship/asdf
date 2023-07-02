@@ -59,15 +59,7 @@ const video = data => {
 
   output.attrs.style = Object.assign(output.attrs.style, borderRadius)
 
-  if (element.content.visible) {
-    output.attrs['data-show-only'] = element.content.visible
-  }
-
-  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
-  output.params = Object.assign(
-    output.params,
-    animations.params(document.querySelector(`[id="${element.id}"]`))
-  )
+  output.attrs.id = element.id
 
   return output
 }

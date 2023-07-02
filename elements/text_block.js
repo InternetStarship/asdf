@@ -56,8 +56,8 @@ const text_block = data => {
     if (mainContainer.classList.contains('de4column')) {
       columnCount = 4
     }
-    app.copiedCSS += `\n\n/* CSS for Text Block */\n`
-    app.copiedCSS += `.id-${output.id}[data-page-element="FlexContainer/V1"] { 
+    app.generatedCSS += `\n\n/* CSS for Text Block */\n`
+    app.generatedCSS += `#${element.id}[data-page-element="FlexContainer/V1"] { 
   column-count: ${columnCount} !important;
   display: block !important;
 }`
@@ -68,6 +68,8 @@ const text_block = data => {
   }
 
   output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
+
+  output.attrs.id = element.id
 
   return output
 }

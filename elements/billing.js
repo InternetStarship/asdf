@@ -23,59 +23,73 @@ const billing_block = data => {
       },
       'billing_headline'
     )
-    delete headlineJSON.selectors['.elHeadline'].params['--style-background-image-url']
-    headlineJSON.selectors['.elHeadline'].params['--style-padding-horizontal'] = 0
-    headlineJSON.attrs.style['padding-top'] = 0
 
     let inputJSON = {}
-    if (data.element.content.items[i].label === 'Country') {
-      const inputBox = document.querySelector(`#${element.id} select[name="country"]`).getBoundingClientRect()
-      inputJSON = select({
-        element: {
-          content: {
-            width: inputBox.width,
-            height: inputBox.height,
-            placeholder: 'Select Country',
-            name: document.querySelector(`#${element.id} select[name="country"]`).getAttribute('name'),
-            type: document.querySelector(`#${element.id} select[name="country"]`).getAttribute('type'),
-            required: document
-              .querySelector(`#${element.id} select[name="country"]`)
-              .getAttribute('class')
-              .includes('required1')
-              ? 'required1'
-              : 'required0',
-          },
-          id: element.id,
-          css: css_input,
-        },
-        id: app.makeId(),
-        index: i,
-      })
-      inputJSON.selectors['.elSelect'].attrs.style['margin-bottom'] = '0px'
-    } else {
-      const inputBox = document.querySelector(`#${element.id} input[name="address"]`).getBoundingClientRect()
-      inputJSON = input({
-        element: {
-          content: {
-            width: inputBox.width,
-            height: inputBox.height,
-            placeholder: data.element.content.items[i].input.getAttribute('placeholder'),
-            name: data.element.content.items[i].input.getAttribute('name'),
-            type: data.element.content.items[i].input.getAttribute('type'),
-            required: data.element.content.items[i].input.getAttribute('class').includes('required1')
-              ? 'required1'
-              : 'required0',
-          },
-          id: element.id,
-          css: css_input,
-        },
-        id: app.makeId(),
-        index: i,
-      })
 
-      inputJSON.selectors['.elInput'].attrs.style['margin-bottom'] = '0px'
-      inputJSON.selectors['.inputHolder, .borderHolder'].attrs.style['margin-top'] = '0px'
-      inputJSON.selectors['.inputHolder, .borderHolder'].params['--style-padding-horizontal'] = '0px'
+    if (data.element.content.items[i].label === 'Country') {
+      const inputDom = document.querySelector(`#${element.id} select[name="country"]`)
+
+      if (inputDom) {
+        const inputBox = inputDom.getBoundingClientRect()
+        const items = []
+        const options = inputDom.querySelectorAll('option')
+        options.forEach(option => {
+          items.push({
+            value: option.value,
+            text: option.textContent,
+          })
+        })
+        inputJSON = select({
+          element: {
+            content: {
+              width: inputBox.width,
+              height: inputBox.height,
+              placeholder: 'Select Country',
+              name: document.querySelector(`#${element.id} select[name="country"]`).getAttribute('name'),
+              type: document.querySelector(`#${element.id} select[name="country"]`).getAttribute('type'),
+              required: document
+                .querySelector(`#${element.id} select[name="country"]`)
+                .getAttribute('class')
+                .includes('required1')
+                ? 'required1'
+                : 'required0',
+              items: items,
+            },
+            id: element.id,
+            css: css_input,
+          },
+          id: app.makeId(),
+          index: i,
+        })
+      }
+      inputJSON.attrs.style['margin-top'] = 0
+      inputJSON.attrs.style['padding-bottom'] = 0
+      inputJSON.attrs.style['padding-top'] = 0
+    } else {
+      const inputDom = document.querySelector(`#${element.id} input[name="address"]`)
+
+      if (inputDom) {
+        const inputBox = inputDom.getBoundingClientRect()
+        inputJSON = input({
+          element: {
+            content: {
+              width: inputBox.width,
+              height: inputBox.height,
+              placeholder: data.element.content.items[i].input.getAttribute('placeholder'),
+              name: data.element.content.items[i].input.getAttribute('name'),
+              type: data.element.content.items[i].input.getAttribute('type'),
+              required: data.element.content.items[i].input.getAttribute('class').includes('required1')
+                ? 'required1'
+                : 'required0',
+            },
+            id: element.id,
+            css: css_input,
+          },
+          id: app.makeId(),
+          index: i,
+        })
+      }
+      inputJSON.attrs.style['margin-top'] = 0
     }
 
     const innerFlexContainer = flex_container([headlineJSON, inputJSON], id, i)
@@ -83,7 +97,7 @@ const billing_block = data => {
     innerFlexContainer.attrs.style['gap'] = 0
 
     if (i !== 0) {
-      innerFlexContainer.attrs.style['margin-top'] = 22
+      innerFlexContainer.attrs.style['margin-top'] = 10
     }
 
     children.push(innerFlexContainer)
@@ -96,11 +110,11 @@ const billing_block = data => {
 
   if (element.content.visible) {
     output.attrs['data-show-only'] = element.content.visible
-    output.attrs = Object.assign(
-      output.attrs,
-      animations.attrs(document.querySelector(`[id="${element.id}"]`))
-    )
   }
+
+  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
+
+  output.attrs.id = element.id
 
   return output
 }

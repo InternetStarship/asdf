@@ -62,5 +62,7 @@ const checkbox = (data, type = 'checkbox') => {
     output.attrs['data-show-only'] = element.content.visible
   }
 
+  output.attrs.id = element.id
+
   return output
 }

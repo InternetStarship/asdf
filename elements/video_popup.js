@@ -80,5 +80,8 @@ const video_popup = (data, type = 'video_popup') => {
     output.params,
     animations.params(document.querySelector(`[id="${element.id}"]`))
   )
+
+  output.attrs.id = element.id
+
   return output
 }

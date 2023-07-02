@@ -60,5 +60,7 @@ const divider = data => {
     output.params,
     animations.params(document.querySelector(`[id="${element.id}"]`))
   )
+
+  output.attrs.id = element.id
   return output
 }

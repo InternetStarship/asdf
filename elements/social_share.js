@@ -32,5 +32,7 @@ const social_share = data => {
     message: 'The social share links have been converted to a Custom HTML/JS element.',
   })
 
+  output.attrs.id = element.id
+
   return output
 }

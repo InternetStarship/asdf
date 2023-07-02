@@ -1,6 +1,6 @@
 const app = {
-  copiedCSS: '',
-  copiedJS: '',
+  generatedCSS: '',
+  generatedJS: '',
   idList: [],
   recommendations: [],
   idLookupTable: [],
@@ -26,7 +26,7 @@ const app = {
 
     const response = {
       data: {
-        css: app.copiedCSS,
+        css: app.generatedCSS,
         page_tree: JSON.stringify(clickfunnels_v2),
         google_font_families: google_font_families,
       },
@@ -347,5 +347,51 @@ const app = {
         })
       }
     })
+  },
+
+  cssForInput: (id, type) => {
+    const input = document.querySelector(`#${id} .elInput`)
+    const boxShadow = ['es-gradient', 'es-lightgreyInput', 'elInputStyle1', 'ceoinput']
+
+    let boxShadowCSS = ''
+
+    boxShadow.map(box => {
+      if (input.classList.contains(box)) {
+        switch (box) {
+          case 'es-gradient':
+            boxShadowCSS = 'box-shadow: inset 0px 0px 2px 2px rgba(0,0,0,0.055) !important;'
+            break
+          case 'es-lightgreyInput':
+            boxShadowCSS =
+              'box-shadow: inset 0px 2px 4px rgba(128,128,128,0.15), 0px 3px 2px rgba(140,157,169,0.14) !important;'
+            break
+          case 'elInputStyle1':
+            boxShadowCSS = 'box-shadow: 0 0 0 3px rgb(4 3 3 / 5%) !important;'
+            break
+          case 'ceoinput':
+            boxShadowCSS =
+              'box-shadow: inset 0 1px 2px rgba(130,137,150,0.23), 0 1px 0 rgba(255,255,255,0.95) !important;'
+            break
+        }
+      }
+    })
+
+    let className = '.elInput'
+    if (type === 'TextArea') className = '.elTextarea'
+    if (type === 'Select') className = '.elSelect'
+
+    if (boxShadowCSS !== '') {
+      app.generatedCSS += `\n\n/* CSS for ${type} */\n`
+      app.generatedCSS += `
+#${id} ${className} {
+  ${boxShadowCSS}
+}`
+
+      app.recommendations.push({
+        title: 'Input Box Shadow',
+        status: 'CSS',
+        explainer: 'Custom CSS has been added to the input box to match the original box shadow.',
+      })
+    }
   },
 }

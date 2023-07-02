@@ -152,5 +152,7 @@ const headline = (
 
   output.attrs.style = Object.assign(output.attrs.style, borderRadius)
 
+  output.attrs.id = element.id
+
   return output
 }

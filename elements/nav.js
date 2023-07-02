@@ -41,5 +41,7 @@ const navigation = data => {
     )
   }
 
+  output.attrs.id = element.id
+
   return output
 }

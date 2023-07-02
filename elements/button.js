@@ -265,5 +265,7 @@ const button = data => {
     borderRadius
   )
 
+  output.attrs.id = element.id
+
   return output
 }

@@ -87,9 +87,9 @@ const progress = data => {
   classic_themes.forEach(theme => {
     if (domElement.classList.contains(theme)) {
       let css = classic_themes_css[theme].css
-      css = css.replace(/\.replace-me/g, `.id-${data.id}`)
-      app.copiedCSS += `\n\n/* CSS for Progress Bar */\n`
-      app.copiedCSS += css
+      css = css.replace(/\.replace-me/g, `#${element.id}`)
+      app.generatedCSS += `\n\n/* CSS for Progress Bar */\n`
+      app.generatedCSS += css
       app.recommendations.push({
         type: 'Progress Bar Theme',
         status: 'CSS',
@@ -158,6 +158,8 @@ const progress = data => {
     output.selectors['.progress-bar'].attrs.style,
     borderRadiusBar
   )
+
+  output.attrs.id = element.id
 
   return output
 }

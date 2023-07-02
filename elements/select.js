@@ -151,5 +151,8 @@ const select = data => {
     output.selectors['.elSelectWrapper'].attrs['data-type'] = dataType
   }
 
+  app.cssForInput(element.id, 'Select')
+  output.attrs.id = element.id
+
   return output
 }

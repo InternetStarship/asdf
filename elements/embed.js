@@ -16,5 +16,7 @@ const embed = data => {
     },
   }
 
+  output.attrs.id = element.id
+
   return output
 }

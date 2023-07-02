@@ -229,10 +229,10 @@ const list = data => {
     const themeClass = element.content.html.match(/elBulletList_theme\d+/g)
     const themeNumber = themeClass[0].match(/\d+/g)
     let css = cf_classic_themes[themeNumber[0] - 1]
-    css = css.replace(/\.elBulletList_theme\d+/g, `.id-${id}`)
+    css = css.replace(/\.elBulletList_theme\d+/g, `#${element.id}`)
     bulletSpacing = 0
-    app.copiedCSS += `\n\n/* CSS for Bullet List */\n`
-    app.copiedCSS += css
+    app.generatedCSS += `\n\n/* CSS for Bullet List */\n`
+    app.generatedCSS += css
     app.recommendations.push({
       type: 'Bullet List Theme',
       status: 'CSS',
@@ -389,6 +389,8 @@ const list = data => {
     output.params,
     animations.params(document.querySelector(`[id="${element.id}"]`))
   )
+
+  output.attrs.id = element.id
 
   return output
 }

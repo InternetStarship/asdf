@@ -25,5 +25,7 @@ const fb_comments = data => {
     message: 'The Facebook comments have been converted to a Custom HTML/JS element.',
   })
 
+  output.attrs.id = element.id
+
   return output
 }

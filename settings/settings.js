@@ -11,15 +11,8 @@ const settings = () => {
   const textColor = document.querySelector('html').style.color
   const fontFamily = document.querySelector('html').style.fontFamily
 
-  app.copiedCSS = app.copiedCSS + document.querySelector('#custom-css').innerText
-
-  app.copiedCSS = app.copiedCSS.replaceAll(`;`, ` !important;`)
-  app.copiedCSS = app.copiedCSS.replaceAll(`!important !important;`, ` !important;`)
-  app.copiedCSS = app.copiedCSS.replaceAll(`!important!important;`, ` !important;`)
-
-  app.idList.map(item => {
-    app.copiedCSS = app.copiedCSS.replaceAll(`#${item.cf1_id}`, `.id-${item.cf2_id}`)
-  })
+  app.generatedCSS = app.generatedCSS + document.querySelector('#custom-css').innerText
+  app.generatedCSS = app.generatedCSS.replace(/;!important|!important!important/g, ' !important')
 
   // Note: Tracking code for Header and Footer is effectively impossible to accurately
   // grab without having access to the ClickFunnels Classic editor.
@@ -45,21 +38,21 @@ const settings = () => {
         type: 'raw',
         parentId: headerCodeId,
         fractionalIndex: 'a0',
-        innerText: '',
+        innerText: '', // blank
       },
       {
         id: 'footer-code',
         type: 'raw',
         parentId: footerCodeId,
         fractionalIndex: 'a1',
-        innerText: '',
+        innerText: app.generatedJS,
       },
       {
         id: 'css',
         type: 'raw',
         parentId: cssCodeId,
         fractionalIndex: 'a2',
-        innerText: cssbeautify(app.copiedCSS, {
+        innerText: cssbeautify(app.generatedCSS, {
           indent: '  ',
           openbrace: 'end-of-line',
           autosemicolon: true,

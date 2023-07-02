@@ -100,5 +100,7 @@ const image = data => {
     output.selectors['.elImage'].attrs.target = element.content.target
   }
 
+  output.attrs.id = element.id
+
   return output
 }

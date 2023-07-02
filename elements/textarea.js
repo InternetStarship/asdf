@@ -91,57 +91,8 @@ const textarea = data => {
     },
   }
 
-  inputRequiredCSS(element.id, data.id)
+  app.cssForInput(element.id, 'TextArea')
+  output.attrs.id = element.id
 
   return output
-}
-
-function inputRequiredCSS(elementId, id) {
-  const input = document.querySelector(`#${elementId} .elInput`)
-
-  const colors = ['elInputIColor', 'elInputIBlack', 'elInputIWhite']
-  const types = ['elInputIName', 'elInputIEmail', 'elInputIPhone', 'elInputIAddress']
-  const images = ['name', 'email', 'phone', 'address']
-  const bgColor = ['elInputBG1', 'elInputBG2', 'elInputBG3', 'elInputBG4', 'elInputBG5']
-
-  colors.map(color => {
-    let version = ''
-    if (color === 'elInputIBlack') version = '2'
-    if (color === 'elInputIWhite') version = '3'
-
-    types.map((type, index) => {
-      if (input.classList.contains(color) && input.classList.contains(type)) {
-        let bg_color = ''
-        let bg_gradient = ''
-        let bg_position = '97%'
-
-        if (input.classList.contains('elInputILeft')) bg_position = '3%'
-        bgColor.map(bg => {
-          if (input.classList.contains(bg)) {
-            if (bg === 'elInputBG1') bg_color = '#ffffff'
-            if (bg === 'elInputBG2') bg_color = '#F1F1F1'
-            if (bg === 'elInputBG3') bg_color = 'rgba(0,0,0,0.5)'
-            if (bg === 'elInputBG4') {
-              bg_color = ''
-              bg_gradient = ', linear-gradient(top, #fff, #efefef)'
-            }
-            if (bg === 'elInputBG5') {
-              bg_color = ''
-              bg_gradient = ', linear-gradient(to bottom, #ebebeb 0%, #f6f6f6 9%, white 100%)'
-            }
-          }
-        })
-
-        app.copiedCSS += `\n\n/* CSS for Textarea */\n`
-        app.copiedCSS += `.id-${id}[data-page-element="TextArea/V1"] .elInput {
-    background: url('https://app.clickfunnels.com/images/${images[index]}${version}.png') no-repeat ${bg_color} ${bg_position}${bg_gradient}  !important;
-  }
-  .id-${id} .inputHolder, 
-  .id-${id} .borderHolder {
-      background: none !important;
-  }
-          `
-      }
-    })
-  })
 }

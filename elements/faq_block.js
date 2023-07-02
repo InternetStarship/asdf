@@ -57,5 +57,7 @@ const faq_block = data => {
     )
   }
 
+  output.attrs.id = element.id
+
   return output
 }
