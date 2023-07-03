@@ -18,9 +18,9 @@ const headline = (
   //   blueprintClassname = '.elParagraph'
   // }
 
-  const output = blueprint(blueprintTitle, data.id, data.parentId, data.index, element)
+  const output = app.blueprint(blueprintTitle, data.id, data.parentId, data.index, element)
   const contentEditableNodeId = app.makeId()
-  const css = properties.css(element.id, type)
+  const css = app.properties.css(element.id, type)
   let children = app.headlinePageTree(element.content.json, contentEditableNodeId)
   let fontWeight = css['font-weight']
   let boldColor = ''
@@ -44,7 +44,7 @@ const headline = (
     ]
   }
 
-  const borderRadius = properties.borderRadius(element.css)
+  const borderRadius = app.properties.borderRadius(element.css)
 
   if (fontWeight === 'normal') {
     fontWeight = '400'
@@ -56,7 +56,7 @@ const headline = (
     fontWeight = '300'
   }
 
-  const cssPrepend = properties.css(element.id, prependIconType)
+  const cssPrepend = app.properties.css(element.id, prependIconType)
   const fa_prependDom = document.querySelector(`#${element.id} .${fa_prepended_class}`)
   let fa_prepended = {}
 
@@ -85,7 +85,7 @@ const headline = (
     return element !== undefined
   })
 
-  output.params = type !== 'image_list_headline' ? params(css, 'element', element.id) : {}
+  output.params = type !== 'image_list_headline' ? app.params(css, 'element', element.id) : {}
 
   output.attrs = {
     style: {

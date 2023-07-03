@@ -2,15 +2,15 @@ const featured_image = data => {
   const element = data.element
   const parentId = data.parentId
   const index = data.index
-  const css_image = properties.css(element.id, 'featured_image_image')
-  const css_headline = properties.css(element.id, 'featured_image_headline')
-  const css_paragraph = properties.css(element.id, 'featured_image_paragraph')
-  const borderRadius = properties.borderRadius(css_image)
+  const css_image = app.properties.css(element.id, 'featured_image_image')
+  const css_headline = app.properties.css(element.id, 'featured_image_headline')
+  const css_paragraph = app.properties.css(element.id, 'featured_image_paragraph')
+  const borderRadius = app.properties.borderRadius(css_image)
 
   const innerFlexId = app.makeId()
   const innerSecondFlexId = app.makeId()
 
-  const imageParams = params(css_image, 'element', element.id)
+  const imageParams = app.params(css_image, 'element', element.id)
   imageParams['default-aspect-ratio'] = '1280 / 853'
   imageParams['default-aspect-ratio--unit'] = 'px'
   imageParams['--style-padding-horizontal'] = 0
@@ -165,7 +165,10 @@ const featured_image = data => {
     output.attrs['data-show-only'] = element.content.visible
   }
 
-  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
+  output.attrs = Object.assign(
+    output.attrs,
+    app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
+  )
 
   output.attrs.id = element.id
 

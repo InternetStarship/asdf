@@ -1,7 +1,7 @@
 const input = data => {
   const element = data.element
-  const output = blueprint('Input/V1', data.id, data.parentId, data.index, element)
-  const css = properties.css(element.id, 'input')
+  const output = app.blueprint('Input/V1', data.id, data.parentId, data.index, element)
+  const css = app.properties.css(element.id, 'input')
 
   output.params = {
     label: element.content.placeholder,

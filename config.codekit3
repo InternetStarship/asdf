@@ -336,17 +336,6 @@
       "sC" : 0,
       "tS" : 0
     },
-    "\/layout\/blueprint.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 0,
-      "oA" : 1,
-      "oAP" : "\/layout\/blueprint-min.js",
-      "oF" : 1,
-      "sC" : 0,
-      "tS" : 0
-    },
     "\/layout\/columns.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -354,17 +343,6 @@
       "mi" : 0,
       "oA" : 1,
       "oAP" : "\/layout\/columns-min.js",
-      "oF" : 1,
-      "sC" : 0,
-      "tS" : 0
-    },
-    "\/layout\/elements.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 0,
-      "oA" : 1,
-      "oAP" : "\/layout\/elements-min.js",
       "oF" : 1,
       "sC" : 0,
       "tS" : 0
@@ -387,83 +365,6 @@
       "mi" : 0,
       "oA" : 1,
       "oAP" : "\/layout\/rows-min.js",
-      "oF" : 1,
-      "sC" : 0,
-      "tS" : 0
-    },
-    "\/layout\/sections.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 0,
-      "oA" : 1,
-      "oAP" : "\/layout\/sections-min.js",
-      "oF" : 1,
-      "sC" : 0,
-      "tS" : 0
-    },
-    "\/page-tree\/clickfunnels-classic.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 0,
-      "oA" : 1,
-      "oAP" : "\/page-tree\/clickfunnels-classic-min.js",
-      "oF" : 1,
-      "sC" : 0,
-      "tS" : 0
-    },
-    "\/page-tree\/clickfunnels2.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 0,
-      "oA" : 1,
-      "oAP" : "\/page-tree\/clickfunnels2-min.js",
-      "oF" : 1,
-      "sC" : 0,
-      "tS" : 0
-    },
-    "\/settings\/animations.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 0,
-      "oA" : 1,
-      "oAP" : "\/settings\/animations-min.js",
-      "oF" : 1,
-      "sC" : 0,
-      "tS" : 0
-    },
-    "\/settings\/params.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 0,
-      "oA" : 1,
-      "oAP" : "\/settings\/params-min.js",
-      "oF" : 1,
-      "sC" : 0,
-      "tS" : 0
-    },
-    "\/settings\/properties.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 0,
-      "oA" : 1,
-      "oAP" : "\/settings\/properties-min.js",
-      "oF" : 1,
-      "sC" : 0,
-      "tS" : 0
-    },
-    "\/settings\/settings.js" : {
-      "bF" : 0,
-      "ft" : 64,
-      "ma" : 0,
-      "mi" : 0,
-      "oA" : 1,
-      "oAP" : "\/settings\/settings-min.js",
       "oF" : 1,
       "sC" : 0,
       "tS" : 0
@@ -843,7 +744,7 @@
       },
       "camelcase" : {
         "active" : 0,
-        "optionString" : "{'properties': 'always', 'ignoreDestructuring': false, 'ignoreImports': false}"
+        "optionString" : "{'app.properties': 'always', 'ignoreDestructuring': false, 'ignoreImports': false}"
       },
       "capitalized-comments" : {
         "active" : 0,
@@ -961,11 +862,11 @@
       },
       "id-length" : {
         "active" : 0,
-        "optionString" : "{'min': 2, 'max': 1000, 'properties': 'always', 'exceptions': ['x', 'i', 'y']}"
+        "optionString" : "{'min': 2, 'max': 1000, 'app.properties': 'always', 'exceptions': ['x', 'i', 'y']}"
       },
       "id-match" : {
         "active" : 0,
-        "optionString" : "'^[a-z]+([A-Z][a-z]+)*$', {'properties': false, 'onlyDeclarations': true, 'ignoreDestructuring': false}"
+        "optionString" : "'^[a-z]+([A-Z][a-z]+)*$', {'app.properties': false, 'onlyDeclarations': true, 'ignoreDestructuring': false}"
       },
       "implicit-arrow-linebreak" : {
         "active" : 0,
@@ -1057,7 +958,7 @@
       },
       "new-cap" : {
         "active" : 0,
-        "optionString" : "{'newIsCap': true, 'capIsNew': true, 'newIsCapExceptions': [], 'capIsNewExceptions': ['Array', 'Boolean', 'Date', 'Error', 'Function', 'Number', 'Object', 'RegExp', 'String', 'Symbol'], 'properties': true}"
+        "optionString" : "{'newIsCap': true, 'capIsNew': true, 'newIsCapExceptions': [], 'capIsNewExceptions': ['Array', 'Boolean', 'Date', 'Error', 'Function', 'Number', 'Object', 'RegExp', 'String', 'Symbol'], 'app.properties': true}"
       },
       "new-parens" : {
         "active" : 0,
@@ -1556,7 +1457,7 @@
       },
       "object-property-newline" : {
         "active" : 0,
-        "optionString" : "{'allowAllPropertiesOnSameLine': true}"
+        "optionString" : "{'allowAllapp.propertiesOnSameLine': true}"
       },
       "object-shorthand" : {
         "active" : 0,
@@ -1595,7 +1496,7 @@
       },
       "prefer-destructuring" : {
         "active" : 0,
-        "optionString" : "{'array': true, 'object': true}, {'enforceForRenamedProperties': false}"
+        "optionString" : "{'array': true, 'object': true}, {'enforceForRenamedapp.properties': false}"
       },
       "prefer-exponentiation-operator" : {
         "active" : 0
@@ -1642,7 +1543,7 @@
       },
       "require-atomic-updates" : {
         "active" : 0,
-        "optionString" : "{'allowProperties': false}"
+        "optionString" : "{'allowapp.properties': false}"
       },
       "require-await" : {
         "active" : 0

@@ -10,7 +10,7 @@ const rows = (rows, parentId) => {
         cf2_id: id,
       })
 
-      const borderRadius = properties.borderRadius(row.css)
+      const borderRadius = app.properties.borderRadius(row.css)
       const backgroundClasses = document.querySelector(`[id="${row.id}"]`).classList
       let backgroundPosition = ''
 
@@ -39,7 +39,7 @@ const rows = (rows, parentId) => {
           'data-skip-corners-settings': 'false',
           'data-skip-borders-settings': 'false',
         },
-        params: params(row.css, 'row', row.id),
+        params: app.params(row.css, 'row', row.id),
         id: id,
         version: 0,
         parentId: parentId,
@@ -47,8 +47,11 @@ const rows = (rows, parentId) => {
         children: columns(row.columns, id),
       }
 
-      data.attrs = Object.assign(data.attrs, animations.attrs(document.querySelector(`[id="${row.id}"]`)))
-      data.params = Object.assign(data.params, animations.params(document.querySelector(`[id="${row.id}"]`)))
+      data.attrs = Object.assign(data.attrs, app.animations.attrs(document.querySelector(`[id="${row.id}"]`)))
+      data.params = Object.assign(
+        data.params,
+        app.animations.params(document.querySelector(`[id="${row.id}"]`))
+      )
 
       data.attrs.style = Object.assign(data.attrs.style, borderRadius)
       return data

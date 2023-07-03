@@ -3,8 +3,8 @@ const faq_block = data => {
   const id = data.id
   const parentId = data.parentId
   const index = data.index
-  const css_headline = properties.css(element.id, 'faq_block_headline')
-  const css_paragraph = properties.css(element.id, 'faq_block_paragraph')
+  const css_headline = app.properties.css(element.id, 'faq_block_headline')
+  const css_paragraph = app.properties.css(element.id, 'faq_block_paragraph')
 
   const headlineId = app.makeId()
   const headlineJSON = headline(
@@ -53,7 +53,7 @@ const faq_block = data => {
     output.attrs['data-show-only'] = element.content.visible
     output.attrs = Object.assign(
       output.attrs,
-      animations.attrs(document.querySelector(`[id="${element.id}"]`))
+      app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
     )
   }
 

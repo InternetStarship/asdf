@@ -1,5 +1,5 @@
 const popup = (sections, parentId) => {
-  const borderRadius = properties.borderRadius(sections[0].css)
+  const borderRadius = app.properties.borderRadius(sections[0].css)
   const containerClasses = [
     'smallContainer',
     'midContainer',
@@ -20,8 +20,8 @@ const popup = (sections, parentId) => {
   if (popupModal) {
     popupModal.style.display = 'block'
   }
-  const css = properties.css(null, 'popup')
-  const cssBackdrop = properties.css(null, 'popup-backdrop')
+  const css = app.properties.css(null, 'popup')
+  const cssBackdrop = app.properties.css(null, 'popup-backdrop')
   const popupWidth = document.querySelector('.containerModal').getBoundingClientRect()
 
   const popup = {
@@ -47,7 +47,7 @@ const popup = (sections, parentId) => {
           'data-skip-corners-settings': 'false',
           'data-skip-shadow-settings': 'false',
         },
-        params: params(css, 'section', sections[0].id),
+        params: app.params(css, 'section', sections[0].id),
       },
       '.modal-wrapper': {
         params: {

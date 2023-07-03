@@ -16,7 +16,7 @@ const pricing = data => {
             json: data.element.content.header.label.json,
           },
           id: element.id,
-          css: properties.css(element.id, `pricing_label_headline`),
+          css: app.properties.css(element.id, `pricing_label_headline`),
         },
         id: app.makeId(),
         index: 0,
@@ -34,7 +34,7 @@ const pricing = data => {
             json: data.element.content.header.figure.json,
           },
           id: element.id,
-          css: properties.css(element.id, `pricing_figure_headline`),
+          css: app.properties.css(element.id, `pricing_figure_headline`),
         },
         id: app.makeId(),
         index: 1,
@@ -52,7 +52,7 @@ const pricing = data => {
             json: data.element.content.header.foreword.json,
           },
           id: element.id,
-          css: properties.css(element.id, `pricing_foreword_headline`),
+          css: app.properties.css(element.id, `pricing_foreword_headline`),
         },
         id: app.makeId(),
         index: 2,
@@ -82,7 +82,7 @@ const pricing = data => {
             json: data.element.content.items[i].json,
           },
           id: element.id,
-          css: properties.css(element.id, `pricing_headline_${i + 1}`),
+          css: app.properties.css(element.id, `pricing_headline_${i + 1}`),
         },
         id: app.makeId(),
         index: i,
@@ -103,7 +103,7 @@ const pricing = data => {
 
   const mainContainer = document.querySelector(`#${element.id} .pricing-panel`)
   const containerStyles = getComputedStyle(mainContainer)
-  const borderRadius = properties.borderRadius(containerStyles)
+  const borderRadius = app.properties.borderRadius(containerStyles)
 
   output.attrs.style = Object.assign(output.attrs.style, borderRadius)
 
@@ -116,7 +116,7 @@ const pricing = data => {
 
   output.params = Object.assign(
     output.params,
-    params(properties.css(element.id, `pricing`), 'element', element.id)
+    app.params(app.properties.css(element.id, `pricing`), 'element', element.id)
   )
 
   output.params['width--unit'] = '%'
@@ -125,7 +125,10 @@ const pricing = data => {
     output.attrs['data-show-only'] = element.content.visible
   }
 
-  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
+  output.attrs = Object.assign(
+    output.attrs,
+    app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
+  )
 
   output.attrs.id = element.id
 

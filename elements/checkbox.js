@@ -1,8 +1,8 @@
 const checkbox = (data, type = 'checkbox') => {
   const element = data.element
-  const output = blueprint('Checkbox/V1', data.id, data.parentId, data.index, element)
+  const output = app.blueprint('Checkbox/V1', data.id, data.parentId, data.index, element)
   const contentEditableNodeId = app.makeId()
-  const css = properties.css(element.id, type)
+  const css = app.properties.css(element.id, type)
   let children = app.headlinePageTree(element.content.json, contentEditableNodeId)
 
   children = children.filter(function (element) {

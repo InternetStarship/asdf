@@ -3,8 +3,8 @@
 //   const id = data.id
 //   const parentId = data.parentId
 //   const index = data.index
-//   const css_headline = properties.css(element.id, 'shipping_headline')
-//   const css_input = properties.css(element.id, 'shipping_input')
+//   const css_headline = app.properties.css(element.id, 'shipping_headline')
+//   const css_input = app.properties.css(element.id, 'shipping_input')
 //   const children = []
 
 //   for (let i = 0; i < element.content.items.length; i++) {
@@ -106,7 +106,7 @@
 //     output.attrs['data-show-only'] = element.content.visible
 //     output.attrs = Object.assign(
 //       output.attrs,
-//       animations.attrs(document.querySelector(`[id="${element.id}"]`))
+//       app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
 //     )
 //   }
 
@@ -118,8 +118,8 @@ const shipping_block = data => {
   const id = data.id
   const parentId = data.parentId
   const index = data.index
-  const css_headline = properties.css(element.id, 'shipping_headline')
-  const css_input = properties.css(element.id, 'shipping_input')
+  const css_headline = app.properties.css(element.id, 'shipping_headline')
+  const css_input = app.properties.css(element.id, 'shipping_input')
   const children = []
 
   for (let i = 0; i < element.content.items.length; i++) {
@@ -231,7 +231,10 @@ const shipping_block = data => {
     output.attrs['data-show-only'] = element.content.visible
   }
 
-  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
+  output.attrs = Object.assign(
+    output.attrs,
+    app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
+  )
 
   output.attrs.id = element.id
 

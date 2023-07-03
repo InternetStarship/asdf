@@ -1,9 +1,9 @@
 const image = data => {
   const element = data.element
-  const output = blueprint('Image/V2', data.id, data.parentId, data.index, element)
-  const css = properties.css(element.id, 'image')
-  const borderRadius = properties.borderRadius(css)
-  const theParams = params(css, 'element', element.id)
+  const output = app.blueprint('Image/V2', data.id, data.parentId, data.index, element)
+  const css = app.properties.css(element.id, 'image')
+  const borderRadius = app.properties.borderRadius(css)
+  const theParams = app.params(css, 'element', element.id)
 
   theParams['default-aspect-ratio'] = '1280 / 853'
 

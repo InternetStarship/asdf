@@ -24,16 +24,9 @@ window.addEventListener(
         await Promise.all([
           inject('https://cdn.jsdelivr.net/npm/cssbeautify@0.3.1/cssbeautify.min.js'),
           inject('app.js'),
-          inject('settings/animations.js'),
-          inject('settings/params.js'),
-          inject('settings/properties.js'),
-          inject('settings/settings.js'),
-          inject('layout/blueprint.js'),
           inject('layout/popup.js'),
-          inject('layout/sections.js'),
           inject('layout/rows.js'),
           inject('layout/columns.js'),
-          inject('layout/elements.js'),
           inject('elements/audio_player.js'),
           inject('elements/billing.js'),
           inject('elements/button.js'),
@@ -62,8 +55,6 @@ window.addEventListener(
           inject('elements/text_block.js'),
           inject('elements/video.js'),
           inject('elements/video_popup.js'),
-          inject('page-tree/clickfunnels-classic.js'),
-          inject('page-tree/clickfunnels2.js'),
         ])
 
         app.checkImagesLoaded('.containerWrapper', app.init)

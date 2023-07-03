@@ -14,7 +14,7 @@ const navigation = data => {
             json: data.element.content.items[i].json,
           },
           id: element.id,
-          css: properties.css(element.id, `navigation_headline_${i + 1}`),
+          css: app.properties.css(element.id, `navigation_headline_${i + 1}`),
         },
         id: app.makeId(),
         index: i,
@@ -37,7 +37,7 @@ const navigation = data => {
     output.attrs['data-show-only'] = element.content.visible
     output.attrs = Object.assign(
       output.attrs,
-      animations.attrs(document.querySelector(`[id="${element.id}"]`))
+      app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
     )
   }
 

@@ -1,8 +1,8 @@
 const columns = (columns, parentId) => {
   return columns.map((column, index) => {
     if (column) {
-      const columnCSS = properties.css(column.id, 'column')
-      const columnContainerCSS = properties.css(column.id, 'columnContainer')
+      const columnCSS = app.properties.css(column.id, 'column')
+      const columnContainerCSS = app.properties.css(column.id, 'columnContainer')
       const id = app.makeId()
 
       app.idList.push({
@@ -12,7 +12,7 @@ const columns = (columns, parentId) => {
         cf2_id: id,
       })
 
-      const borderRadius = properties.borderRadius(columnCSS)
+      const borderRadius = app.properties.borderRadius(columnCSS)
       const backgroundClasses = document.querySelector(`[id="${column.id}"]`).classList
       let backgroundPosition = ''
 
@@ -45,7 +45,7 @@ const columns = (columns, parentId) => {
         fractionalIndex: `a${index}`,
         selectors: {
           '& > .col-inner': {
-            params: params(columnCSS, 'column', column.id),
+            params: app.params(columnCSS, 'column', column.id),
             attrs: {
               className: `${backgroundPosition}`,
               style: {
@@ -65,7 +65,7 @@ const columns = (columns, parentId) => {
           },
           '.col-inner': {},
         },
-        children: elements(column.elements, id),
+        children: app.elements(column.elements, id),
       }
 
       data.selectors['& > .col-inner'].attrs.style = Object.assign(
@@ -73,10 +73,13 @@ const columns = (columns, parentId) => {
         borderRadius
       )
 
-      data.attrs = Object.assign(data.attrs, animations.attrs(document.querySelector(`[id="${column.id}"]`)))
+      data.attrs = Object.assign(
+        data.attrs,
+        app.animations.attrs(document.querySelector(`[id="${column.id}"]`))
+      )
       data.params = Object.assign(
         data.params,
-        animations.params(document.querySelector(`[id="${column.id}"]`))
+        app.animations.params(document.querySelector(`[id="${column.id}"]`))
       )
 
       return data

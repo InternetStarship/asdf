@@ -14,7 +14,7 @@ const text_block = data => {
             json: data.element.content.items[i].json,
           },
           id: element.id,
-          css: properties.css(
+          css: app.properties.css(
             element.id,
             `text_block_headline_${i + 1}_${data.element.content.items[i].type}`
           ),
@@ -34,7 +34,7 @@ const text_block = data => {
 
   const mainContainer = document.querySelector(`#${element.id} .elTextblock`)
   const containerStyles = getComputedStyle(mainContainer)
-  const borderRadius = properties.borderRadius(containerStyles)
+  const borderRadius = app.properties.borderRadius(containerStyles)
 
   output.attrs.style = Object.assign(output.attrs.style, borderRadius)
 
@@ -67,7 +67,10 @@ const text_block = data => {
     output.attrs['data-show-only'] = element.content.visible
   }
 
-  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
+  output.attrs = Object.assign(
+    output.attrs,
+    app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
+  )
 
   output.attrs.id = element.id
 

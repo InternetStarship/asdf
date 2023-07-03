@@ -1,7 +1,7 @@
 const list = data => {
   const element = data.element
   const id = data.id
-  const css = properties.css(element.id, 'list')
+  const css = app.properties.css(element.id, 'list')
   const mainId = app.makeId()
   const children = []
   let themeClassName = ''
@@ -290,7 +290,7 @@ const list = data => {
     linkColor = firstLink.style.color
   }
 
-  const output = blueprint('BulletList/V1', data.id, data.parentId, data.index, element)
+  const output = app.blueprint('BulletList/V1', data.id, data.parentId, data.index, element)
 
   output.attrs = {
     style: {
@@ -384,10 +384,13 @@ const list = data => {
     output.attrs['data-show-only'] = element.content.visible
   }
 
-  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
+  output.attrs = Object.assign(
+    output.attrs,
+    app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
+  )
   output.params = Object.assign(
     output.params,
-    animations.params(document.querySelector(`[id="${element.id}"]`))
+    app.animations.params(document.querySelector(`[id="${element.id}"]`))
   )
 
   output.attrs.id = element.id

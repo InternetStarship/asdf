@@ -1,8 +1,8 @@
 const audio_player = (data, type = 'audio_player') => {
   const element = data.element
-  const output = blueprint('Audio/V1', data.id, data.parentId, data.index, element)
-  const css = properties.css(element.id, type) || element.css
-  const borderRadius = properties.borderRadius(css)
+  const output = app.blueprint('Audio/V1', data.id, data.parentId, data.index, element)
+  const css = app.properties.css(element.id, type) || element.css
+  const borderRadius = app.properties.borderRadius(css)
 
   const alignments = {
     'margin-right': 0,
@@ -197,18 +197,21 @@ const audio_player = (data, type = 'audio_player') => {
 
   output.attrs.style = Object.assign(output.attrs.style, borderRadius)
 
-  output.params = Object.assign(output.params, params(css, 'element', element.id))
+  output.params = Object.assign(output.params, app.params(css, 'element', element.id))
   output.params['--style-background-color'] = css['background-color']
 
   if (element.content.visible) {
     output.attrs['data-show-only'] = element.content.visible
   }
 
-  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
+  output.attrs = Object.assign(
+    output.attrs,
+    app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
+  )
 
   output.params = Object.assign(
     output.params,
-    animations.params(document.querySelector(`[id="${element.id}"]`))
+    app.animations.params(document.querySelector(`[id="${element.id}"]`))
   )
 
   output.attrs.id = element.id

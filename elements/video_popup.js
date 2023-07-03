@@ -1,8 +1,8 @@
 const video_popup = (data, type = 'video_popup') => {
   const element = data.element
-  const output = blueprint('VideoPopup/V1', data.id, data.parentId, data.index, element)
-  const css = properties.css(element.id, type) || element.css
-  const borderRadius = properties.borderRadius(css)
+  const output = app.blueprint('VideoPopup/V1', data.id, data.parentId, data.index, element)
+  const css = app.properties.css(element.id, type) || element.css
+  const borderRadius = app.properties.borderRadius(css)
 
   output.params = {
     'padding-top--unit': 'px',
@@ -62,7 +62,6 @@ const video_popup = (data, type = 'video_popup') => {
           '-webkit-box-sizing': 'border-box',
           '-moz-box-sizing': 'border-box',
           'box-sizing': 'border-box',
-          'text-align': element.css['text-align'] || 'center',
           position: css['position'] || 'relative',
           'padding-top': parseInt(css['padding-top']) || 0,
           'padding-bottom': parseInt(css['padding-bottom']) || 0,
@@ -70,10 +69,17 @@ const video_popup = (data, type = 'video_popup') => {
           'padding-right': parseInt(css['padding-right']) || 0,
           'background-color': css['background-color'],
           'z-index': parseInt(css['z-index']) || 0,
-          opacity: parseFloat(css['opacity']) || 1,
         },
       },
-      params: params(properties.css(element.id, type), 'element', element.id),
+      params: app.params(app.properties.css(element.id, type), 'element', element.id),
+    },
+    '.elImageWrapper': {
+      attrs: {
+        style: {
+          opacity: parseFloat(css['opacity']) || 1,
+          'text-align': css['text-align'] || 'center',
+        },
+      },
     },
   }
 

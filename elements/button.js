@@ -1,15 +1,15 @@
 const button = data => {
   const element = data.element
-  const output = blueprint('Button/V1', data.id, data.parentId, data.index, element)
+  const output = app.blueprint('Button/V1', data.id, data.parentId, data.index, element)
   const mainId = app.makeId()
   const subId = app.makeId()
-  const css = properties.css(element.id, 'button')
-  const cssMain = properties.css(element.id, 'buttonMain')
-  const cssSub = properties.css(element.id, 'buttonSub')
-  const cssPrepend = properties.css(element.id, 'buttonPrepend')
-  const cssAppend = properties.css(element.id, 'buttonAppend')
-  const borderRadius = properties.borderRadius(css)
-  const theParams = params(css, 'element', element.id)
+  const css = app.properties.css(element.id, 'button')
+  const cssMain = app.properties.css(element.id, 'buttonMain')
+  const cssSub = app.properties.css(element.id, 'buttonSub')
+  const cssPrepend = app.properties.css(element.id, 'buttonPrepend')
+  const cssAppend = app.properties.css(element.id, 'buttonAppend')
+  const borderRadius = app.properties.borderRadius(css)
+  const theParams = app.params(css, 'element', element.id)
 
   theParams['width--unit'] = '%'
   theParams['--style-padding-horizontal'] = parseInt(css['padding-left'])
@@ -146,7 +146,7 @@ const button = data => {
         },
         'data-skip-text-shadow-settings': 'false',
       },
-      params: params(cssMain, 'element', element.id),
+      params: app.params(cssMain, 'element', element.id),
     },
     '.elButton .elButtonSub': {
       attrs: {
@@ -164,7 +164,7 @@ const button = data => {
         },
         'data-skip-text-shadow-settings': 'false',
       },
-      params: params(cssSub, 'element', element.id),
+      params: app.params(cssSub, 'element', element.id),
     },
     '.elButton:hover,\\n.elButton.elButtonHovered': {
       params: {

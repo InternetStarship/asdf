@@ -1,7 +1,7 @@
 const select = data => {
   const element = data.element
-  const output = blueprint('SelectBox/V1', data.id, data.parentId, data.index, element)
-  const css = properties.css(element.id, 'select')
+  const output = app.blueprint('SelectBox/V1', data.id, data.parentId, data.index, element)
+  const css = app.properties.css(element.id, 'select')
   let dataType = element.content.name
   let selectName = element.content.name
   let customType = element.content.custom_type

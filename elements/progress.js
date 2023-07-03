@@ -1,11 +1,11 @@
 const progress = data => {
   const element = data.element
-  const output = blueprint('ProgressBar/V1', data.id, data.parentId, data.index, element)
-  const cssParent = properties.css(element.id)
-  const css = properties.css(element.id, 'progress')
-  const cssBar = properties.css(element.id, 'progress-bar')
-  const borderRadius = properties.borderRadius(css)
-  const borderRadiusBar = properties.borderRadius(cssBar)
+  const output = app.blueprint('ProgressBar/V1', data.id, data.parentId, data.index, element)
+  const cssParent = app.properties.css(element.id)
+  const css = app.properties.css(element.id, 'progress')
+  const cssBar = app.properties.css(element.id, 'progress-bar')
+  const borderRadius = app.properties.borderRadius(css)
+  const borderRadiusBar = app.properties.borderRadius(cssBar)
   let fontWeight = cssBar['font-weight']
   if (fontWeight === 'normal') {
     fontWeight = '400'
@@ -108,7 +108,7 @@ const progress = data => {
           'margin-top': parseInt(cssParent['margin-top']) || 0,
         },
       },
-      params: params(css, 'element', element.id),
+      params: app.params(css, 'element', element.id),
     },
     '.progress-bar': {
       params: {

@@ -1,9 +1,9 @@
 const video = data => {
   const element = data.element
-  const output = blueprint('Video/V1', data.id, data.parentId, data.index, element)
-  const css = properties.css(element.id, 'video')
-  const borderRadius = properties.borderRadius(css)
-  const theParams = params(css, 'element', element.id)
+  const output = app.blueprint('Video/V1', data.id, data.parentId, data.index, element)
+  const css = app.properties.css(element.id, 'video')
+  const borderRadius = app.properties.borderRadius(css)
+  const theParams = app.params(css, 'element', element.id)
 
   theParams[`video_url`] = element.content.url || 'https://www.youtube.com/watch?v=Z7o9pbPHu0k'
   theParams[`video-${element.content.videoType}-autoplay`] = element.content.autoplay || '0'

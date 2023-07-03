@@ -3,10 +3,10 @@ const divider = data => {
   const id = data.id
   const parentId = data.parentId
   const index = data.index
-  const css = properties.css(element.id, 'divider')
-  const cssContainer = properties.css(element.id, 'dividerContainer')
+  const css = app.properties.css(element.id, 'divider')
+  const cssContainer = app.properties.css(element.id, 'dividerContainer')
   const dividerInner = document.querySelector(`#${element.id} .elDividerInner`)
-  const theParams = params(css, 'element', element.id)
+  const theParams = app.params(css, 'element', element.id)
   theParams['--style-border-top-width'] = parseInt(css['border-top-width']) || 0
   theParams['width--unit'] = '%'
   const alignment = dividerInner.getAttribute('data-align')
@@ -55,10 +55,13 @@ const divider = data => {
   if (element.content.visible) {
     output.attrs['data-show-only'] = element.content.visible
   }
-  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
+  output.attrs = Object.assign(
+    output.attrs,
+    app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
+  )
   output.params = Object.assign(
     output.params,
-    animations.params(document.querySelector(`[id="${element.id}"]`))
+    app.animations.params(document.querySelector(`[id="${element.id}"]`))
   )
 
   output.attrs.id = element.id

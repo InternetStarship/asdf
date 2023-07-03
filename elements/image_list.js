@@ -3,7 +3,7 @@ const image_list = data => {
   const id = data.id
   const parentId = data.parentId
   const index = data.index
-  const css_headline = properties.css(element.id, 'image_list_headline')
+  const css_headline = app.properties.css(element.id, 'image_list_headline')
   const children = []
 
   for (let i = 0; i < element.content.list.length; i++) {
@@ -88,7 +88,10 @@ const image_list = data => {
     output.attrs['data-show-only'] = element.content.visible
   }
 
-  output.attrs = Object.assign(output.attrs, animations.attrs(document.querySelector(`[id="${element.id}"]`)))
+  output.attrs = Object.assign(
+    output.attrs,
+    app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
+  )
 
   output.attrs.id = element.id
 

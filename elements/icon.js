@@ -1,7 +1,7 @@
 const icon = data => {
   const element = data.element
-  const output = blueprint('Icon/V1', data.id, data.parentId, data.index, element)
-  const css = properties.css(element.id, 'icon')
+  const output = app.blueprint('Icon/V1', data.id, data.parentId, data.index, element)
+  const css = app.properties.css(element.id, 'icon')
   const href = document.querySelector(`#${element.id} .eliconelement`).getAttribute('href')
 
   const cf_classic_themes = [
@@ -405,7 +405,7 @@ const icon = data => {
           opacity: parseInt(css['opacity']) || 1,
         },
       },
-      params: params(css, 'element', element.id),
+      params: app.params(css, 'element', element.id),
     },
     '.iconElement .fa, .iconElement .fas, .iconElement .fa-fw': {
       attrs: {
