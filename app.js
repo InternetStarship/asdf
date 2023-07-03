@@ -3100,17 +3100,8 @@ const app = {
     const css_headline = app.properties.css(element.id, 'featured_image_headline')
     const css_paragraph = app.properties.css(element.id, 'featured_image_paragraph')
     const borderRadius = app.properties.borderRadius(css_image)
-
     const innerFlexId = app.makeId()
     const innerSecondFlexId = app.makeId()
-
-    const imageParams = app.params(css_image, 'element', element.id)
-    imageParams['default-aspect-ratio'] = '1280 / 853'
-    imageParams['default-aspect-ratio--unit'] = 'px'
-    imageParams['--style-padding-horizontal'] = 0
-    imageParams['--style-padding-horizontal--unit'] = 'px'
-    imageParams['--style-padding-vertical'] = 0
-    imageParams['--style-padding-vertical--unit'] = 'px'
 
     const imageJSON = app.image(
       {
@@ -3211,9 +3202,12 @@ const app = {
       'border-radius--unit': radiusUnit,
     })
 
-    imageJSON.selectors['.elImage'].params = Object.assign(imageJSON.params, {
-      'border-radius--unit': radiusUnit,
-    })
+    imageJSON.selectors['.elImage'].params = Object.assign(
+      {},
+      {
+        'border-radius--unit': radiusUnit,
+      }
+    )
 
     let textContainer = ''
     if (data.element.content.headline_text && data.element.content.paragraph_text) {
