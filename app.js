@@ -823,21 +823,32 @@ const app = {
         return data
       }
 
-      if (dom.querySelector('.wideCountdown')) {
+      if (
+        dom.getAttribute('data-de-type') === 'countdown' ||
+        dom.getAttribute('data-de-type') === 'countdown-evergreen' ||
+        dom.getAttribute('data-de-type') === 'countdown-daily'
+      ) {
         data.type = 'countdown'
-        const element = dom.querySelector('.wideCountdown')
+        const element = dom.querySelector('.is-countdown')
         data.content = {
           visible: app.checkVisibility(dom),
-          showWeeks: dom.getAttribute('data-show-weeks'),
-          showMonths: dom.getAttribute('data-show-months'),
-          showYears: dom.getAttribute('data-show-years'),
-          showDays: dom.getAttribute('data-show-days'),
-          showSeconds: dom.getAttribute('data-show-seconds'),
+          showWeeks: dom.getAttribute('data-show-weeks') || false,
+          showMonths: dom.getAttribute('data-show-months') || false,
+          showYears: dom.getAttribute('data-show-years') || false,
+          showDays: dom.getAttribute('data-show-days') || true,
+          showHours: dom.getAttribute('data-show-hours') || true,
+          showMinutes: dom.getAttribute('data-show-minutes') || true,
+          showSeconds: dom.getAttribute('data-show-seconds') || true,
           date: element.getAttribute('data-date'),
           time: element.getAttribute('data-time'),
           timezone: element.getAttribute('data-tz'),
+          action: dom.getAttribute('data-expire-type'),
           lang: element.getAttribute('data-lang'),
           url: element.getAttribute('data-url'),
+          hours: element.getAttribute('data-hours'),
+          minutes: element.getAttribute('data-minutes'),
+          seconds: element.getAttribute('data-seconds'),
+          type: dom.getAttribute('data-de-type'),
         }
         return data
       }
@@ -970,7 +981,7 @@ const app = {
       id: id,
       version: 0,
       parentId: parentId,
-      fractionalIndex: 'a' + index,
+      fractionalIndex: 'a0',
       attrs: {},
       params: {},
     }
@@ -2688,44 +2699,72 @@ const app = {
     const element = data.element
     const output = app.blueprint('Countdown/V1', data.id, data.parentId, data.index, element)
 
-    const timerOptions = {
-      time_resets: 'on_page_load',
-      reset_day: 1,
-      reset_time_hours: 1,
-      reset_time_minutes: 2,
-      reset_time_seconds: 2,
-    }
+    let time_reset = ''
+    let countdown_type = ''
+    let date = element.content.date.split('/')
+    let month = date[0]
+    let day = date[1]
+    let year = date[2]
+    let end_date = null
 
-    const type = ['countdown', 'evergreen']
+    // todo: make minute timer work
+    // todo: make daily timer work
+
+    switch (element.content.type) {
+      case 'countdown':
+        countdown_type = 'countdown'
+        time_reset = 'monthly'
+        end_date = `${year}-${month}-${day}`
+        break
+      case 'countdown-evergreen':
+        countdown_type = 'evergreen'
+        time_reset = 'on_page_load'
+        break
+      case 'countdown-daily':
+        time_reset = 'daily'
+        countdown_type = 'evergreen'
+        break
+    }
 
     output.params = {
-      type: 'countdown',
-      countdown_opts: {
-        show_years: false,
-        show_months: false,
-        show_weeks: false,
-        show_days: false,
-        show_hours: true,
-        show_minutes: true,
-        show_seconds: true,
-      },
-      evergreen_props: {
-        time_resets: 'monthly',
-        reset_day: 1,
-        reset_time: '00:00:00',
-        reset_time_hours: 0,
-        reset_time_minutes: 0,
-        reset_time_seconds: 0,
-        timezone: 'America/New_York',
-      },
+      type: countdown_type,
       show_colons: true,
-      timezone: 'America/New_York',
-      timer_action: 'showhide',
+      timezone: element.content.timezone,
+      timer_action: element.content.action,
       cookie_policy: 'none',
       expire_days: 0,
-      end_date: '2022-12-18',
-      countdown_id: '6Z-6O4GA-25',
+      countdown_id: app.makeId(),
     }
+
+    if (end_date) {
+      output.params.end_date = end_date
+      output.params.end_time = `${element.content.time}:00:00`
+    }
+
+    // todo: redirect_to url
+    // todo: showhide
+
+    output.params.evergreen_props = {
+      time_resets: time_reset,
+      reset_day: 1,
+      reset_time: '00:00:00',
+      reset_time_hours: parseInt(element.content.hours) || 0,
+      reset_time_minutes: parseInt(element.content.minutes) || 0,
+      reset_time_seconds: parseInt(element.content.seconds) || 0,
+      timezone: element.content.timezone,
+    }
+
+    output.params.countdown_opts = {
+      show_years: /true/i.test(element.content.showYears),
+      show_months: /true/i.test(element.content.showMonths),
+      show_weeks: /true/i.test(element.content.showWeeks),
+      show_days: /true/i.test(element.content.showDays),
+      show_hours: /true/i.test(element.content.showHours),
+      show_minutes: /true/i.test(element.content.showMinutes),
+      show_seconds: /true/i.test(element.content.showSeconds),
+    }
+
+    // todo: try to make themes work
 
     output.selectors = {
       '.elCountdownAmount': {
@@ -2814,6 +2853,8 @@ const app = {
     }
 
     output.attrs.id = element.id
+
+    console.log('countdown output', output)
 
     return output
   },
