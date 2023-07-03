@@ -983,49 +983,123 @@ const app = {
       id: id,
       version: 0,
       parentId: parentId,
-      fractionalIndex: 'a0',
+      fractionalIndex: app.fractionalIndex(index),
       attrs: {},
       params: {},
-    }
-
-    if (element) {
-      if (element.content.visible) {
-        output.attrs['data-show-only'] = element.content.visible
-      }
-
-      output.attrs = Object.assign(
-        output.attrs,
-        app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
-      )
-      output.params = Object.assign(
-        output.params,
-        app.animations.params(document.querySelector(`[id="${element.id}"]`))
-      )
     }
 
     return output
   },
 
   animations: {
+    check: (element, output) => {
+      if (element) {
+        const parentElement = document.querySelector(`#${element.id}`)
+        const animationAttrs = app.animations.attrs(parentElement)
+        output.attrs = Object.assign(output.attrs, animationAttrs)
+        const animationParams = app.animations.params(parentElement)
+        output.params = Object.assign(output.params, animationParams)
+      }
+      return output
+    },
+
+    visible: (element, output) => {
+      if (element) {
+        const isVisible = element.content.visible
+        if (isVisible) {
+          const dom = document.querySelector(`#${element.id}`)
+          let timedSeconds = dom.getAttribute('data-timed-seconds')
+          let trigger = dom.getAttribute('data-trigger')
+
+          if (isVisible === 'none' && !timedSeconds && trigger !== 'none') {
+            output.attrs['data-show-only'] = element.content.visible
+          }
+        }
+      }
+      return output
+    },
+
+    direction: 'left',
+
     attrs: dom => {
-      if (dom.getAttribute('data-trigger') !== 'none') {
-        return {
+      let animationTrigger = dom.getAttribute('data-trigger')
+      let delay = parseInt(dom.getAttribute('data-delay'))
+      if (dom.getAttribute('data-timed-seconds') && animationTrigger === 'none') {
+        delay = parseInt(dom.getAttribute('data-timed-seconds')) * 1000
+      }
+      if (dom.getAttribute('data-timed-minutes') && animationTrigger === 'none') {
+        delay = parseInt(dom.getAttribute('data-timed-minutes')) * 60000
+      }
+      if (
+        dom.getAttribute('data-timed-minutes') &&
+        dom.getAttribute('data-timed-seconds') &&
+        animationTrigger === 'none'
+      ) {
+        delay =
+          parseInt(dom.getAttribute('data-timed-minutes')) * 60000 +
+          parseInt(dom.getAttribute('data-timed-seconds')) * 1000
+      }
+      if (
+        animationTrigger !== 'none' ||
+        (animationTrigger === 'none' && dom.getAttribute('data-timed-seconds'))
+      ) {
+        let animationType = 'fade-in'
+        if (dom.getAttribute('data-animate')) {
+          animationType = dom.getAttribute('data-animate')
+        }
+        switch (animationType) {
+          case 'fade':
+            animationType = 'fade-in'
+            break
+          case 'left':
+            animationType = 'slide-in'
+            app.animations.direction = 'left'
+            break
+          case 'right':
+            animationType = 'slide-in'
+            app.animations.direction = 'right'
+            break
+          case 'top':
+            animationType = 'slide-in'
+            app.animations.direction = 'top'
+            break
+          case 'bottom':
+            animationType = 'slide-in'
+            app.animations.direction = 'bottom'
+            break
+        }
+        switch (animationTrigger) {
+          case 'none':
+            animationTrigger = 'load'
+            break
+          case 'ran':
+            animationTrigger = 'load'
+            break
+          case 'done':
+            animationTrigger = 'scroll'
+            break
+          case 'scale':
+            animationTrigger = 'expand-in'
+            break
+        }
+        const output = {
           'data-skip-animation-settings': 'false',
-          'data-animation-delay': dom.getAttribute('data-delay') || 0,
-          'data-animation-trigger': dom.getAttribute('data-trigger') || 'none',
-          'data-animation-type': 'fade-in', // dom.getAttribute('data-animate'),
+          'data-animation-delay': parseInt(delay),
+          'data-animation-trigger': animationTrigger,
+          'data-animation-type': animationType,
           'data-animation-timing-function': 'linear',
-          'data-animation-direction': 'reverse',
           'data-animation-once': true,
           'data-animation-loop': false,
         }
+        return output
+      } else {
+        return {}
       }
-      return {}
     },
     params: () => {
       return {
-        '--data-animation-time': 1000,
-        '--data-animation-direction': 'right',
+        '--data-animation-time': 100,
+        '--data-animation-direction': app.animations.direction || 'left',
       }
     },
   },
@@ -1507,7 +1581,7 @@ const app = {
           id: 'page_style',
           type: 'css',
           parentId: app.makeId(),
-          fractionalIndex: 'a0',
+          fractionalIndex: app.fractionalIndex(0),
           attrs: {
             style: { color: textColor, 'font-family': fontFamily, 'font-weight': 500 },
           },
@@ -1518,21 +1592,21 @@ const app = {
           id: 'header-code',
           type: 'raw',
           parentId: headerCodeId,
-          fractionalIndex: 'a0',
+          fractionalIndex: app.fractionalIndex(1),
           innerText: '', // blank
         },
         {
           id: 'footer-code',
           type: 'raw',
           parentId: footerCodeId,
-          fractionalIndex: 'a1',
+          fractionalIndex: app.fractionalIndex(2),
           innerText: app.generatedJS,
         },
         {
           id: 'css',
           type: 'raw',
           parentId: cssCodeId,
-          fractionalIndex: 'a2',
+          fractionalIndex: app.fractionalIndex(3),
           innerText: cssbeautify(app.generatedCSS, {
             indent: '  ',
             openbrace: 'end-of-line',
@@ -1625,7 +1699,7 @@ const app = {
     return sections.map((section, index) => {
       if (section && section.id !== 'modalPopup') {
         const id = app.makeId()
-        const output = app.blueprint('SectionContainer/V1', id, parentId, index, section)
+        const output = app.blueprint('SectionContainer/V1', id, parentId, index)
         const borderRadius = app.properties.borderRadius(section.css)
         const containerClasses = [
           'smallContainer',
@@ -1683,7 +1757,7 @@ const app = {
     return rows.map((row, index) => {
       if (row) {
         const id = app.makeId()
-        const output = app.blueprint('RowContainer/V1', id, parentId, index, row)
+        const output = app.blueprint('RowContainer/V1', id, parentId, index)
         const borderRadius = app.properties.borderRadius(row.css)
         const backgroundClasses = document.querySelector(`[id="${row.id}"]`).classList
         let backgroundPosition = ''
@@ -1734,7 +1808,7 @@ const app = {
         const columnCSS = app.properties.css(column.id, 'column')
         const columnContainerCSS = app.properties.css(column.id, 'columnContainer')
         const id = app.makeId()
-        const output = app.blueprint('ColContainer/V1', id, parentId, index, column)
+        const output = app.blueprint('ColContainer/V1', id, parentId, index)
         const borderRadius = app.properties.borderRadius(columnCSS)
         const backgroundClasses = document.querySelector(`[id="${column.id}"] .col-inner`).classList
         let backgroundPosition = ''
@@ -1906,14 +1980,13 @@ const app = {
 
     classicHeadlineArray.forEach((headline, index) => {
       const id = app.makeId()
-      const fractionalIndex = 'a' + (index + 1).toString(36)
 
       let output = {
         ...headline,
         id: id,
         version: 0,
         parentId: mainParentId,
-        fractionalIndex: fractionalIndex,
+        fractionalIndex: app.fractionalIndex(index),
       }
 
       if (headline.type === 'a') {
@@ -2039,7 +2112,7 @@ const app = {
           id: id,
           version: 0,
           parentId: parentId,
-          fractionalIndex: 'a0',
+          fractionalIndex: app.fractionalIndex(),
           children: app.rows(section.rows, id),
         }
 
@@ -2052,7 +2125,7 @@ const app = {
 
   audio_player: (data, type = 'audio_player') => {
     const element = data.element
-    const output = app.blueprint('Audio/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('Audio/V1', data.id, data.parentId, data.index)
     const css = app.properties.css(element.id, type) || element.css
     const borderRadius = app.properties.borderRadius(css)
 
@@ -2252,21 +2325,9 @@ const app = {
     output.params = Object.assign(output.params, app.params(css, 'element', element.id))
     output.params['--style-background-color'] = css['background-color']
 
-    if (element.content.visible) {
-      output.attrs['data-show-only'] = element.content.visible
-    }
-
-    output.attrs = Object.assign(
-      output.attrs,
-      app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
-    )
-
-    output.params = Object.assign(
-      output.params,
-      app.animations.params(document.querySelector(`[id="${element.id}"]`))
-    )
-
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
@@ -2381,23 +2442,16 @@ const app = {
     output.attrs.style['flex-direction'] = 'column'
     output.attrs.style['gap'] = 0.5
 
-    if (element.content.visible) {
-      output.attrs['data-show-only'] = element.content.visible
-    }
-
-    output.attrs = Object.assign(
-      output.attrs,
-      app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
-    )
-
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
 
   button: data => {
     const element = data.element
-    const output = app.blueprint('Button/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('Button/V1', data.id, data.parentId, data.index)
     const mainId = app.makeId()
     const subId = app.makeId()
     const css = app.properties.css(element.id, 'button')
@@ -2623,7 +2677,7 @@ const app = {
         id: mainId,
         version: 0,
         parentId: data.id,
-        fractionalIndex: 'a0',
+        fractionalIndex: app.fractionalIndex(),
         children: [
           {
             type: 'text',
@@ -2631,7 +2685,7 @@ const app = {
             id: app.makeId(),
             version: 0,
             parentId: mainId,
-            fractionalIndex: 'a0',
+            fractionalIndex: app.fractionalIndex(),
           },
         ],
       },
@@ -2652,7 +2706,7 @@ const app = {
         id: subId,
         version: 0,
         parentId: data.id,
-        fractionalIndex: 'a0',
+        fractionalIndex: app.fractionalIndex(data.index),
         innerText: element.content.sub,
       })
     }
@@ -2663,13 +2717,15 @@ const app = {
     )
 
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
 
   checkbox: (data, type = 'checkbox') => {
     const element = data.element
-    const output = app.blueprint('Checkbox/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('Checkbox/V1', data.id, data.parentId, data.index)
     const contentEditableNodeId = app.makeId()
     const css = app.properties.css(element.id, type)
     let children = app.headlinePageTree(element.content.json, contentEditableNodeId)
@@ -2722,23 +2778,21 @@ const app = {
         slotName: 'label',
         version: 0,
         parentId: data.id,
-        fractionalIndex: 'a0',
+        fractionalIndex: app.fractionalIndex(data.index),
         children: children,
       },
     ]
 
-    if (element.content.visible) {
-      output.attrs['data-show-only'] = element.content.visible
-    }
-
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
 
   countdown: data => {
     const element = data.element
-    const output = app.blueprint('Countdown/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('Countdown/V1', data.id, data.parentId, data.index)
 
     let time_reset = null
     let countdown_type = null
@@ -2921,13 +2975,15 @@ const app = {
     }
 
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
 
   divider: data => {
     const element = data.element
-    const output = app.blueprint('Divider/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('Divider/V1', data.id, data.parentId, data.index)
     const css = app.properties.css(element.id, 'divider')
     const cssContainer = app.properties.css(element.id, 'dividerContainer')
     const dividerInner = document.querySelector(`#${element.id} .elDividerInner`)
@@ -2975,13 +3031,15 @@ const app = {
     }
 
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
 
   embed: data => {
     const element = data.element
-    const output = app.blueprint('CustomHtmlJs/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('CustomHtmlJs/V1', data.id, data.parentId, data.index)
     const css = app.properties.css(element.id, 'embed')
 
     output.params = {
@@ -2996,6 +3054,8 @@ const app = {
     }
 
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
@@ -3051,22 +3111,16 @@ const app = {
     output.attrs.style['margin-top'] = document.querySelector(`#${element.id}`).style.marginTop || 0
     output.attrs.style['flex-direction'] = 'column'
 
-    if (element.content.visible) {
-      output.attrs['data-show-only'] = element.content.visible
-      output.attrs = Object.assign(
-        output.attrs,
-        app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
-      )
-    }
-
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
 
   fb_comments: data => {
     const element = data.element
-    const output = app.blueprint('CustomHtmlJs/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('CustomHtmlJs/V1', data.id, data.parentId, data.index)
     const css = app.properties.css(element.id, 'embed')
 
     output.params = {
@@ -3088,6 +3142,8 @@ const app = {
     })
 
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
@@ -3249,23 +3305,16 @@ const app = {
     output.attrs.style['margin-top'] = document.querySelector(`#${element.id}`).style.marginTop || 0
     output.attrs.style['align-items'] = 'flex-start'
 
-    if (element.content.visible) {
-      output.attrs['data-show-only'] = element.content.visible
-    }
-
-    output.attrs = Object.assign(
-      output.attrs,
-      app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
-    )
-
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
 
   flex_container: (children, parentId, index) => {
     const id = app.makeId()
-    const output = app.blueprint('FlexContainer/V1', id, parentId, index, null)
+    const output = app.blueprint('FlexContainer/V1', id, parentId, index)
 
     output.attrs = {
       className: 'elFlexNoWrapMobile elFlexNoWrap',
@@ -3317,7 +3366,7 @@ const app = {
     //   blueprintClassname = '.elParagraph'
     // }
 
-    const output = app.blueprint(blueprintTitle, data.id, data.parentId, data.index, element)
+    const output = app.blueprint(blueprintTitle, data.id, data.parentId, data.index)
     const contentEditableNodeId = app.makeId()
     const css = app.properties.css(element.id, type)
     let children = app.headlinePageTree(element.content.json, contentEditableNodeId)
@@ -3338,7 +3387,7 @@ const app = {
           id: plainTextId,
           version: 0,
           parentId: contentEditableNodeId,
-          fractionalIndex: 'a0',
+          fractionalIndex: app.fractionalIndex(),
         },
       ]
     }
@@ -3440,25 +3489,23 @@ const app = {
         id: contentEditableNodeId,
         version: 0,
         parentId: data.id,
-        fractionalIndex: 'a0',
+        fractionalIndex: app.fractionalIndex(data.index),
         children: children,
       },
     ]
 
-    if (element.content.visible) {
-      output.attrs['data-show-only'] = element.content.visible
-    }
-
     output.attrs.style = Object.assign(output.attrs.style, borderRadius)
 
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
 
   icon: data => {
     const element = data.element
-    const output = app.blueprint('Icon/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('Icon/V1', data.id, data.parentId, data.index)
     const css = app.properties.css(element.id, 'icon')
     const href = document.querySelector(`#${element.id} .eliconelement`).getAttribute('href')
 
@@ -3879,6 +3926,8 @@ const app = {
     }
 
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
@@ -3969,16 +4018,9 @@ const app = {
     output.attrs.style['gap'] = 0.5
     output.attrs.style['margin-left'] = document.querySelector(`#${element.id}`).style.marginLeft || 0
 
-    if (element.content.visible) {
-      output.attrs['data-show-only'] = element.content.visible
-    }
-
-    output.attrs = Object.assign(
-      output.attrs,
-      app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
-    )
-
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
@@ -4040,7 +4082,7 @@ const app = {
 
   image: data => {
     const element = data.element
-    const output = app.blueprint('Image/V2', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('Image/V2', data.id, data.parentId, data.index)
     const css = app.properties.css(element.id, 'image')
     const borderRadius = app.properties.borderRadius(css)
     const theParams = app.params(css, 'element', element.id)
@@ -4139,13 +4181,15 @@ const app = {
     }
 
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
 
   input: data => {
     const element = data.element
-    const output = app.blueprint('Input/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('Input/V1', data.id, data.parentId, data.index)
     const css = app.properties.css(element.id, 'input')
 
     output.params = {
@@ -4238,6 +4282,8 @@ const app = {
 
     app.cssForInput(element.id, 'Input')
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
@@ -4490,7 +4536,7 @@ const app = {
 
       content.forEach((item, index) => {
         item.parentId = itemID
-        item.fractionalIndex = 'a' + (index + 1).toString(36)
+        item.fractionalIndex = app.fractionalIndex(index)
       })
 
       content[0] = {
@@ -4510,7 +4556,7 @@ const app = {
         id: itemID,
         version: 0,
         parentId: mainId,
-        fractionalIndex: 'a' + (index + 1).toString(36),
+        fractionalIndex: app.fractionalIndex(index),
         children: content,
       }
       children.push(data)
@@ -4534,7 +4580,7 @@ const app = {
       linkColor = firstLink.style.color
     }
 
-    const output = app.blueprint('BulletList/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('BulletList/V1', data.id, data.parentId, data.index)
 
     output.attrs = {
       style: {
@@ -4619,25 +4665,14 @@ const app = {
         id: mainId,
         version: 0,
         parentId: id,
-        fractionalIndex: 'a0',
+        fractionalIndex: app.fractionalIndex(data.index),
         children: children,
       },
     ]
 
-    if (element.content.visible) {
-      output.attrs['data-show-only'] = element.content.visible
-    }
-
-    output.attrs = Object.assign(
-      output.attrs,
-      app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
-    )
-    output.params = Object.assign(
-      output.params,
-      app.animations.params(document.querySelector(`[id="${element.id}"]`))
-    )
-
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
@@ -4677,15 +4712,9 @@ const app = {
     output.attrs.style['justify-content'] = 'center'
     output.attrs.style['gap'] = 2.3
 
-    if (element.content.visible) {
-      output.attrs['data-show-only'] = element.content.visible
-      output.attrs = Object.assign(
-        output.attrs,
-        app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
-      )
-    }
-
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
@@ -4814,23 +4843,16 @@ const app = {
 
     output.params['width--unit'] = '%'
 
-    if (element.content.visible) {
-      output.attrs['data-show-only'] = element.content.visible
-    }
-
-    output.attrs = Object.assign(
-      output.attrs,
-      app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
-    )
-
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
 
   progress: data => {
     const element = data.element
-    const output = app.blueprint('ProgressBar/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('ProgressBar/V1', data.id, data.parentId, data.index)
     const cssParent = app.properties.css(element.id)
     const css = app.properties.css(element.id, 'progress')
     const cssBar = app.properties.css(element.id, 'progress-bar')
@@ -4990,13 +5012,15 @@ const app = {
     )
 
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
 
   select: data => {
     const element = data.element
-    const output = app.blueprint('SelectBox/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('SelectBox/V1', data.id, data.parentId, data.index)
     const css = app.properties.css(element.id, 'select')
     let dataType = element.content.name
     let selectName = element.content.name
@@ -5040,7 +5064,7 @@ const app = {
           id: defaultOptionId,
           version: 0,
           parentId: data.id,
-          fractionalIndex: 'a0',
+          fractionalIndex: app.fractionalIndex(),
           children: [
             {
               type: 'text',
@@ -5048,7 +5072,7 @@ const app = {
               id: app.makeId(),
               version: 0,
               parentId: defaultOptionId,
-              fractionalIndex: 'a0',
+              fractionalIndex: app.fractionalIndex(),
             },
           ],
         },
@@ -5063,7 +5087,7 @@ const app = {
           id: defaultOptionId,
           version: 0,
           parentId: data.id,
-          fractionalIndex: 'a0',
+          fractionalIndex: app.fractionalIndex(),
           children: [
             {
               type: 'text',
@@ -5071,13 +5095,13 @@ const app = {
               id: app.makeId,
               version: 0,
               parentId: defaultOptionId,
-              fractionalIndex: 'a0',
+              fractionalIndex: app.fractionalIndex(),
             },
           ],
         },
       ]
 
-      element.content.items.forEach(item => {
+      element.content.items.forEach((item, index) => {
         const optionId = app.makeId()
         output.children.push({
           type: 'option',
@@ -5087,7 +5111,7 @@ const app = {
           id: optionId,
           version: 0,
           parentId: data.id,
-          fractionalIndex: 'a1',
+          fractionalIndex: app.fractionalIndex(index),
           children: [
             {
               type: 'text',
@@ -5095,7 +5119,7 @@ const app = {
               id: app.makeId(),
               version: 0,
               parentId: optionId,
-              fractionalIndex: 'a0',
+              fractionalIndex: app.fractionalIndex(),
             },
           ],
         })
@@ -5149,6 +5173,8 @@ const app = {
 
     app.cssForInput(element.id, 'Select')
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
@@ -5267,23 +5293,16 @@ const app = {
     output.attrs.style['flex-direction'] = 'column'
     output.attrs.style['gap'] = 0.5
 
-    if (element.content.visible) {
-      output.attrs['data-show-only'] = element.content.visible
-    }
-
-    output.attrs = Object.assign(
-      output.attrs,
-      app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
-    )
-
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
 
   social_share: data => {
     const element = data.element
-    const output = app.blueprint('CustomHtmlJs/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('CustomHtmlJs/V1', data.id, data.parentId, data.index)
     const css = app.properties.css(element.id, 'embed')
 
     output.params = {
@@ -5312,6 +5331,8 @@ const app = {
     })
 
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
@@ -5381,23 +5402,16 @@ const app = {
   }`
     }
 
-    if (element.content.visible) {
-      output.attrs['data-show-only'] = element.content.visible
-    }
-
-    output.attrs = Object.assign(
-      output.attrs,
-      app.animations.attrs(document.querySelector(`[id="${element.id}"]`))
-    )
-
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
 
   textarea: data => {
     const element = data.element
-    const output = app.blueprint('TextArea/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('TextArea/V1', data.id, data.parentId, data.index)
     const css = app.properties.css(element.id, 'input')
 
     output.params = {
@@ -5490,13 +5504,15 @@ const app = {
 
     app.cssForInput(element.id, 'TextArea')
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
 
   video_popup: (data, type = 'video_popup') => {
     const element = data.element
-    const output = app.blueprint('VideoPopup/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('VideoPopup/V1', data.id, data.parentId, data.index)
     const css = app.properties.css(element.id, type) || element.css
     const borderRadius = app.properties.borderRadius(css)
 
@@ -5600,13 +5616,15 @@ const app = {
     output.attrs.style = Object.assign(output.attrs.style, borderRadius)
 
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     return output
   },
 
   video: data => {
     const element = data.element
-    const output = app.blueprint('Video/V1', data.id, data.parentId, data.index, element)
+    const output = app.blueprint('Video/V1', data.id, data.parentId, data.index)
     const css = app.properties.css(element.id, 'video')
     const borderRadius = app.properties.borderRadius(css)
     const theParams = app.params(css, 'element', element.id)
@@ -5665,6 +5683,8 @@ const app = {
 
     output.attrs.style = Object.assign(output.attrs.style, borderRadius)
     output.attrs.id = element.id
+    app.animations.visible(element, output)
+    app.animations.check(element, output)
 
     if (element.content.videoType === 'html5') {
       app.generatedCSS += `
@@ -5801,6 +5821,10 @@ const app = {
     var s = new Option().style
     s.color = color
     return s.color == color
+  },
+
+  fractionalIndex: index => {
+    return 'a0'
   },
 
   buildRecommendations: () => {
