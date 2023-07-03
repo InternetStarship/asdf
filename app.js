@@ -50,7 +50,7 @@ const app = {
           type: 'section',
           title: section.dataset.title,
           id: section.id,
-          css: app.properties.css(section.id),
+          css: app.properties.css(section.id, 'section'),
           rows: app.clickfunnels_classic.rows(section),
           content: {
             visible: app.checkVisibility(section),
@@ -70,7 +70,7 @@ const app = {
           type: 'row',
           title: row.dataset.title,
           id: row.id,
-          css: app.properties.css(row.id),
+          css: app.properties.css(row.id, 'row'),
           columns: app.clickfunnels_classic.columns(row),
           content: {
             visible: app.checkVisibility(row),
@@ -1147,6 +1147,8 @@ const app = {
           'letter-spacing',
           'line-height',
           'text-align',
+          'border-color',
+          'border-style',
           'border-bottom-width',
           'border-top-width',
           'border-left-width',
@@ -1186,6 +1188,14 @@ const app = {
           }
         }
 
+        if (dom.style.borderColor) {
+          data['border-color'] = dom.style.borderColor
+        }
+
+        if (dom.style.borderStyle) {
+          data['border-style'] = dom.style.borderStyle
+        }
+
         if (parseInt(data['padding-bottom']) === 0 && parseInt(data['margin-bottom']) !== 0) {
           data['padding-bottom'] = data['margin-bottom']
         } else if (parseInt(data['padding-bottom']) !== 0 && parseInt(data['margin-bottom']) !== 0) {
@@ -1221,8 +1231,31 @@ const app = {
       const right = css['border-right-style']
       const borderStyle = [top, bottom, left, right]
 
+      let style = css['border-style']
+
+      function findDifferent(arr) {
+        const counts = {}
+        for (let i = 0; i < arr.length; i++) {
+          if (counts[arr[i]] === undefined) {
+            counts[arr[i]] = 1
+          } else {
+            counts[arr[i]]++
+          }
+        }
+        for (const prop in counts) {
+          if (counts[prop] === 1) {
+            return prop
+          }
+        }
+        return arr[0]
+      }
+
+      if (!style) {
+        style = findDifferent(borderStyle)
+      }
+
       return {
-        'border-style': borderStyle[0] || borderStyle[1] || borderStyle[2] || borderStyle[3],
+        'border-style': style,
       }
     },
 
@@ -1233,11 +1266,11 @@ const app = {
       const right = css['border-right-color']
       const borderColor = [top, bottom, left, right]
 
-      let color = top
+      let color = css['border-color']
 
       borderColor.forEach(item => {
         // default border color in classic, check for any other color, otherwise default to top.
-        if (item !== 'rgb(47, 47, 47)') {
+        if (item !== 'rgb(47, 47, 47)' && item !== 'rgb(68, 82, 97)') {
           color = item
         }
       })
@@ -1395,7 +1428,8 @@ const app = {
     }
 
     const borderColor = app.properties.borderColor(css)
-    if (borderColor['border-color']) {
+
+    if (css['border-color']) {
       data['--style-border-color'] = borderColor['border-color']
     } else {
       data['--style-border-color'] = 'transparent'
@@ -1702,7 +1736,7 @@ const app = {
         const id = app.makeId()
         const output = app.blueprint('ColContainer/V1', id, parentId, index, column)
         const borderRadius = app.properties.borderRadius(columnCSS)
-        const backgroundClasses = document.querySelector(`[id="${column.id}"]`).classList
+        const backgroundClasses = document.querySelector(`[id="${column.id}"] .col-inner`).classList
         let backgroundPosition = ''
 
         app.convertBackgroundPositionClassName(backgroundClasses, className => {
@@ -1732,7 +1766,6 @@ const app = {
           '& > .col-inner': {
             params: app.params(columnCSS, 'column', column.id),
             attrs: {
-              className: `${backgroundPosition}`,
               style: {
                 'padding-top': parseInt(columnCSS['padding-top']) || 0,
                 'padding-bottom': parseInt(columnCSS['padding-bottom']) || 0,
@@ -1748,7 +1781,11 @@ const app = {
               'data-skip-corners-settings': 'false',
             },
           },
-          '.col-inner': {},
+          '.col-inner': {
+            attrs: {
+              className: `${backgroundPosition}`,
+            },
+          },
         }
 
         output.children = app.elements(column.elements, id)
