@@ -399,7 +399,7 @@ const app = {
         let stickyEnabled = false
         let stickyCloseable = false
         let stickySize = 'medium'
-        let stickyPosition = 'top-left'
+        let stickyPosition = 'top-right'
         let stickyStyle = ''
 
         if (videoType === 'youtube') {
@@ -439,9 +439,9 @@ const app = {
         }
 
         if (classes.includes('cf-sticky-video-theme1')) {
-          stickyStyle = 'black-with-shadow'
+          stickyStyle = 'black-with-dropshadow'
         } else if (classes.includes('cf-sticky-video-theme2')) {
-          stickyStyle = 'white-with-shadow'
+          stickyStyle = 'white-with-dropshadow'
         } else if (classes.includes('cf-sticky-video-theme3')) {
           stickyStyle = 'light-transparent-border'
         } else if (classes.includes('cf-sticky-video-theme4')) {
@@ -467,6 +467,8 @@ const app = {
             style: stickyStyle,
           },
         }
+
+        console.log(data.content)
 
         data.content.videoType = videoType || 'youtube'
         if (videoType === 'youtube') {
@@ -835,7 +837,7 @@ const app = {
           showWeeks: dom.getAttribute('data-show-weeks') || false,
           showMonths: dom.getAttribute('data-show-months') || false,
           showYears: dom.getAttribute('data-show-years') || false,
-          showDays: dom.getAttribute('data-show-days') || true,
+          showDays: dom.getAttribute('data-show-days') || false,
           showHours: dom.getAttribute('data-show-hours') || true,
           showMinutes: dom.getAttribute('data-show-minutes') || true,
           showSeconds: dom.getAttribute('data-show-seconds') || true,
@@ -849,6 +851,8 @@ const app = {
           minutes: element.getAttribute('data-minutes'),
           seconds: element.getAttribute('data-seconds'),
           type: dom.getAttribute('data-de-type'),
+          hideIds: element.getAttribute('data-hide-ids'),
+          showIds: element.getAttribute('data-show-ids'),
         }
         return data
       }
@@ -2426,7 +2430,7 @@ const app = {
       element.content.showIds.split(',').forEach(id => {
         const item = app.idList.find(item => item.cf1_id === id)
         const newId = item ? item.cf2_id : id
-        newShowIds += `id-${newId},`
+        newShowIds += `${newId},`
       })
     }
 
@@ -2434,7 +2438,7 @@ const app = {
       element.content.hideIds.split(',').forEach(id => {
         const item = app.idList.find(item => item.cf1_id === id)
         const newId = item ? item.cf2_id : id
-        newHideIds += `id-${newId},`
+        newHideIds += `${newId},`
       })
     }
 
@@ -2699,16 +2703,20 @@ const app = {
     const element = data.element
     const output = app.blueprint('Countdown/V1', data.id, data.parentId, data.index, element)
 
-    let time_reset = ''
-    let countdown_type = ''
-    let date = element.content.date.split('/')
-    let month = date[0]
-    let day = date[1]
-    let year = date[2]
+    let time_reset = null
+    let countdown_type = null
+    let date = element.content.date
     let end_date = null
+    let month = null
+    let day = null
+    let year = null
 
-    // todo: make minute timer work
-    // todo: make daily timer work
+    if (date) {
+      date = date.split('/')
+      month = date[0]
+      day = date[1]
+      year = date[2]
+    }
 
     switch (element.content.type) {
       case 'countdown':
@@ -2728,7 +2736,7 @@ const app = {
 
     output.params = {
       type: countdown_type,
-      show_colons: true,
+      show_colons: false,
       timezone: element.content.timezone,
       timer_action: element.content.action,
       cookie_policy: 'none',
@@ -2736,22 +2744,44 @@ const app = {
       countdown_id: app.makeId(),
     }
 
+    if (element.content.action === 'url') {
+      output.params.timer_action = 'redirect_to'
+      output.params.redirect_to = element.content.url
+    }
+
+    if (element.content.action === 'showhide') {
+      output.params.timer_action = 'showhide'
+      output.params.showIds = element.content.showIds
+      output.params.hideIds = element.content.hideIds
+    }
+
     if (end_date) {
       output.params.end_date = end_date
       output.params.end_time = `${element.content.time}:00:00`
     }
 
-    // todo: redirect_to url
-    // todo: showhide
-
     output.params.evergreen_props = {
       time_resets: time_reset,
       reset_day: 1,
-      reset_time: '00:00:00',
-      reset_time_hours: parseInt(element.content.hours) || 0,
-      reset_time_minutes: parseInt(element.content.minutes) || 0,
-      reset_time_seconds: parseInt(element.content.seconds) || 0,
       timezone: element.content.timezone,
+    }
+
+    if (element.content.type === 'countdown-daily') {
+      output.params.evergreen_props.reset_time = `${element.content.time}:00:00`
+    }
+
+    if (element.content.type === 'countdown-evergreen') {
+      if (element.content.hours) {
+        output.params.evergreen_props.reset_time_hours = parseInt(element.content.hours)
+      }
+
+      if (element.content.minutes) {
+        output.params.evergreen_props.reset_time_minutes = parseInt(element.content.minutes)
+      }
+
+      if (element.content.seconds) {
+        output.params.evergreen_props.reset_time_seconds = parseInt(element.content.seconds)
+      }
     }
 
     output.params.countdown_opts = {
@@ -2765,6 +2795,7 @@ const app = {
     }
 
     // todo: try to make themes work
+    // size, label color, etc
 
     output.selectors = {
       '.elCountdownAmount': {
