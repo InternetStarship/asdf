@@ -832,6 +832,7 @@ const app = {
         const element = dom.querySelector('.is-countdown')
         data.content = {
           visible: app.checkVisibility(dom),
+          hasTheme: dom.hasAttribute('data-element-theme'),
           showWeeks: dom.getAttribute('data-show-weeks') || false,
           showMonths: dom.getAttribute('data-show-months') || false,
           showYears: dom.getAttribute('data-show-years') || false,
@@ -2827,7 +2828,7 @@ const app = {
 
     output.params = {
       type: countdown_type,
-      show_colons: false,
+      show_colons: element.content.hasTheme ? false : true,
       timezone: element.content.timezone,
       timer_action: element.content.action,
       cookie_policy: 'none',
@@ -2885,31 +2886,59 @@ const app = {
       show_seconds: /true/i.test(element.content.showSeconds),
     }
 
-    // todo: try to make themes work
-    // size, label color, etc
+    const dom = document.querySelector(`#${element.id}`)
+    const elCountdownAmount = getComputedStyle(dom.querySelector('.countdown-amount'))
+    const elCountdownPeriod = getComputedStyle(dom.querySelector('.countdown-period'))
+    const elCountdown = dom.querySelector('.is-countdown')
+    let elCountdownBGColor = elCountdownAmount['background-color']
+    let elCountdownTextColor = elCountdownAmount['color']
+
+    if (elCountdown.classList.contains('cdYellow')) {
+      elCountdownBGColor = '#feea69'
+    } else if (elCountdown.classList.contains('cdBlack')) {
+      elCountdownBGColor = '#2e2e2e'
+      elCountdownTextColor = '#ffffff'
+    } else if (elCountdown.classList.contains('cdWhite')) {
+      elCountdownBGColor = 'rgba(0,0,0,0)'
+    } else if (elCountdown.classList.contains('cdRed')) {
+      elCountdownBGColor = '#e5162f'
+    } else if (elCountdown.classList.contains('cdBlue')) {
+      elCountdownBGColor = '#49a4cc'
+    } else if (elCountdown.classList.contains('cdGreen')) {
+      elCountdownBGColor = '#77ba34'
+    }
+
+    if (elCountdown.classList.contains('cdStyleTextOnly')) {
+      elCountdownBGColor = 'rgba(0,0,0,0)'
+      elCountdownTextColor = elCountdownAmount['color']
+    }
+
+    if (elCountdown.classList.contains('cdStyleCircleLine')) {
+      elCountdownBGColor = 'rgba(0,0,0,0)'
+    }
 
     output.selectors = {
       '.elCountdownAmount': {
         attrs: {
           style: {
-            color: '#fff',
-            'font-size': '28px',
-            'font-family': 'Inter',
-            'font-weight': '700',
-            'line-height': '100%',
+            color: elCountdownTextColor,
+            'font-size': elCountdownAmount['font-size'],
+            'font-family': elCountdownAmount['font-family'],
+            'font-weight': elCountdownAmount['font-weight'],
+            'line-height': elCountdownAmount['line-height'],
           },
         },
       },
       '.elCountdownPeriod': {
         attrs: {
           style: {
-            'text-transform': 'uppercase',
-            color: '#fff',
-            'text-align': 'center',
-            'font-size': '11px',
-            'font-family': 'Inter',
-            'font-weight': '600',
-            'min-width': 5.3,
+            'text-transform': elCountdownPeriod['text-transform'],
+            color: elCountdownPeriod['color'],
+            'text-align': elCountdownPeriod['text-align'],
+            'font-size': elCountdownPeriod['font-size'],
+            'font-family': elCountdownPeriod['font-family'],
+            'font-weight': elCountdownPeriod['font-weight'],
+            'min-width': elCountdownPeriod['min-width'],
           },
         },
         params: {
@@ -2920,30 +2949,32 @@ const app = {
         attrs: {
           'data-skip-shadow-settings': 'false',
           'data-skip-corners-settings': 'false',
+          'data-skip-background-settings': 'false',
           style: {
-            gap: '0.3em',
-            'padding-top': '8px',
-            'padding-bottom': '8px',
-            'border-radius': '8px',
+            gap: '0',
+            'padding-top': parseInt(elCountdownAmount['padding-top']) + 5,
+            'padding-bottom': parseInt(elCountdownAmount['padding-bottom']) + 5,
+            'padding-right': parseInt(elCountdownAmount['padding-right']) + 10,
+            'padding-left': parseInt(elCountdownAmount['padding-left']) + 10,
+            'border-radius': elCountdownAmount['border-top-left-radius'],
           },
         },
         params: {
-          '--style-background-color': '#1C65E1',
-          '--style-padding-horizontal': '5px',
-          '--style-box-shadow-distance-x': 0,
-          '--style-box-shadow-distance-y': 6,
-          '--style-box-shadow-blur': 24,
-          '--style-box-shadow-spread': -8,
-          '--style-box-shadow-color': 'rgba(28, 101, 225, 0.5)',
-          '--style-border-width': '3px',
-          '--style-border-style': 'solid',
-          '--style-border-color': '#164EAD',
+          '--style-background-color': elCountdownBGColor,
+          '--style-box-shadow-distance-x': elCountdownAmount['box-shadow-offset-x'],
+          '--style-box-shadow-distance-y': elCountdownAmount['box-shadow-offset-y'],
+          '--style-box-shadow-blur': elCountdownAmount['box-shadow-blur'],
+          '--style-box-shadow-spread': elCountdownAmount['box-shadow-spread'],
+          '--style-box-shadow-color': elCountdownAmount['box-shadow-color'],
+          '--style-border-width': elCountdownAmount['border-width'],
+          '--style-border-style': elCountdownAmount['border-style'],
+          '--style-border-color': elCountdownAmount['border-top-color'],
         },
       },
       '.elCountdownGroupTime': {
         attrs: {
           style: {
-            gap: '1.1em',
+            gap: '1em',
           },
         },
       },
